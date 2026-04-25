@@ -12,14 +12,15 @@ namespace DAL_62_RS
     public class Accesos_62_RS
     {
         public SqlConnection Conexion = new SqlConnection();
+        private SqlTransaction transaccion_62_RS;
 
         public void abrir()
-        {   
+        {
             //PC HORACIO
-            //Conexion.ConnectionString = "Data Source=DESKTOP-B0G8N2S;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
-            
+            Conexion.ConnectionString = "Data Source=DESKTOP-B0G8N2S;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
+
             //NOTEBOOK HORACIO
-            Conexion.ConnectionString = "Data Souorce=HORACIO\\horac;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
+            //Conexion.ConnectionString = "Data Souorce=HORACIO\\horac;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
             try
             {
                 Conexion.Open();
@@ -103,6 +104,33 @@ namespace DAL_62_RS
             }
             return dataTable;
 
+        }
+
+
+        public int EscribirText(string query, SqlParameter[] parametros)
+        {
+            abrir();
+            SqlCommand cmd = new SqlCommand(query, Conexion);
+            cmd.CommandType = CommandType.Text;
+            if (parametros != null) cmd.Parameters.AddRange(parametros);
+
+            transaccion_62_RS = Conexion.BeginTransaction();
+            cmd.Transaction = transaccion_62_RS;
+            try
+            {
+                int filasafectadas_62_RS = cmd.ExecuteNonQuery();
+                transaccion_62_RS.Commit();
+                return filasafectadas_62_RS;
+            }
+            catch (Exception ex)
+            {
+                transaccion_62_RS.Rollback();
+                throw new Exception("Error al ejecutar la consulta: " + ex.Message);
+            }
+            finally
+            {
+                cerrar();
+            }
         }
     }
 }

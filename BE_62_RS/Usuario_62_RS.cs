@@ -72,8 +72,8 @@ namespace BE_62_RS
 		}
 
 		private string password_62_RS;
-		public string Password
-		{
+		public string Password_62_RS
+        {
 			get { return password_62_RS; }
 			set { password_62_RS = value; }
 		}

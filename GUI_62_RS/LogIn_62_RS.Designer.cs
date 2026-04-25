@@ -28,85 +28,85 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            button1 = new Button();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            comboBox1 = new ComboBox();
+            TxtUsuario_62_RS = new TextBox();
+            TxtContra_62_RS = new TextBox();
+            BtnIniciarSesion_62_RS = new Button();
+            LblUsuario_62_RS = new Label();
+            LblContra_62_RS = new Label();
+            LblIdioma_62_RS = new Label();
+            CmbIdioma_62_RS = new ComboBox();
             SuspendLayout();
             // 
-            // textBox1
+            // TxtUsuario_62_RS
             // 
-            textBox1.Location = new Point(84, 54);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(130, 23);
-            textBox1.TabIndex = 0;
+            TxtUsuario_62_RS.Location = new Point(84, 54);
+            TxtUsuario_62_RS.Name = "TxtUsuario_62_RS";
+            TxtUsuario_62_RS.Size = new Size(130, 23);
+            TxtUsuario_62_RS.TabIndex = 0;
             // 
-            // textBox2
+            // TxtContra_62_RS
             // 
-            textBox2.Location = new Point(84, 96);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(130, 23);
-            textBox2.TabIndex = 1;
+            TxtContra_62_RS.Location = new Point(84, 96);
+            TxtContra_62_RS.Name = "TxtContra_62_RS";
+            TxtContra_62_RS.Size = new Size(130, 23);
+            TxtContra_62_RS.TabIndex = 1;
             // 
-            // button1
+            // BtnIniciarSesion_62_RS
             // 
-            button1.Location = new Point(22, 150);
-            button1.Name = "button1";
-            button1.Size = new Size(192, 71);
-            button1.TabIndex = 2;
-            button1.Text = "Iniciar Sesion";
-            button1.UseVisualStyleBackColor = true;
+            BtnIniciarSesion_62_RS.Location = new Point(22, 150);
+            BtnIniciarSesion_62_RS.Name = "BtnIniciarSesion_62_RS";
+            BtnIniciarSesion_62_RS.Size = new Size(192, 71);
+            BtnIniciarSesion_62_RS.TabIndex = 2;
+            BtnIniciarSesion_62_RS.Text = "Iniciar Sesion";
+            BtnIniciarSesion_62_RS.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // LblUsuario_62_RS
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(8, 57);
-            label1.Name = "label1";
-            label1.Size = new Size(50, 15);
-            label1.TabIndex = 3;
-            label1.Text = "Usuario:";
+            LblUsuario_62_RS.AutoSize = true;
+            LblUsuario_62_RS.Location = new Point(8, 57);
+            LblUsuario_62_RS.Name = "LblUsuario_62_RS";
+            LblUsuario_62_RS.Size = new Size(50, 15);
+            LblUsuario_62_RS.TabIndex = 3;
+            LblUsuario_62_RS.Text = "Usuario:";
             // 
-            // label2
+            // LblContra_62_RS
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(8, 99);
-            label2.Name = "label2";
-            label2.Size = new Size(70, 15);
-            label2.TabIndex = 4;
-            label2.Text = "Contraseña:";
+            LblContra_62_RS.AutoSize = true;
+            LblContra_62_RS.Location = new Point(8, 99);
+            LblContra_62_RS.Name = "LblContra_62_RS";
+            LblContra_62_RS.Size = new Size(70, 15);
+            LblContra_62_RS.TabIndex = 4;
+            LblContra_62_RS.Text = "Contraseña:";
             // 
-            // label3
+            // LblIdioma_62_RS
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(8, 15);
-            label3.Name = "label3";
-            label3.Size = new Size(47, 15);
-            label3.TabIndex = 5;
-            label3.Text = "Idioma:";
+            LblIdioma_62_RS.AutoSize = true;
+            LblIdioma_62_RS.Location = new Point(8, 15);
+            LblIdioma_62_RS.Name = "LblIdioma_62_RS";
+            LblIdioma_62_RS.Size = new Size(47, 15);
+            LblIdioma_62_RS.TabIndex = 5;
+            LblIdioma_62_RS.Text = "Idioma:";
             // 
-            // comboBox1
+            // CmbIdioma_62_RS
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(84, 12);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(130, 23);
-            comboBox1.TabIndex = 6;
+            CmbIdioma_62_RS.FormattingEnabled = true;
+            CmbIdioma_62_RS.Location = new Point(84, 12);
+            CmbIdioma_62_RS.Name = "CmbIdioma_62_RS";
+            CmbIdioma_62_RS.Size = new Size(130, 23);
+            CmbIdioma_62_RS.TabIndex = 6;
             // 
             // LogIn_62_RS
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(238, 233);
-            Controls.Add(comboBox1);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(button1);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(CmbIdioma_62_RS);
+            Controls.Add(LblIdioma_62_RS);
+            Controls.Add(LblContra_62_RS);
+            Controls.Add(LblUsuario_62_RS);
+            Controls.Add(BtnIniciarSesion_62_RS);
+            Controls.Add(TxtContra_62_RS);
+            Controls.Add(TxtUsuario_62_RS);
             Name = "LogIn_62_RS";
             Text = "LogIn_62_RS";
             ResumeLayout(false);
@@ -115,12 +115,12 @@
 
         #endregion
 
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private Button button1;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private ComboBox comboBox1;
+        private TextBox TxtUsuario_62_RS;
+        private TextBox TxtContra_62_RS;
+        private Button BtnIniciarSesion_62_RS;
+        private Label LblUsuario_62_RS;
+        private Label LblContra_62_RS;
+        private Label LblIdioma_62_RS;
+        private ComboBox CmbIdioma_62_RS;
     }
 }

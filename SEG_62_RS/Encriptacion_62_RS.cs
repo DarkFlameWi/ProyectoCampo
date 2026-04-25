@@ -9,11 +9,22 @@ namespace SEG_62_RS
 {
     public class Encriptacion_62_RS
     {
-        public static string EncriptarIrreversible(string texto)
+        public static string EncriptarMD5_62_RS(string input_62_RS)
         {
+            using (MD5 md5_62_RS = MD5.Create())
+            {
+                byte[] inputBytes_62_RS = Encoding.ASCII.GetBytes(input_62_RS);
+                byte[] hashBytes_62_RS = md5_62_RS.ComputeHash(inputBytes_62_RS);
 
-            return texto;
+                StringBuilder sb_62_RS = new StringBuilder();
+                for (int i = 0; i < hashBytes_62_RS.Length; i++)
+                {
+                    sb_62_RS.Append(hashBytes_62_RS[i].ToString("X2"));
+                }
+                return sb_62_RS.ToString();
+            }
         }
+
         public static string EncriptarReversible(string texto)
         {
             return texto;
