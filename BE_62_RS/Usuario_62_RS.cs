@@ -14,7 +14,14 @@ namespace BE_62_RS
 			get { return idusuario_62_RS; }
 			set { idusuario_62_RS = value; }
 		}
-		
+
+		private int ididioma;
+		public int IdIdioma
+		{
+			get { return ididioma; }
+			set { ididioma = value; }
+		}
+
 		private string dni_62_RS;
 		public string DNI_62_RS
         {

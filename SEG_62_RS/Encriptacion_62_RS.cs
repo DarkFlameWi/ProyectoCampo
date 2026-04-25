@@ -11,8 +11,8 @@ namespace SEG_62_RS
     {
         public static string EncriptarIrreversible(string texto)
         {
-            return texto;
 
+            return texto;
         }
         public static string EncriptarReversible(string texto)
         {
