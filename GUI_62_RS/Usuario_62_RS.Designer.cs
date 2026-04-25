@@ -28,169 +28,182 @@
         /// </summary>
         private void InitializeComponent()
         {
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            dataGridView1 = new DataGridView();
-            button2 = new Button();
-            button1 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
-            button7 = new Button();
+            RbActivo_62_RS = new RadioButton();
+            RbTodo_62_RS = new RadioButton();
+            LblUsuario_62_RS = new Label();
+            LblNumUsu_62_RS = new Label();
+            LblCantUsu_62_RS = new Label();
+            DgvUsu_62_RS = new DataGridView();
+            BtnCrear_62_RS = new Button();
+            BtnDesbloquear_62_RS = new Button();
+            BtnModificar_62_RS = new Button();
+            BtnActivar_62_RS = new Button();
+            BtnAplicar_62_RS = new Button();
+            BtnCancelar_62_RS = new Button();
+            BtnSalir_62_RS = new Button();
             GroupBox = new GroupBox();
             tableLayoutPanel1 = new TableLayoutPanel();
-            textBox8 = new TextBox();
-            textBox7 = new TextBox();
-            textBox6 = new TextBox();
-            textBox5 = new TextBox();
-            textBox4 = new TextBox();
-            textBox3 = new TextBox();
-            textBox2 = new TextBox();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
-            label7 = new Label();
-            label8 = new Label();
-            label9 = new Label();
-            label10 = new Label();
-            label11 = new Label();
-            textBox1 = new TextBox();
-            textBox9 = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            TxtActivo_62_RS = new TextBox();
+            TxtBloqueado_62_RS = new TextBox();
+            TxtLogIn_62_RS = new TextBox();
+            TxtRol_62_RS = new TextBox();
+            TxtEmail_62_RS = new TextBox();
+            TxtNombre_62_RS = new TextBox();
+            TxtApellido_62_RS = new TextBox();
+            LblDni_62_RS = new Label();
+            LblApellido_62_RS = new Label();
+            LblNombre_62_RS = new Label();
+            LblEmail_62_RS = new Label();
+            LblRol_62_RS = new Label();
+            LblLogIn_62_RS = new Label();
+            LblBloqueado_62_RS = new Label();
+            LblActivo_62_RS = new Label();
+            txtDni_62_RS = new TextBox();
+            TxtMensaje_62_RS = new TextBox();
+            ((System.ComponentModel.ISupportInitialize)DgvUsu_62_RS).BeginInit();
             GroupBox.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
-            // radioButton1
+            // RbActivo_62_RS
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(126, 24);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(72, 19);
-            radioButton1.TabIndex = 1;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "ACTIVOS";
-            radioButton1.UseVisualStyleBackColor = true;
+            RbActivo_62_RS.AutoSize = true;
+            RbActivo_62_RS.Location = new Point(144, 32);
+            RbActivo_62_RS.Margin = new Padding(3, 4, 3, 4);
+            RbActivo_62_RS.Name = "RbActivo_62_RS";
+            RbActivo_62_RS.Size = new Size(89, 24);
+            RbActivo_62_RS.TabIndex = 1;
+            RbActivo_62_RS.TabStop = true;
+            RbActivo_62_RS.Text = "ACTIVOS";
+            RbActivo_62_RS.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // RbTodo_62_RS
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(238, 24);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(62, 19);
-            radioButton2.TabIndex = 2;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "TODOS";
-            radioButton2.UseVisualStyleBackColor = true;
+            RbTodo_62_RS.AutoSize = true;
+            RbTodo_62_RS.Location = new Point(272, 32);
+            RbTodo_62_RS.Margin = new Padding(3, 4, 3, 4);
+            RbTodo_62_RS.Name = "RbTodo_62_RS";
+            RbTodo_62_RS.Size = new Size(78, 24);
+            RbTodo_62_RS.TabIndex = 2;
+            RbTodo_62_RS.TabStop = true;
+            RbTodo_62_RS.Text = "TODOS";
+            RbTodo_62_RS.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // LblUsuario_62_RS
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(23, 26);
-            label1.Name = "label1";
-            label1.Size = new Size(62, 15);
-            label1.TabIndex = 3;
-            label1.Text = "USUARIOS";
+            LblUsuario_62_RS.AutoSize = true;
+            LblUsuario_62_RS.Location = new Point(26, 35);
+            LblUsuario_62_RS.Name = "LblUsuario_62_RS";
+            LblUsuario_62_RS.Size = new Size(79, 20);
+            LblUsuario_62_RS.TabIndex = 3;
+            LblUsuario_62_RS.Text = "USUARIOS";
             // 
-            // label2
+            // LblNumUsu_62_RS
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(318, 26);
-            label2.Name = "label2";
-            label2.Size = new Size(118, 15);
-            label2.TabIndex = 4;
-            label2.Text = "Número de Usuarios:";
+            LblNumUsu_62_RS.AutoSize = true;
+            LblNumUsu_62_RS.Location = new Point(363, 35);
+            LblNumUsu_62_RS.Name = "LblNumUsu_62_RS";
+            LblNumUsu_62_RS.Size = new Size(147, 20);
+            LblNumUsu_62_RS.TabIndex = 4;
+            LblNumUsu_62_RS.Text = "Número de Usuarios:";
             // 
-            // label3
+            // LblCantUsu_62_RS
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(438, 28);
-            label3.Name = "label3";
-            label3.Size = new Size(38, 15);
-            label3.TabIndex = 5;
-            label3.Text = "label3";
+            LblCantUsu_62_RS.AutoSize = true;
+            LblCantUsu_62_RS.Location = new Point(501, 37);
+            LblCantUsu_62_RS.Name = "LblCantUsu_62_RS";
+            LblCantUsu_62_RS.Size = new Size(50, 20);
+            LblCantUsu_62_RS.TabIndex = 5;
+            LblCantUsu_62_RS.Text = "label3";
             // 
-            // dataGridView1
+            // DgvUsu_62_RS
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(23, 72);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(453, 150);
-            dataGridView1.TabIndex = 6;
+            DgvUsu_62_RS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DgvUsu_62_RS.Location = new Point(26, 96);
+            DgvUsu_62_RS.Margin = new Padding(3, 4, 3, 4);
+            DgvUsu_62_RS.Name = "DgvUsu_62_RS";
+            DgvUsu_62_RS.RowHeadersWidth = 51;
+            DgvUsu_62_RS.Size = new Size(518, 200);
+            DgvUsu_62_RS.TabIndex = 6;
             // 
-            // button2
+            // BtnCrear_62_RS
             // 
-            button2.Location = new Point(501, 25);
-            button2.Name = "button2";
-            button2.Size = new Size(121, 60);
-            button2.TabIndex = 7;
-            button2.Text = "Crear";
-            button2.UseVisualStyleBackColor = true;
+            BtnCrear_62_RS.Location = new Point(573, 33);
+            BtnCrear_62_RS.Margin = new Padding(3, 4, 3, 4);
+            BtnCrear_62_RS.Name = "BtnCrear_62_RS";
+            BtnCrear_62_RS.Size = new Size(138, 80);
+            BtnCrear_62_RS.TabIndex = 7;
+            BtnCrear_62_RS.Text = "Crear";
+            BtnCrear_62_RS.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // BtnDesbloquear_62_RS
             // 
-            button1.Location = new Point(501, 91);
-            button1.Name = "button1";
-            button1.Size = new Size(121, 72);
-            button1.TabIndex = 8;
-            button1.Text = "Desbloquear";
-            button1.UseVisualStyleBackColor = true;
+            BtnDesbloquear_62_RS.Location = new Point(573, 121);
+            BtnDesbloquear_62_RS.Margin = new Padding(3, 4, 3, 4);
+            BtnDesbloquear_62_RS.Name = "BtnDesbloquear_62_RS";
+            BtnDesbloquear_62_RS.Size = new Size(138, 96);
+            BtnDesbloquear_62_RS.TabIndex = 8;
+            BtnDesbloquear_62_RS.Text = "Desbloquear";
+            BtnDesbloquear_62_RS.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // BtnModificar_62_RS
             // 
-            button3.Location = new Point(501, 169);
-            button3.Name = "button3";
-            button3.Size = new Size(121, 67);
-            button3.TabIndex = 9;
-            button3.Text = "Modificar";
-            button3.UseVisualStyleBackColor = true;
+            BtnModificar_62_RS.Location = new Point(573, 225);
+            BtnModificar_62_RS.Margin = new Padding(3, 4, 3, 4);
+            BtnModificar_62_RS.Name = "BtnModificar_62_RS";
+            BtnModificar_62_RS.Size = new Size(138, 89);
+            BtnModificar_62_RS.TabIndex = 9;
+            BtnModificar_62_RS.Text = "Modificar";
+            BtnModificar_62_RS.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // BtnActivar_62_RS
             // 
-            button4.Location = new Point(501, 242);
-            button4.Name = "button4";
-            button4.Size = new Size(121, 67);
-            button4.TabIndex = 10;
-            button4.Text = "Act. / Desact.";
-            button4.UseVisualStyleBackColor = true;
+            BtnActivar_62_RS.Location = new Point(573, 323);
+            BtnActivar_62_RS.Margin = new Padding(3, 4, 3, 4);
+            BtnActivar_62_RS.Name = "BtnActivar_62_RS";
+            BtnActivar_62_RS.Size = new Size(138, 89);
+            BtnActivar_62_RS.TabIndex = 10;
+            BtnActivar_62_RS.Text = "Act. / Desact.";
+            BtnActivar_62_RS.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // BtnAplicar_62_RS
             // 
-            button5.Location = new Point(501, 315);
-            button5.Name = "button5";
-            button5.Size = new Size(121, 66);
-            button5.TabIndex = 11;
-            button5.Text = "Aplicar";
-            button5.UseVisualStyleBackColor = true;
+            BtnAplicar_62_RS.Location = new Point(573, 420);
+            BtnAplicar_62_RS.Margin = new Padding(3, 4, 3, 4);
+            BtnAplicar_62_RS.Name = "BtnAplicar_62_RS";
+            BtnAplicar_62_RS.Size = new Size(138, 88);
+            BtnAplicar_62_RS.TabIndex = 11;
+            BtnAplicar_62_RS.Text = "Aplicar";
+            BtnAplicar_62_RS.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // BtnCancelar_62_RS
             // 
-            button6.Location = new Point(501, 387);
-            button6.Name = "button6";
-            button6.Size = new Size(121, 61);
-            button6.TabIndex = 12;
-            button6.Text = "Cancelar";
-            button6.UseVisualStyleBackColor = true;
+            BtnCancelar_62_RS.Location = new Point(573, 516);
+            BtnCancelar_62_RS.Margin = new Padding(3, 4, 3, 4);
+            BtnCancelar_62_RS.Name = "BtnCancelar_62_RS";
+            BtnCancelar_62_RS.Size = new Size(138, 81);
+            BtnCancelar_62_RS.TabIndex = 12;
+            BtnCancelar_62_RS.Text = "Cancelar";
+            BtnCancelar_62_RS.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // BtnSalir_62_RS
             // 
-            button7.Location = new Point(501, 453);
-            button7.Name = "button7";
-            button7.Size = new Size(121, 50);
-            button7.TabIndex = 13;
-            button7.Text = "Salir";
-            button7.UseVisualStyleBackColor = true;
+            BtnSalir_62_RS.Location = new Point(573, 604);
+            BtnSalir_62_RS.Margin = new Padding(3, 4, 3, 4);
+            BtnSalir_62_RS.Name = "BtnSalir_62_RS";
+            BtnSalir_62_RS.Size = new Size(138, 67);
+            BtnSalir_62_RS.TabIndex = 13;
+            BtnSalir_62_RS.Text = "Salir";
+            BtnSalir_62_RS.UseVisualStyleBackColor = true;
             // 
             // GroupBox
             // 
             GroupBox.Controls.Add(tableLayoutPanel1);
-            GroupBox.Location = new Point(23, 228);
+            GroupBox.Location = new Point(26, 304);
+            GroupBox.Margin = new Padding(3, 4, 3, 4);
             GroupBox.Name = "GroupBox";
-            GroupBox.Size = new Size(277, 261);
+            GroupBox.Padding = new Padding(3, 4, 3, 4);
+            GroupBox.Size = new Size(317, 348);
             GroupBox.TabIndex = 14;
             GroupBox.TabStop = false;
             GroupBox.Text = "DATOS:";
@@ -200,24 +213,25 @@
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(textBox8, 1, 7);
-            tableLayoutPanel1.Controls.Add(textBox7, 1, 6);
-            tableLayoutPanel1.Controls.Add(textBox6, 1, 5);
-            tableLayoutPanel1.Controls.Add(textBox5, 1, 4);
-            tableLayoutPanel1.Controls.Add(textBox4, 1, 3);
-            tableLayoutPanel1.Controls.Add(textBox3, 1, 2);
-            tableLayoutPanel1.Controls.Add(textBox2, 1, 1);
-            tableLayoutPanel1.Controls.Add(label4, 0, 0);
-            tableLayoutPanel1.Controls.Add(label5, 0, 1);
-            tableLayoutPanel1.Controls.Add(label6, 0, 2);
-            tableLayoutPanel1.Controls.Add(label7, 0, 3);
-            tableLayoutPanel1.Controls.Add(label8, 0, 4);
-            tableLayoutPanel1.Controls.Add(label9, 0, 5);
-            tableLayoutPanel1.Controls.Add(label10, 0, 6);
-            tableLayoutPanel1.Controls.Add(label11, 0, 7);
-            tableLayoutPanel1.Controls.Add(textBox1, 1, 0);
-            tableLayoutPanel1.Location = new Point(6, 22);
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 23F));
+            tableLayoutPanel1.Controls.Add(TxtActivo_62_RS, 1, 7);
+            tableLayoutPanel1.Controls.Add(TxtBloqueado_62_RS, 1, 6);
+            tableLayoutPanel1.Controls.Add(TxtLogIn_62_RS, 1, 5);
+            tableLayoutPanel1.Controls.Add(TxtRol_62_RS, 1, 4);
+            tableLayoutPanel1.Controls.Add(TxtEmail_62_RS, 1, 3);
+            tableLayoutPanel1.Controls.Add(TxtNombre_62_RS, 1, 2);
+            tableLayoutPanel1.Controls.Add(TxtApellido_62_RS, 1, 1);
+            tableLayoutPanel1.Controls.Add(LblDni_62_RS, 0, 0);
+            tableLayoutPanel1.Controls.Add(LblApellido_62_RS, 0, 1);
+            tableLayoutPanel1.Controls.Add(LblNombre_62_RS, 0, 2);
+            tableLayoutPanel1.Controls.Add(LblEmail_62_RS, 0, 3);
+            tableLayoutPanel1.Controls.Add(LblRol_62_RS, 0, 4);
+            tableLayoutPanel1.Controls.Add(LblLogIn_62_RS, 0, 5);
+            tableLayoutPanel1.Controls.Add(LblBloqueado_62_RS, 0, 6);
+            tableLayoutPanel1.Controls.Add(LblActivo_62_RS, 0, 7);
+            tableLayoutPanel1.Controls.Add(txtDni_62_RS, 1, 0);
+            tableLayoutPanel1.Location = new Point(7, 29);
+            tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 8;
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
@@ -228,168 +242,178 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(271, 233);
+            tableLayoutPanel1.Size = new Size(310, 311);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // textBox8
+            // TxtActivo_62_RS
             // 
-            textBox8.Location = new Point(138, 206);
-            textBox8.Name = "textBox8";
-            textBox8.Size = new Size(130, 23);
-            textBox8.TabIndex = 15;
+            TxtActivo_62_RS.Location = new Point(158, 249);
+            TxtActivo_62_RS.Margin = new Padding(3, 4, 3, 4);
+            TxtActivo_62_RS.Name = "TxtActivo_62_RS";
+            TxtActivo_62_RS.Size = new Size(148, 27);
+            TxtActivo_62_RS.TabIndex = 15;
             // 
-            // textBox7
+            // TxtBloqueado_62_RS
             // 
-            textBox7.Location = new Point(138, 177);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(130, 23);
-            textBox7.TabIndex = 14;
+            TxtBloqueado_62_RS.Location = new Point(158, 214);
+            TxtBloqueado_62_RS.Margin = new Padding(3, 4, 3, 4);
+            TxtBloqueado_62_RS.Name = "TxtBloqueado_62_RS";
+            TxtBloqueado_62_RS.Size = new Size(148, 27);
+            TxtBloqueado_62_RS.TabIndex = 14;
             // 
-            // textBox6
+            // TxtLogIn_62_RS
             // 
-            textBox6.Location = new Point(138, 148);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(130, 23);
-            textBox6.TabIndex = 13;
+            TxtLogIn_62_RS.Location = new Point(158, 179);
+            TxtLogIn_62_RS.Margin = new Padding(3, 4, 3, 4);
+            TxtLogIn_62_RS.Name = "TxtLogIn_62_RS";
+            TxtLogIn_62_RS.Size = new Size(148, 27);
+            TxtLogIn_62_RS.TabIndex = 13;
             // 
-            // textBox5
+            // TxtRol_62_RS
             // 
-            textBox5.Location = new Point(138, 119);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(130, 23);
-            textBox5.TabIndex = 12;
+            TxtRol_62_RS.Location = new Point(158, 144);
+            TxtRol_62_RS.Margin = new Padding(3, 4, 3, 4);
+            TxtRol_62_RS.Name = "TxtRol_62_RS";
+            TxtRol_62_RS.Size = new Size(148, 27);
+            TxtRol_62_RS.TabIndex = 12;
             // 
-            // textBox4
+            // TxtEmail_62_RS
             // 
-            textBox4.Location = new Point(138, 90);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(130, 23);
-            textBox4.TabIndex = 11;
+            TxtEmail_62_RS.Location = new Point(158, 109);
+            TxtEmail_62_RS.Margin = new Padding(3, 4, 3, 4);
+            TxtEmail_62_RS.Name = "TxtEmail_62_RS";
+            TxtEmail_62_RS.Size = new Size(148, 27);
+            TxtEmail_62_RS.TabIndex = 11;
             // 
-            // textBox3
+            // TxtNombre_62_RS
             // 
-            textBox3.Location = new Point(138, 61);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(130, 23);
-            textBox3.TabIndex = 10;
+            TxtNombre_62_RS.Location = new Point(158, 74);
+            TxtNombre_62_RS.Margin = new Padding(3, 4, 3, 4);
+            TxtNombre_62_RS.Name = "TxtNombre_62_RS";
+            TxtNombre_62_RS.Size = new Size(148, 27);
+            TxtNombre_62_RS.TabIndex = 10;
             // 
-            // textBox2
+            // TxtApellido_62_RS
             // 
-            textBox2.Location = new Point(138, 32);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(130, 23);
-            textBox2.TabIndex = 9;
+            TxtApellido_62_RS.Location = new Point(158, 39);
+            TxtApellido_62_RS.Margin = new Padding(3, 4, 3, 4);
+            TxtApellido_62_RS.Name = "TxtApellido_62_RS";
+            TxtApellido_62_RS.Size = new Size(148, 27);
+            TxtApellido_62_RS.TabIndex = 9;
             // 
-            // label4
+            // LblDni_62_RS
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(3, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(30, 15);
-            label4.TabIndex = 0;
-            label4.Text = "DNI:";
+            LblDni_62_RS.AutoSize = true;
+            LblDni_62_RS.Location = new Point(3, 0);
+            LblDni_62_RS.Name = "LblDni_62_RS";
+            LblDni_62_RS.Size = new Size(38, 20);
+            LblDni_62_RS.TabIndex = 0;
+            LblDni_62_RS.Text = "DNI:";
             // 
-            // label5
+            // LblApellido_62_RS
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(3, 29);
-            label5.Name = "label5";
-            label5.Size = new Size(59, 15);
-            label5.TabIndex = 1;
-            label5.Text = "Apellidos:";
+            LblApellido_62_RS.AutoSize = true;
+            LblApellido_62_RS.Location = new Point(3, 35);
+            LblApellido_62_RS.Name = "LblApellido_62_RS";
+            LblApellido_62_RS.Size = new Size(75, 20);
+            LblApellido_62_RS.TabIndex = 1;
+            LblApellido_62_RS.Text = "Apellidos:";
             // 
-            // label6
+            // LblNombre_62_RS
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(3, 58);
-            label6.Name = "label6";
-            label6.Size = new Size(59, 15);
-            label6.TabIndex = 2;
-            label6.Text = "Nombres:";
+            LblNombre_62_RS.AutoSize = true;
+            LblNombre_62_RS.Location = new Point(3, 70);
+            LblNombre_62_RS.Name = "LblNombre_62_RS";
+            LblNombre_62_RS.Size = new Size(73, 20);
+            LblNombre_62_RS.TabIndex = 2;
+            LblNombre_62_RS.Text = "Nombres:";
             // 
-            // label7
+            // LblEmail_62_RS
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(3, 87);
-            label7.Name = "label7";
-            label7.Size = new Size(39, 15);
-            label7.TabIndex = 3;
-            label7.Text = "Email:";
+            LblEmail_62_RS.AutoSize = true;
+            LblEmail_62_RS.Location = new Point(3, 105);
+            LblEmail_62_RS.Name = "LblEmail_62_RS";
+            LblEmail_62_RS.Size = new Size(49, 20);
+            LblEmail_62_RS.TabIndex = 3;
+            LblEmail_62_RS.Text = "Email:";
             // 
-            // label8
+            // LblRol_62_RS
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(3, 116);
-            label8.Name = "label8";
-            label8.Size = new Size(27, 15);
-            label8.TabIndex = 4;
-            label8.Text = "Rol:";
+            LblRol_62_RS.AutoSize = true;
+            LblRol_62_RS.Location = new Point(3, 140);
+            LblRol_62_RS.Name = "LblRol_62_RS";
+            LblRol_62_RS.Size = new Size(34, 20);
+            LblRol_62_RS.TabIndex = 4;
+            LblRol_62_RS.Text = "Rol:";
             // 
-            // label9
+            // LblLogIn_62_RS
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(3, 145);
-            label9.Name = "label9";
-            label9.Size = new Size(40, 15);
-            label9.TabIndex = 5;
-            label9.Text = "LogIn:";
+            LblLogIn_62_RS.AutoSize = true;
+            LblLogIn_62_RS.Location = new Point(3, 175);
+            LblLogIn_62_RS.Name = "LblLogIn_62_RS";
+            LblLogIn_62_RS.Size = new Size(49, 20);
+            LblLogIn_62_RS.TabIndex = 5;
+            LblLogIn_62_RS.Text = "LogIn:";
             // 
-            // label10
+            // LblBloqueado_62_RS
             // 
-            label10.AutoSize = true;
-            label10.Location = new Point(3, 174);
-            label10.Name = "label10";
-            label10.Size = new Size(67, 15);
-            label10.TabIndex = 6;
-            label10.Text = "Bloqueado:";
+            LblBloqueado_62_RS.AutoSize = true;
+            LblBloqueado_62_RS.Location = new Point(3, 210);
+            LblBloqueado_62_RS.Name = "LblBloqueado_62_RS";
+            LblBloqueado_62_RS.Size = new Size(85, 20);
+            LblBloqueado_62_RS.TabIndex = 6;
+            LblBloqueado_62_RS.Text = "Bloqueado:";
             // 
-            // label11
+            // LblActivo_62_RS
             // 
-            label11.AutoSize = true;
-            label11.Location = new Point(3, 203);
-            label11.Name = "label11";
-            label11.Size = new Size(44, 15);
-            label11.TabIndex = 7;
-            label11.Text = "Activo:";
+            LblActivo_62_RS.AutoSize = true;
+            LblActivo_62_RS.Location = new Point(3, 245);
+            LblActivo_62_RS.Name = "LblActivo_62_RS";
+            LblActivo_62_RS.Size = new Size(54, 20);
+            LblActivo_62_RS.TabIndex = 7;
+            LblActivo_62_RS.Text = "Activo:";
             // 
-            // textBox1
+            // txtDni_62_RS
             // 
-            textBox1.Location = new Point(138, 3);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(130, 23);
-            textBox1.TabIndex = 8;
+            txtDni_62_RS.Location = new Point(158, 4);
+            txtDni_62_RS.Margin = new Padding(3, 4, 3, 4);
+            txtDni_62_RS.Name = "txtDni_62_RS";
+            txtDni_62_RS.Size = new Size(148, 27);
+            txtDni_62_RS.TabIndex = 8;
             // 
-            // textBox9
+            // TxtMensaje_62_RS
             // 
-            textBox9.Location = new Point(318, 242);
-            textBox9.Multiline = true;
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(158, 168);
-            textBox9.TabIndex = 15;
+            TxtMensaje_62_RS.Location = new Point(363, 323);
+            TxtMensaje_62_RS.Margin = new Padding(3, 4, 3, 4);
+            TxtMensaje_62_RS.Multiline = true;
+            TxtMensaje_62_RS.Name = "TxtMensaje_62_RS";
+            TxtMensaje_62_RS.Size = new Size(180, 223);
+            TxtMensaje_62_RS.TabIndex = 15;
             // 
             // Usuario_62_RS
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(627, 512);
-            Controls.Add(textBox9);
+            ClientSize = new Size(717, 683);
+            Controls.Add(TxtMensaje_62_RS);
             Controls.Add(GroupBox);
-            Controls.Add(button7);
-            Controls.Add(button6);
-            Controls.Add(button5);
-            Controls.Add(button4);
-            Controls.Add(button3);
-            Controls.Add(button1);
-            Controls.Add(button2);
-            Controls.Add(dataGridView1);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(radioButton2);
-            Controls.Add(radioButton1);
+            Controls.Add(BtnSalir_62_RS);
+            Controls.Add(BtnCancelar_62_RS);
+            Controls.Add(BtnAplicar_62_RS);
+            Controls.Add(BtnActivar_62_RS);
+            Controls.Add(BtnModificar_62_RS);
+            Controls.Add(BtnDesbloquear_62_RS);
+            Controls.Add(BtnCrear_62_RS);
+            Controls.Add(DgvUsu_62_RS);
+            Controls.Add(LblCantUsu_62_RS);
+            Controls.Add(LblNumUsu_62_RS);
+            Controls.Add(LblUsuario_62_RS);
+            Controls.Add(RbTodo_62_RS);
+            Controls.Add(RbActivo_62_RS);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Usuario_62_RS";
             Text = "Usuario";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DgvUsu_62_RS).EndInit();
             GroupBox.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
@@ -399,37 +423,37 @@
 
         #endregion
 
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private DataGridView dataGridView1;
-        private Button button2;
-        private Button button1;
-        private Button button3;
-        private Button button4;
-        private Button button5;
-        private Button button6;
-        private Button button7;
+        private RadioButton RbActivo_62_RS;
+        private RadioButton RbTodo_62_RS;
+        private Label LblUsuario_62_RS;
+        private Label LblNumUsu_62_RS;
+        private Label LblCantUsu_62_RS;
+        private DataGridView DgvUsu_62_RS;
+        private Button BtnCrear_62_RS;
+        private Button BtnDesbloquear_62_RS;
+        private Button BtnModificar_62_RS;
+        private Button BtnActivar_62_RS;
+        private Button BtnAplicar_62_RS;
+        private Button BtnCancelar_62_RS;
+        private Button BtnSalir_62_RS;
         private GroupBox GroupBox;
         private TableLayoutPanel tableLayoutPanel1;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private Label label8;
-        private Label label9;
-        private Label label10;
-        private Label label11;
-        private TextBox textBox8;
-        private TextBox textBox7;
-        private TextBox textBox6;
-        private TextBox textBox5;
-        private TextBox textBox4;
-        private TextBox textBox3;
-        private TextBox textBox2;
-        private TextBox textBox1;
-        private TextBox textBox9;
+        private Label LblDni_62_RS;
+        private Label LblApellido_62_RS;
+        private Label LblNombre_62_RS;
+        private Label LblEmail_62_RS;
+        private Label LblRol_62_RS;
+        private Label LblLogIn_62_RS;
+        private Label LblBloqueado_62_RS;
+        private Label LblActivo_62_RS;
+        private TextBox TxtActivo_62_RS;
+        private TextBox TxtBloqueado_62_RS;
+        private TextBox TxtLogIn_62_RS;
+        private TextBox TxtRol_62_RS;
+        private TextBox TxtEmail_62_RS;
+        private TextBox TxtNombre_62_RS;
+        private TextBox TxtApellido_62_RS;
+        private TextBox txtDni_62_RS;
+        private TextBox TxtMensaje_62_RS;
     }
 }

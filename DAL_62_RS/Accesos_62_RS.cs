@@ -14,8 +14,12 @@ namespace DAL_62_RS
         public SqlConnection Conexion = new SqlConnection();
 
         public void abrir()
-        {
-            Conexion.ConnectionString = "Data Source=DESKTOP-B0G8N2S;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
+        {   
+            //PC HORACIO
+            //Conexion.ConnectionString = "Data Source=DESKTOP-B0G8N2S;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
+            
+            //NOTEBOOK HORACIO
+            Conexion.ConnectionString = "Data Souorce=HORACIO\\horac;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
             try
             {
                 Conexion.Open();

@@ -30,8 +30,8 @@
         {
             menuStrip1 = new MenuStrip();
             adminToolStripMenuItem = new ToolStripMenuItem();
-            backUpToolStripMenuItem = new ToolStripMenuItem();
-            perfilesToolStripMenuItem = new ToolStripMenuItem();
+            PerfilrestoolStripMenuItem = new ToolStripMenuItem();
+            UsuariosToolStripMenuItem = new ToolStripMenuItem();
             bitacoraToolStripMenuItem = new ToolStripMenuItem();
             backUpToolStripMenuItem1 = new ToolStripMenuItem();
             restoreToolStripMenuItem = new ToolStripMenuItem();
@@ -61,190 +61,203 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { adminToolStripMenuItem, maestroToolStripMenuItem, usuarioToolStripMenuItem, ventasToolStripMenuItem, comprasToolStripMenuItem, reportesToolStripMenuItem, ayudaToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Padding = new Padding(7, 3, 0, 3);
+            menuStrip1.Size = new Size(914, 30);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
             // adminToolStripMenuItem
             // 
-            adminToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { backUpToolStripMenuItem, perfilesToolStripMenuItem, bitacoraToolStripMenuItem, backUpToolStripMenuItem1, restoreToolStripMenuItem, digVerificacorToolStripMenuItem });
+            adminToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { PerfilrestoolStripMenuItem, UsuariosToolStripMenuItem, bitacoraToolStripMenuItem, backUpToolStripMenuItem1, restoreToolStripMenuItem, digVerificacorToolStripMenuItem });
             adminToolStripMenuItem.Name = "adminToolStripMenuItem";
-            adminToolStripMenuItem.Size = new Size(55, 20);
+            adminToolStripMenuItem.Size = new Size(67, 24);
             adminToolStripMenuItem.Text = "Admin";
             // 
-            // backUpToolStripMenuItem
+            // PerfilrestoolStripMenuItem
             // 
-            backUpToolStripMenuItem.Name = "backUpToolStripMenuItem";
-            backUpToolStripMenuItem.Size = new Size(180, 22);
-            backUpToolStripMenuItem.Text = "Perfiles";
+            PerfilrestoolStripMenuItem.Name = "PerfilrestoolStripMenuItem";
+            PerfilrestoolStripMenuItem.Size = new Size(224, 26);
+            PerfilrestoolStripMenuItem.Text = "Perfiles";
+            PerfilrestoolStripMenuItem.Click += PerfilrestoolStripMenuItem_Click;
             // 
-            // perfilesToolStripMenuItem
+            // UsuariosToolStripMenuItem
             // 
-            perfilesToolStripMenuItem.Name = "perfilesToolStripMenuItem";
-            perfilesToolStripMenuItem.Size = new Size(180, 22);
-            perfilesToolStripMenuItem.Text = "Usuarios";
+            UsuariosToolStripMenuItem.Name = "UsuariosToolStripMenuItem";
+            UsuariosToolStripMenuItem.Size = new Size(224, 26);
+            UsuariosToolStripMenuItem.Text = "Usuarios";
+            UsuariosToolStripMenuItem.Click += UsuariosToolStripMenuItem_Click;
             // 
             // bitacoraToolStripMenuItem
             // 
             bitacoraToolStripMenuItem.Name = "bitacoraToolStripMenuItem";
-            bitacoraToolStripMenuItem.Size = new Size(180, 22);
+            bitacoraToolStripMenuItem.Size = new Size(224, 26);
             bitacoraToolStripMenuItem.Text = "Bitacora";
+            bitacoraToolStripMenuItem.Click += bitacoraToolStripMenuItem_Click;
             // 
             // backUpToolStripMenuItem1
             // 
             backUpToolStripMenuItem1.Name = "backUpToolStripMenuItem1";
-            backUpToolStripMenuItem1.Size = new Size(180, 22);
+            backUpToolStripMenuItem1.Size = new Size(224, 26);
             backUpToolStripMenuItem1.Text = "BackUp";
+            backUpToolStripMenuItem1.Click += backUpToolStripMenuItem1_Click;
             // 
             // restoreToolStripMenuItem
             // 
             restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-            restoreToolStripMenuItem.Size = new Size(180, 22);
+            restoreToolStripMenuItem.Size = new Size(224, 26);
             restoreToolStripMenuItem.Text = "Restore";
+            restoreToolStripMenuItem.Click += restoreToolStripMenuItem_Click;
             // 
             // digVerificacorToolStripMenuItem
             // 
             digVerificacorToolStripMenuItem.Name = "digVerificacorToolStripMenuItem";
-            digVerificacorToolStripMenuItem.Size = new Size(180, 22);
+            digVerificacorToolStripMenuItem.Size = new Size(224, 26);
             digVerificacorToolStripMenuItem.Text = "Dig. Verificacor";
+            digVerificacorToolStripMenuItem.Click += digVerificacorToolStripMenuItem_Click;
             // 
             // maestroToolStripMenuItem
             // 
             maestroToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { productosToolStripMenuItem, clientesToolStripMenuItem, proovedoresToolStripMenuItem });
             maestroToolStripMenuItem.Name = "maestroToolStripMenuItem";
-            maestroToolStripMenuItem.Size = new Size(67, 20);
+            maestroToolStripMenuItem.Size = new Size(83, 24);
             maestroToolStripMenuItem.Text = "Maestros";
             // 
             // productosToolStripMenuItem
             // 
             productosToolStripMenuItem.Name = "productosToolStripMenuItem";
-            productosToolStripMenuItem.Size = new Size(140, 22);
+            productosToolStripMenuItem.Size = new Size(175, 26);
             productosToolStripMenuItem.Text = "Productos";
             // 
             // clientesToolStripMenuItem
             // 
             clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            clientesToolStripMenuItem.Size = new Size(140, 22);
+            clientesToolStripMenuItem.Size = new Size(175, 26);
             clientesToolStripMenuItem.Text = "Clientes";
             // 
             // proovedoresToolStripMenuItem
             // 
             proovedoresToolStripMenuItem.Name = "proovedoresToolStripMenuItem";
-            proovedoresToolStripMenuItem.Size = new Size(140, 22);
+            proovedoresToolStripMenuItem.Size = new Size(175, 26);
             proovedoresToolStripMenuItem.Text = "Proovedores";
             // 
             // usuarioToolStripMenuItem
             // 
             usuarioToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cambiarClaveToolStripMenuItem, cambiarIdiomaToolStripMenuItem, logOutToolStripMenuItem });
             usuarioToolStripMenuItem.Name = "usuarioToolStripMenuItem";
-            usuarioToolStripMenuItem.Size = new Size(64, 20);
+            usuarioToolStripMenuItem.Size = new Size(79, 24);
             usuarioToolStripMenuItem.Text = "Usuarios";
             // 
             // cambiarClaveToolStripMenuItem
             // 
             cambiarClaveToolStripMenuItem.Name = "cambiarClaveToolStripMenuItem";
-            cambiarClaveToolStripMenuItem.Size = new Size(159, 22);
+            cambiarClaveToolStripMenuItem.Size = new Size(199, 26);
             cambiarClaveToolStripMenuItem.Text = "Cambiar Clave";
+            cambiarClaveToolStripMenuItem.Click += cambiarClaveToolStripMenuItem_Click;
             // 
             // cambiarIdiomaToolStripMenuItem
             // 
             cambiarIdiomaToolStripMenuItem.Name = "cambiarIdiomaToolStripMenuItem";
-            cambiarIdiomaToolStripMenuItem.Size = new Size(159, 22);
+            cambiarIdiomaToolStripMenuItem.Size = new Size(199, 26);
             cambiarIdiomaToolStripMenuItem.Text = "Cambiar Idioma";
+            cambiarIdiomaToolStripMenuItem.Click += cambiarIdiomaToolStripMenuItem_Click;
             // 
             // logOutToolStripMenuItem
             // 
             logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            logOutToolStripMenuItem.Size = new Size(159, 22);
+            logOutToolStripMenuItem.Size = new Size(199, 26);
             logOutToolStripMenuItem.Text = "Log Out";
+            logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
             // 
             // ventasToolStripMenuItem
             // 
             ventasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { carritoToolStripMenuItem, facturarToolStripMenuItem, despacharToolStripMenuItem });
             ventasToolStripMenuItem.Name = "ventasToolStripMenuItem";
-            ventasToolStripMenuItem.Size = new Size(53, 20);
+            ventasToolStripMenuItem.Size = new Size(66, 24);
             ventasToolStripMenuItem.Text = "Ventas";
             // 
             // carritoToolStripMenuItem
             // 
             carritoToolStripMenuItem.Name = "carritoToolStripMenuItem";
-            carritoToolStripMenuItem.Size = new Size(144, 22);
+            carritoToolStripMenuItem.Size = new Size(179, 26);
             carritoToolStripMenuItem.Text = "Lista Compra";
             // 
             // facturarToolStripMenuItem
             // 
             facturarToolStripMenuItem.Name = "facturarToolStripMenuItem";
-            facturarToolStripMenuItem.Size = new Size(144, 22);
+            facturarToolStripMenuItem.Size = new Size(179, 26);
             facturarToolStripMenuItem.Text = "Facturar";
             // 
             // despacharToolStripMenuItem
             // 
             despacharToolStripMenuItem.Name = "despacharToolStripMenuItem";
-            despacharToolStripMenuItem.Size = new Size(144, 22);
+            despacharToolStripMenuItem.Size = new Size(179, 26);
             despacharToolStripMenuItem.Text = "Despachar";
             // 
             // comprasToolStripMenuItem
             // 
             comprasToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { solicitudToolStripMenuItem, ordenCompraToolStripMenuItem, recepcionToolStripMenuItem });
             comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
-            comprasToolStripMenuItem.Size = new Size(67, 20);
+            comprasToolStripMenuItem.Size = new Size(82, 24);
             comprasToolStripMenuItem.Text = "Compras";
             // 
             // solicitudToolStripMenuItem
             // 
             solicitudToolStripMenuItem.Name = "solicitudToolStripMenuItem";
-            solicitudToolStripMenuItem.Size = new Size(153, 22);
+            solicitudToolStripMenuItem.Size = new Size(190, 26);
             solicitudToolStripMenuItem.Text = "Solicitud";
             // 
             // ordenCompraToolStripMenuItem
             // 
             ordenCompraToolStripMenuItem.Name = "ordenCompraToolStripMenuItem";
-            ordenCompraToolStripMenuItem.Size = new Size(153, 22);
+            ordenCompraToolStripMenuItem.Size = new Size(190, 26);
             ordenCompraToolStripMenuItem.Text = "Orden Compra";
             // 
             // recepcionToolStripMenuItem
             // 
             recepcionToolStripMenuItem.Name = "recepcionToolStripMenuItem";
-            recepcionToolStripMenuItem.Size = new Size(153, 22);
+            recepcionToolStripMenuItem.Size = new Size(190, 26);
             recepcionToolStripMenuItem.Text = "Recepcion";
             // 
             // reportesToolStripMenuItem
             // 
             reportesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { reporteVentasToolStripMenuItem, reporteComprasToolStripMenuItem });
             reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
-            reportesToolStripMenuItem.Size = new Size(65, 20);
+            reportesToolStripMenuItem.Size = new Size(82, 24);
             reportesToolStripMenuItem.Text = "Reportes";
             // 
             // reporteVentasToolStripMenuItem
             // 
             reporteVentasToolStripMenuItem.Name = "reporteVentasToolStripMenuItem";
-            reporteVentasToolStripMenuItem.Size = new Size(166, 22);
+            reporteVentasToolStripMenuItem.Size = new Size(208, 26);
             reporteVentasToolStripMenuItem.Text = "Reporte Ventas";
             // 
             // reporteComprasToolStripMenuItem
             // 
             reporteComprasToolStripMenuItem.Name = "reporteComprasToolStripMenuItem";
-            reporteComprasToolStripMenuItem.Size = new Size(166, 22);
+            reporteComprasToolStripMenuItem.Size = new Size(208, 26);
             reporteComprasToolStripMenuItem.Text = "Reporte Compras";
             // 
             // ayudaToolStripMenuItem
             // 
             ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            ayudaToolStripMenuItem.Size = new Size(53, 20);
+            ayudaToolStripMenuItem.Size = new Size(65, 24);
             ayudaToolStripMenuItem.Text = "Ayuda";
             // 
             // Administracion_62_RS
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(menuStrip1);
             IsMdiContainer = true;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Administracion_62_RS";
             Text = "Administracion";
+            Load += Administracion_62_RS_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -264,8 +277,8 @@
         private ToolStripMenuItem comprasToolStripMenuItem;
         private ToolStripMenuItem reportesToolStripMenuItem;
         private ToolStripMenuItem ayudaToolStripMenuItem;
-        private ToolStripMenuItem backUpToolStripMenuItem;
-        private ToolStripMenuItem perfilesToolStripMenuItem;
+        private ToolStripMenuItem PerfilrestoolStripMenuItem;
+        private ToolStripMenuItem UsuariosToolStripMenuItem;
         private ToolStripMenuItem bitacoraToolStripMenuItem;
         private ToolStripMenuItem backUpToolStripMenuItem1;
         private ToolStripMenuItem restoreToolStripMenuItem;
