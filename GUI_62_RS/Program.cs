@@ -11,7 +11,7 @@ namespace GUI_62_RS
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new Administracion_62_RS());
         }
     }
 }
