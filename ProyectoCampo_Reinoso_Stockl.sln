@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37216.2 d17.14
+VisualStudioVersion = 17.14.37216.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI_62_RS", "GUI_62_RS\GUI_62_RS.csproj", "{55E89AD0-8EF1-4BB3-84FE-4C9B4847C9EA}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BE_62_RS", "BE_62_RS\BE_62_RS.csproj", "{57BB9E46-67D4-4897-A131-886048831C0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL_62_RS", "DAL_62_RS\DAL_62_RS.csproj", "{B6F80D4A-D3D4-441F-AEA6-B32867A4F71F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEG_62_RS", "SEG_62_RS\SEG_62_RS.csproj", "{53595802-3C3F-41BF-8CF8-00245FEB036A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B6F80D4A-D3D4-441F-AEA6-B32867A4F71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6F80D4A-D3D4-441F-AEA6-B32867A4F71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6F80D4A-D3D4-441F-AEA6-B32867A4F71F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53595802-3C3F-41BF-8CF8-00245FEB036A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53595802-3C3F-41BF-8CF8-00245FEB036A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53595802-3C3F-41BF-8CF8-00245FEB036A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53595802-3C3F-41BF-8CF8-00245FEB036A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
