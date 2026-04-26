@@ -16,6 +16,7 @@ namespace GUI_62_RS
         {
             InitializeComponent();
         }
+        BLL_62_RS.Usuario_62_RS BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
 
         private void Administracion_62_RS_Load(object sender, EventArgs e)
         {
@@ -71,7 +72,22 @@ namespace GUI_62_RS
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var confirmacion_62_RS = MessageBox.Show("¿Está seguro que desea salir?", "Cerrar Sesión",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            if (confirmacion_62_RS == DialogResult.Yes)
+            {
+                try
+                {
+                    BLLusuario_62_RS.logout_62_RS();
+
+                    Application.Restart();
+                }
+                catch (Exception ex_62_RS)
+                {
+                    MessageBox.Show(ex_62_RS.Message);
+                }
+            }
         }
 
     }

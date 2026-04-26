@@ -122,6 +122,7 @@
             DgvUsu_62_RS.RowHeadersWidth = 51;
             DgvUsu_62_RS.Size = new Size(453, 150);
             DgvUsu_62_RS.TabIndex = 6;
+            DgvUsu_62_RS.CellClick += DgvUsu_62_RS_CellClick;
             // 
             // BtnCrear_62_RS
             // 
@@ -141,6 +142,7 @@
             BtnDesbloquear_62_RS.TabIndex = 8;
             BtnDesbloquear_62_RS.Text = "Desbloquear";
             BtnDesbloquear_62_RS.UseVisualStyleBackColor = true;
+            BtnDesbloquear_62_RS.Click += BtnDesbloquear_62_RS_Click;
             // 
             // BtnModificar_62_RS
             // 
@@ -160,6 +162,7 @@
             BtnActivar_62_RS.TabIndex = 10;
             BtnActivar_62_RS.Text = "Act. / Desact.";
             BtnActivar_62_RS.UseVisualStyleBackColor = true;
+            BtnActivar_62_RS.Click += BtnActivar_62_RS_Click;
             // 
             // BtnAplicar_62_RS
             // 

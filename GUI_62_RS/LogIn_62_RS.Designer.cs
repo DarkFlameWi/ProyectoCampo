@@ -48,6 +48,7 @@
             // 
             TxtContra_62_RS.Location = new Point(84, 96);
             TxtContra_62_RS.Name = "TxtContra_62_RS";
+            TxtContra_62_RS.PasswordChar = '*';
             TxtContra_62_RS.Size = new Size(130, 23);
             TxtContra_62_RS.TabIndex = 1;
             // 
@@ -59,6 +60,7 @@
             BtnIniciarSesion_62_RS.TabIndex = 2;
             BtnIniciarSesion_62_RS.Text = "Iniciar Sesion";
             BtnIniciarSesion_62_RS.UseVisualStyleBackColor = true;
+            BtnIniciarSesion_62_RS.Click += BtnIniciarSesion_62_RS_Click;
             // 
             // LblUsuario_62_RS
             // 

@@ -1,43 +1,65 @@
-﻿using System;
+﻿using BE_62_RS;
+using DAL_62_RS;
+using SEG_62_RS;
+using SEG_62_RS.Singleton;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BE_62_RS;
-using SEG_62_RS.Singleton;
-using SEG_62_RS;
-using DAL_62_RS;
 namespace BLL_62_RS
 {
     public class Usuario_62_RS
     {
-        BE_62_RS.Usuario_62_RS usuario_62_RS;
-        DAL_62_RS.Usuario_62_RS usuarioDAL_62_RS;
-
-        public string login_62_RS(string usu_62_RS, string password_62_RS)
+        BE_62_RS.Usuario_62_RS usuario_62_RS = new BE_62_RS.Usuario_62_RS();
+        DAL_62_RS.Usuario_62_RS usuarioDAL_62_RS = new DAL_62_RS.Usuario_62_RS();
+        private int intentosFallidos_62_RS = 0;
+        public string Login_62_RS(string txtUser_62_RS, string txtPass_62_RS)
         {
-            if (SingletonSession_62_RS.Instancia_62_RS.EstaAutenticado_62_RS())
+            try
             {
-                throw new Exception("Ya hay una sesión activa.");
-            }
-            else
-            {
-                //  SingletonSession_62_RS.Instancia_62_RS.IniciarSesion_62_RS(usu_62_RS); traer encriptado de la BD
-                return "Inicio de sesión exitoso.";
+                // 1. Encriptar y Validar
+                string passHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(txtPass_62_RS);
+                BE_62_RS.Usuario_62_RS usuario_62_RS = usuarioDAL_62_RS.ValidarAcceso_62_RS(txtUser_62_RS, passHasheada_62_RS);
 
+                if (usuario_62_RS == null)
+                {
+                    intentosFallidos_62_RS++;
+                    if (intentosFallidos_62_RS >= 3)
+                    {
+                        BloquearUsuarioPorNombre_62_RS(txtUser_62_RS);
+                        throw new Exception("Has superado los 3 intentos. El usuario ha sido bloqueado por seguridad.");
+                    }
+                    throw new Exception($"Credenciales incorrectas. Intento {intentosFallidos_62_RS} de 3.");
+                }
+                if (!usuario_62_RS.Activo_62_RS) throw new Exception("Cuenta desactivada.");
+                if (usuario_62_RS.Estado_62_RS) throw new Exception("Cuenta bloqueada.");
+                intentosFallidos_62_RS = 0;
+                SingletonSession_62_RS.Instancia_62_RS.IniciarSesion_62_RS(usuario_62_RS);
+                return "¡Bienvenido/a!";
             }
+            catch (Exception ex_62_RS) { throw ex_62_RS; }
         }
-
         public void logout_62_RS()
         {
             if (!SingletonSession_62_RS.Instancia_62_RS.EstaAutenticado_62_RS())
+
             {
                 throw new Exception("No hay una sesión activa.");
             }
+
             else
+
             {
                 SingletonSession_62_RS.Instancia_62_RS.CerrarSesion_62_RS();
             }
+        }
+
+        private void BloquearUsuarioPorNombre_62_RS(string nombreUsuario_62_RS)
+        {
+            // En la DAL deberías tener un método que reciba el nombre y ponga estado_62_RS = 1 (true)
+            usuarioDAL_62_RS.BloquearUsuario_62_RS(nombreUsuario_62_RS);
         }
 
         public int AltaUsuario_62_RS(BE_62_RS.Usuario_62_RS user_62_RS)
@@ -55,6 +77,51 @@ namespace BLL_62_RS
             {
                 throw new Exception("Error al dar de alta el usuario: " + ex.Message);
             }
+        }
+
+        public DataTable ListarUsuario_62_RS()
+        {
+            try
+            {
+                DataTable dt_62_RS = usuarioDAL_62_RS.ListarUsuarios_62_RS();
+
+                if (dt_62_RS == null || dt_62_RS.Rows.Count == 0)
+                {
+                }
+                return dt_62_RS;
+            }
+            catch (Exception ex_62_RS)
+            {
+                throw new Exception("Error al procesar la lista de usuarios: " + ex_62_RS.Message);
+            }
+        }
+
+        public void ModificarUsuario_62_RS(BE_62_RS.Usuario_62_RS user_62_RS)
+        {
+            try
+            {
+                user_62_RS.UsU_62_RS = user_62_RS.Nombre_62_RS + user_62_RS.Apellido_62_RS;
+
+                if (usuarioDAL_62_RS.ModificarDatos_62_RS(user_62_RS) == 0)
+                {
+                    throw new Exception("No se encontró el registro para modificar.");
+                }
+            }
+            catch (Exception ex_62_RS)
+            {
+                throw new Exception("Lógica de Negocio: " + ex_62_RS.Message);
+            }
+        }
+
+        public void DesbloquearUsuario_62_RS(int id_62_RS)
+        {
+            usuarioDAL_62_RS.ModificarEstado_62_RS(id_62_RS, "estado_62_RS", 0);
+        }
+
+        public void AlternarActivo_62_RS(int id_62_RS, int valorActual_62_RS)
+        {
+            int nuevoVal_62_RS = (valorActual_62_RS == 1) ? 0 : 1;
+            usuarioDAL_62_RS.ModificarEstado_62_RS(id_62_RS, "Activo_62_RS", nuevoVal_62_RS);
         }
     }
 }

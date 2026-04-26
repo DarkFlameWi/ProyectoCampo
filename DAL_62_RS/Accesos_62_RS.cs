@@ -17,10 +17,7 @@ namespace DAL_62_RS
         public void abrir()
         {
             //PC HORACIO
-            Conexion.ConnectionString = "Data Source=DESKTOP-B0G8N2S;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
-
-            //NOTEBOOK HORACIO
-            //Conexion.ConnectionString = "Data Souorce=HORACIO\\horac;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True";
+            Conexion.ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
             try
             {
                 Conexion.Open();
@@ -126,6 +123,38 @@ namespace DAL_62_RS
             {
                 transaccion_62_RS.Rollback();
                 throw new Exception("Error al ejecutar la consulta: " + ex.Message);
+            }
+            finally
+            {
+                cerrar();
+            }
+        }
+        public DataTable LeerText_62_RS(string consulta_62_RS, SqlParameter[] parametros_62_RS = null)
+        {
+            DataTable tabla_62_RS = new DataTable();
+            abrir();
+
+            try
+            {
+                using (SqlCommand cmd_62_RS = new SqlCommand(consulta_62_RS, Conexion))
+                {
+                    cmd_62_RS.CommandType = CommandType.Text;
+
+                    if (parametros_62_RS != null)
+                    {
+                        cmd_62_RS.Parameters.AddRange(parametros_62_RS);
+                    }
+
+                    using (SqlDataAdapter adaptador_62_RS = new SqlDataAdapter(cmd_62_RS))
+                    {
+                        adaptador_62_RS.Fill(tabla_62_RS);
+                    }
+                }
+                return tabla_62_RS;
+            }
+            catch (SqlException ex_62_RS)
+            {
+                throw new Exception("Error en la lectura de datos (SQL): " + ex_62_RS.Message);
             }
             finally
             {
