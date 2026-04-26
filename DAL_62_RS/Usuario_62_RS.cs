@@ -88,7 +88,6 @@ namespace DAL_62_RS
             try
             {
                 string query_62_RS = "SELECT idusuario_62_RS, IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, dni_62_RS, usu_62_RS, estado_62_RS, Activo_62_RS FROM Usuarios_62_RS";
-                // Asumiendo que tu clase Accesos tiene un método Leer que devuelve DataTable
                 return accesos_62_RS.LeerText_62_RS(query_62_RS);
             }
             catch (SqlException ex_62_RS)

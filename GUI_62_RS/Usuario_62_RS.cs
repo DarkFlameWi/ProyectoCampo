@@ -47,6 +47,7 @@ namespace GUI_62_RS
             try
             {
                 DataTable dt_62_RS = BLLusuario_62_RS.ListarUsuario_62_RS();
+                LblCantUsu_62_RS.Text =  dt_62_RS.Rows.Count.ToString();
                 DgvUsu_62_RS.DataSource = dt_62_RS;
                 if (DgvUsu_62_RS.Columns.Count > 0)
                 {
@@ -79,7 +80,7 @@ namespace GUI_62_RS
                 if (DgvUsu_62_RS.Columns.Contains("idusuario_62_RS"))
                     DgvUsu_62_RS.Columns["idusuario_62_RS"].Visible = false;
 
-                idSeleccionado_62_RS = 0; // Reseteamos la selección tras actualizar
+                idSeleccionado_62_RS = 0;
             }
             catch (Exception ex_62_RS)
             {
@@ -166,6 +167,7 @@ namespace GUI_62_RS
                     TxtNombre_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["nombre_62_RS"].Value.ToString();
                     TxtApellido_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["apellido_62_RS"].Value.ToString();
                     TxtEmail_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["email_62_RS"].Value.ToString();
+                    txtDni_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["dni_62_RS"].Value.ToString();
                 }
             }
             catch (Exception ex_62_RS)
@@ -200,7 +202,6 @@ namespace GUI_62_RS
             {
                 if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
 
-                // Obtenemos el valor actual directamente de la fila seleccionada en la grilla
                 int actual_62_RS = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["Activo_62_RS"].Value);
 
                 BLLusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);

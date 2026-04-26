@@ -19,7 +19,6 @@ namespace BLL_62_RS
         {
             try
             {
-                // 1. Encriptar y Validar
                 string passHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(txtPass_62_RS);
                 BE_62_RS.Usuario_62_RS usuario_62_RS = usuarioDAL_62_RS.ValidarAcceso_62_RS(txtUser_62_RS, passHasheada_62_RS);
 
@@ -58,7 +57,6 @@ namespace BLL_62_RS
 
         private void BloquearUsuarioPorNombre_62_RS(string nombreUsuario_62_RS)
         {
-            // En la DAL deberías tener un método que reciba el nombre y ponga estado_62_RS = 1 (true)
             usuarioDAL_62_RS.BloquearUsuario_62_RS(nombreUsuario_62_RS);
         }
 
