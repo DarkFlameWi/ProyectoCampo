@@ -60,15 +60,25 @@
             LblActivo_62_RS = new Label();
             txtDni_62_RS = new TextBox();
             TxtMensaje_62_RS = new TextBox();
+            panel1 = new Panel();
+            panel4 = new Panel();
+            panel3 = new Panel();
+            panel2 = new Panel();
+            panel5 = new Panel();
             ((System.ComponentModel.ISupportInitialize)DgvUsu_62_RS).BeginInit();
             GroupBox.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
+            panel4.SuspendLayout();
+            panel3.SuspendLayout();
+            panel2.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // RbActivo_62_RS
             // 
             RbActivo_62_RS.AutoSize = true;
-            RbActivo_62_RS.Location = new Point(144, 32);
+            RbActivo_62_RS.Location = new Point(134, 11);
             RbActivo_62_RS.Margin = new Padding(3, 4, 3, 4);
             RbActivo_62_RS.Name = "RbActivo_62_RS";
             RbActivo_62_RS.Size = new Size(89, 24);
@@ -80,7 +90,7 @@
             // RbTodo_62_RS
             // 
             RbTodo_62_RS.AutoSize = true;
-            RbTodo_62_RS.Location = new Point(272, 32);
+            RbTodo_62_RS.Location = new Point(262, 11);
             RbTodo_62_RS.Margin = new Padding(3, 4, 3, 4);
             RbTodo_62_RS.Name = "RbTodo_62_RS";
             RbTodo_62_RS.Size = new Size(78, 24);
@@ -92,7 +102,7 @@
             // LblUsuario_62_RS
             // 
             LblUsuario_62_RS.AutoSize = true;
-            LblUsuario_62_RS.Location = new Point(26, 35);
+            LblUsuario_62_RS.Location = new Point(16, 14);
             LblUsuario_62_RS.Name = "LblUsuario_62_RS";
             LblUsuario_62_RS.Size = new Size(79, 20);
             LblUsuario_62_RS.TabIndex = 3;
@@ -101,7 +111,7 @@
             // LblNumUsu_62_RS
             // 
             LblNumUsu_62_RS.AutoSize = true;
-            LblNumUsu_62_RS.Location = new Point(363, 35);
+            LblNumUsu_62_RS.Location = new Point(3, 13);
             LblNumUsu_62_RS.Name = "LblNumUsu_62_RS";
             LblNumUsu_62_RS.Size = new Size(147, 20);
             LblNumUsu_62_RS.TabIndex = 4;
@@ -110,7 +120,7 @@
             // LblCantUsu_62_RS
             // 
             LblCantUsu_62_RS.AutoSize = true;
-            LblCantUsu_62_RS.Location = new Point(501, 37);
+            LblCantUsu_62_RS.Location = new Point(146, 14);
             LblCantUsu_62_RS.Name = "LblCantUsu_62_RS";
             LblCantUsu_62_RS.Size = new Size(50, 20);
             LblCantUsu_62_RS.TabIndex = 5;
@@ -119,17 +129,18 @@
             // DgvUsu_62_RS
             // 
             DgvUsu_62_RS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DgvUsu_62_RS.Location = new Point(26, 96);
+            DgvUsu_62_RS.Dock = DockStyle.Fill;
+            DgvUsu_62_RS.Location = new Point(0, 0);
             DgvUsu_62_RS.Margin = new Padding(3, 4, 3, 4);
             DgvUsu_62_RS.Name = "DgvUsu_62_RS";
             DgvUsu_62_RS.RowHeadersWidth = 51;
-            DgvUsu_62_RS.Size = new Size(518, 200);
+            DgvUsu_62_RS.Size = new Size(592, 221);
             DgvUsu_62_RS.TabIndex = 6;
             DgvUsu_62_RS.CellClick += DgvUsu_62_RS_CellClick;
             // 
             // BtnCrear_62_RS
             // 
-            BtnCrear_62_RS.Location = new Point(573, 33);
+            BtnCrear_62_RS.Location = new Point(15, 18);
             BtnCrear_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnCrear_62_RS.Name = "BtnCrear_62_RS";
             BtnCrear_62_RS.Size = new Size(138, 80);
@@ -140,7 +151,7 @@
             // 
             // BtnDesbloquear_62_RS
             // 
-            BtnDesbloquear_62_RS.Location = new Point(573, 121);
+            BtnDesbloquear_62_RS.Location = new Point(15, 106);
             BtnDesbloquear_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnDesbloquear_62_RS.Name = "BtnDesbloquear_62_RS";
             BtnDesbloquear_62_RS.Size = new Size(138, 96);
@@ -151,7 +162,7 @@
             // 
             // BtnModificar_62_RS
             // 
-            BtnModificar_62_RS.Location = new Point(573, 225);
+            BtnModificar_62_RS.Location = new Point(15, 210);
             BtnModificar_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnModificar_62_RS.Name = "BtnModificar_62_RS";
             BtnModificar_62_RS.Size = new Size(138, 89);
@@ -162,7 +173,7 @@
             // 
             // BtnActivar_62_RS
             // 
-            BtnActivar_62_RS.Location = new Point(573, 323);
+            BtnActivar_62_RS.Location = new Point(15, 308);
             BtnActivar_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnActivar_62_RS.Name = "BtnActivar_62_RS";
             BtnActivar_62_RS.Size = new Size(138, 89);
@@ -173,7 +184,7 @@
             // 
             // BtnAplicar_62_RS
             // 
-            BtnAplicar_62_RS.Location = new Point(573, 420);
+            BtnAplicar_62_RS.Location = new Point(15, 405);
             BtnAplicar_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnAplicar_62_RS.Name = "BtnAplicar_62_RS";
             BtnAplicar_62_RS.Size = new Size(138, 88);
@@ -183,7 +194,7 @@
             // 
             // BtnCancelar_62_RS
             // 
-            BtnCancelar_62_RS.Location = new Point(573, 516);
+            BtnCancelar_62_RS.Location = new Point(15, 501);
             BtnCancelar_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnCancelar_62_RS.Name = "BtnCancelar_62_RS";
             BtnCancelar_62_RS.Size = new Size(138, 81);
@@ -193,7 +204,7 @@
             // 
             // BtnSalir_62_RS
             // 
-            BtnSalir_62_RS.Location = new Point(573, 604);
+            BtnSalir_62_RS.Location = new Point(15, 589);
             BtnSalir_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnSalir_62_RS.Name = "BtnSalir_62_RS";
             BtnSalir_62_RS.Size = new Size(138, 67);
@@ -204,7 +215,7 @@
             // GroupBox
             // 
             GroupBox.Controls.Add(tableLayoutPanel1);
-            GroupBox.Location = new Point(26, 304);
+            GroupBox.Location = new Point(13, 279);
             GroupBox.Margin = new Padding(3, 4, 3, 4);
             GroupBox.Name = "GroupBox";
             GroupBox.Padding = new Padding(3, 4, 3, 4);
@@ -388,33 +399,78 @@
             // 
             // TxtMensaje_62_RS
             // 
-            TxtMensaje_62_RS.Location = new Point(363, 323);
+            TxtMensaje_62_RS.Location = new Point(350, 298);
             TxtMensaje_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtMensaje_62_RS.Multiline = true;
             TxtMensaje_62_RS.Name = "TxtMensaje_62_RS";
             TxtMensaje_62_RS.Size = new Size(180, 223);
             TxtMensaje_62_RS.TabIndex = 15;
             // 
+            // panel1
+            // 
+            panel1.Controls.Add(panel4);
+            panel1.Controls.Add(panel3);
+            panel1.Controls.Add(TxtMensaje_62_RS);
+            panel1.Controls.Add(GroupBox);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(592, 683);
+            panel1.TabIndex = 16;
+            // 
+            // panel4
+            // 
+            panel4.Controls.Add(DgvUsu_62_RS);
+            panel4.Dock = DockStyle.Top;
+            panel4.Location = new Point(0, 52);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(592, 221);
+            panel4.TabIndex = 17;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(panel5);
+            panel3.Controls.Add(LblUsuario_62_RS);
+            panel3.Controls.Add(RbActivo_62_RS);
+            panel3.Controls.Add(RbTodo_62_RS);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(592, 52);
+            panel3.TabIndex = 16;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(BtnCrear_62_RS);
+            panel2.Controls.Add(BtnDesbloquear_62_RS);
+            panel2.Controls.Add(BtnSalir_62_RS);
+            panel2.Controls.Add(BtnModificar_62_RS);
+            panel2.Controls.Add(BtnCancelar_62_RS);
+            panel2.Controls.Add(BtnActivar_62_RS);
+            panel2.Controls.Add(BtnAplicar_62_RS);
+            panel2.Dock = DockStyle.Right;
+            panel2.Location = new Point(592, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(167, 683);
+            panel2.TabIndex = 17;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(LblNumUsu_62_RS);
+            panel5.Controls.Add(LblCantUsu_62_RS);
+            panel5.Dock = DockStyle.Right;
+            panel5.Location = new Point(389, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(203, 52);
+            panel5.TabIndex = 6;
+            // 
             // Usuario_62_RS
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(717, 683);
-            Controls.Add(TxtMensaje_62_RS);
-            Controls.Add(GroupBox);
-            Controls.Add(BtnSalir_62_RS);
-            Controls.Add(BtnCancelar_62_RS);
-            Controls.Add(BtnAplicar_62_RS);
-            Controls.Add(BtnActivar_62_RS);
-            Controls.Add(BtnModificar_62_RS);
-            Controls.Add(BtnDesbloquear_62_RS);
-            Controls.Add(BtnCrear_62_RS);
-            Controls.Add(DgvUsu_62_RS);
-            Controls.Add(LblCantUsu_62_RS);
-            Controls.Add(LblNumUsu_62_RS);
-            Controls.Add(LblUsuario_62_RS);
-            Controls.Add(RbTodo_62_RS);
-            Controls.Add(RbActivo_62_RS);
+            ClientSize = new Size(759, 683);
+            Controls.Add(panel1);
+            Controls.Add(panel2);
             Margin = new Padding(3, 4, 3, 4);
             Name = "Usuario_62_RS";
             Text = "Usuario";
@@ -422,8 +478,15 @@
             GroupBox.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -460,5 +523,10 @@
         private TextBox TxtApellido_62_RS;
         private TextBox txtDni_62_RS;
         private TextBox TxtMensaje_62_RS;
+        private Panel panel1;
+        private Panel panel4;
+        private Panel panel3;
+        private Panel panel2;
+        private Panel panel5;
     }
 }

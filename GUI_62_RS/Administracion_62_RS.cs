@@ -98,5 +98,13 @@ namespace GUI_62_RS
             }
         }
 
+        private void logInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LogIn_62_RS login = new LogIn_62_RS();
+            login.MdiParent = this;
+            login.Show();
+
+            //Lanza bienvenido, arreglar Singleton
+        }
     }
 }
