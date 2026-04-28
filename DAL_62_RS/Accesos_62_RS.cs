@@ -22,7 +22,7 @@ namespace DAL_62_RS
             //PC HORACIO
             //Conexion.ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
             //PC HANS
-           // Conexion.ConnectionString = @"Data Source=DESKTOP-RG128MN;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
+            //Conexion.ConnectionString = @"Data Source=DESKTOP-RG128MN;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
 
             try
             {

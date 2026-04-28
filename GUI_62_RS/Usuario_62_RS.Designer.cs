@@ -63,16 +63,22 @@
             panel1 = new Panel();
             panel4 = new Panel();
             panel3 = new Panel();
-            panel2 = new Panel();
             panel5 = new Panel();
+            panel2 = new Panel();
+            panel6 = new Panel();
+            panel7 = new Panel();
+            panel8 = new Panel();
+            panel9 = new Panel();
             ((System.ComponentModel.ISupportInitialize)DgvUsu_62_RS).BeginInit();
             GroupBox.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
-            panel2.SuspendLayout();
             panel5.SuspendLayout();
+            panel2.SuspendLayout();
+            panel6.SuspendLayout();
+            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // RbActivo_62_RS
@@ -134,7 +140,7 @@
             DgvUsu_62_RS.Margin = new Padding(3, 4, 3, 4);
             DgvUsu_62_RS.Name = "DgvUsu_62_RS";
             DgvUsu_62_RS.RowHeadersWidth = 51;
-            DgvUsu_62_RS.Size = new Size(592, 221);
+            DgvUsu_62_RS.Size = new Size(603, 221);
             DgvUsu_62_RS.TabIndex = 6;
             DgvUsu_62_RS.CellClick += DgvUsu_62_RS_CellClick;
             // 
@@ -215,11 +221,11 @@
             // GroupBox
             // 
             GroupBox.Controls.Add(tableLayoutPanel1);
-            GroupBox.Location = new Point(13, 279);
+            GroupBox.Location = new Point(16, 8);
             GroupBox.Margin = new Padding(3, 4, 3, 4);
             GroupBox.Name = "GroupBox";
             GroupBox.Padding = new Padding(3, 4, 3, 4);
-            GroupBox.Size = new Size(317, 348);
+            GroupBox.Size = new Size(317, 389);
             GroupBox.TabIndex = 14;
             GroupBox.TabStop = false;
             GroupBox.Text = "DATOS:";
@@ -399,23 +405,24 @@
             // 
             // TxtMensaje_62_RS
             // 
-            TxtMensaje_62_RS.Location = new Point(350, 298);
+            TxtMensaje_62_RS.Dock = DockStyle.Fill;
+            TxtMensaje_62_RS.Location = new Point(0, 26);
             TxtMensaje_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtMensaje_62_RS.Multiline = true;
             TxtMensaje_62_RS.Name = "TxtMensaje_62_RS";
-            TxtMensaje_62_RS.Size = new Size(180, 223);
+            TxtMensaje_62_RS.Size = new Size(255, 356);
             TxtMensaje_62_RS.TabIndex = 15;
             // 
             // panel1
             // 
+            panel1.Controls.Add(panel6);
+            panel1.Controls.Add(panel7);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(panel3);
-            panel1.Controls.Add(TxtMensaje_62_RS);
-            panel1.Controls.Add(GroupBox);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(592, 683);
+            panel1.Size = new Size(603, 683);
             panel1.TabIndex = 16;
             // 
             // panel4
@@ -424,7 +431,7 @@
             panel4.Dock = DockStyle.Top;
             panel4.Location = new Point(0, 52);
             panel4.Name = "panel4";
-            panel4.Size = new Size(592, 221);
+            panel4.Size = new Size(603, 221);
             panel4.TabIndex = 17;
             // 
             // panel3
@@ -436,8 +443,18 @@
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(592, 52);
+            panel3.Size = new Size(603, 52);
             panel3.TabIndex = 16;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(LblNumUsu_62_RS);
+            panel5.Controls.Add(LblCantUsu_62_RS);
+            panel5.Dock = DockStyle.Right;
+            panel5.Location = new Point(400, 0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(203, 52);
+            panel5.TabIndex = 6;
             // 
             // panel2
             // 
@@ -449,26 +466,52 @@
             panel2.Controls.Add(BtnActivar_62_RS);
             panel2.Controls.Add(BtnAplicar_62_RS);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(592, 0);
+            panel2.Location = new Point(603, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(167, 683);
             panel2.TabIndex = 17;
             // 
-            // panel5
+            // panel6
             // 
-            panel5.Controls.Add(LblNumUsu_62_RS);
-            panel5.Controls.Add(LblCantUsu_62_RS);
-            panel5.Dock = DockStyle.Right;
-            panel5.Location = new Point(389, 0);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(203, 52);
-            panel5.TabIndex = 6;
+            panel6.Controls.Add(TxtMensaje_62_RS);
+            panel6.Controls.Add(panel9);
+            panel6.Controls.Add(panel8);
+            panel6.Dock = DockStyle.Fill;
+            panel6.Location = new Point(348, 273);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(255, 410);
+            panel6.TabIndex = 18;
+            // 
+            // panel7
+            // 
+            panel7.Controls.Add(GroupBox);
+            panel7.Dock = DockStyle.Left;
+            panel7.Location = new Point(0, 273);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(348, 410);
+            panel7.TabIndex = 19;
+            // 
+            // panel8
+            // 
+            panel8.Dock = DockStyle.Top;
+            panel8.Location = new Point(0, 0);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(255, 26);
+            panel8.TabIndex = 16;
+            // 
+            // panel9
+            // 
+            panel9.Dock = DockStyle.Bottom;
+            panel9.Location = new Point(0, 382);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(255, 28);
+            panel9.TabIndex = 17;
             // 
             // Usuario_62_RS
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(759, 683);
+            ClientSize = new Size(770, 683);
             Controls.Add(panel1);
             Controls.Add(panel2);
             Margin = new Padding(3, 4, 3, 4);
@@ -479,13 +522,15 @@
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            panel2.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
+            panel7.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -528,5 +573,9 @@
         private Panel panel3;
         private Panel panel2;
         private Panel panel5;
+        private Panel panel6;
+        private Panel panel9;
+        private Panel panel8;
+        private Panel panel7;
     }
 }
