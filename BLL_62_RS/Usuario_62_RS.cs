@@ -21,7 +21,10 @@ namespace BLL_62_RS
             {
                 string passHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(txtPass_62_RS);
                 BE_62_RS.Usuario_62_RS usuario_62_RS = usuarioDAL_62_RS.ValidarAcceso_62_RS(txtUser_62_RS, passHasheada_62_RS);
-
+                if (SingletonSession_62_RS.Instancia_62_RS.EstaAutenticado_62_RS())
+                {
+                    throw new Exception("Ya existe una sesión activa. Debe cerrar la sesión actual para iniciar una nueva.");
+                }
                 if (usuario_62_RS == null)
                 {
                     intentosFallidos_62_RS++;
@@ -120,6 +123,32 @@ namespace BLL_62_RS
         {
             int nuevoVal_62_RS = (valorActual_62_RS == 1) ? 0 : 1;
             usuarioDAL_62_RS.ModificarEstado_62_RS(id_62_RS, "Activo_62_RS", nuevoVal_62_RS);
+        }
+
+        public int ActualizarClave_62_RS(string valorActual_62_RS, string ValorNuevo_62_RS, string ValorRepetido_62_RS)
+        {
+            if (string.IsNullOrEmpty(valorActual_62_RS) || string.IsNullOrEmpty(ValorNuevo_62_RS) || string.IsNullOrEmpty(ValorRepetido_62_RS))
+                throw new Exception("Todos los campos son obligatorios.");
+
+            var usu_62_RS = SEG_62_RS.Singleton.SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+            string Actual_62_Rs = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(valorActual_62_RS);
+            if (Actual_62_Rs != usu_62_RS.password_62_RS)
+                throw new Exception("La clave actual es incorrecta.");
+            if (ValorNuevo_62_RS != ValorRepetido_62_RS)
+                throw new Exception("La nueva clave y su repetición no coinciden.");
+            if (valorActual_62_RS == ValorNuevo_62_RS)
+                throw new Exception("La nueva clave no puede ser igual a la actual.");
+            string nuevaHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(ValorNuevo_62_RS);
+            int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(usu_62_RS.usu_62_RS, nuevaHasheada_62_RS);
+            if (filasAfectadas > 0)
+            {
+                usu_62_RS.password_62_RS = nuevaHasheada_62_RS;
+            }
+            else
+            {
+                throw new Exception("No se pudo actualizar la clave en la base de datos.");
+            }
+            return filasAfectadas;
         }
     }
 }
