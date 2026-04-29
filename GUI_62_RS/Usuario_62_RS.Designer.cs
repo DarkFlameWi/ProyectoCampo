@@ -61,24 +61,24 @@
             txtDni_62_RS = new TextBox();
             TxtMensaje_62_RS = new TextBox();
             panel1 = new Panel();
+            panel6 = new Panel();
+            panel9 = new Panel();
+            panel8 = new Panel();
+            panel7 = new Panel();
             panel4 = new Panel();
             panel3 = new Panel();
             panel5 = new Panel();
             panel2 = new Panel();
-            panel6 = new Panel();
-            panel7 = new Panel();
-            panel8 = new Panel();
-            panel9 = new Panel();
             ((System.ComponentModel.ISupportInitialize)DgvUsu_62_RS).BeginInit();
             GroupBox.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
+            panel6.SuspendLayout();
+            panel7.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             panel5.SuspendLayout();
             panel2.SuspendLayout();
-            panel6.SuspendLayout();
-            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // RbActivo_62_RS
@@ -217,6 +217,7 @@
             BtnSalir_62_RS.TabIndex = 13;
             BtnSalir_62_RS.Text = "Salir";
             BtnSalir_62_RS.UseVisualStyleBackColor = true;
+            BtnSalir_62_RS.Click += BtnSalir_62_RS_Click;
             // 
             // GroupBox
             // 
@@ -425,6 +426,42 @@
             panel1.Size = new Size(603, 683);
             panel1.TabIndex = 16;
             // 
+            // panel6
+            // 
+            panel6.Controls.Add(TxtMensaje_62_RS);
+            panel6.Controls.Add(panel9);
+            panel6.Controls.Add(panel8);
+            panel6.Dock = DockStyle.Fill;
+            panel6.Location = new Point(348, 273);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(255, 410);
+            panel6.TabIndex = 18;
+            // 
+            // panel9
+            // 
+            panel9.Dock = DockStyle.Bottom;
+            panel9.Location = new Point(0, 382);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(255, 28);
+            panel9.TabIndex = 17;
+            // 
+            // panel8
+            // 
+            panel8.Dock = DockStyle.Top;
+            panel8.Location = new Point(0, 0);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(255, 26);
+            panel8.TabIndex = 16;
+            // 
+            // panel7
+            // 
+            panel7.Controls.Add(GroupBox);
+            panel7.Dock = DockStyle.Left;
+            panel7.Location = new Point(0, 273);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(348, 410);
+            panel7.TabIndex = 19;
+            // 
             // panel4
             // 
             panel4.Controls.Add(DgvUsu_62_RS);
@@ -471,42 +508,6 @@
             panel2.Size = new Size(167, 683);
             panel2.TabIndex = 17;
             // 
-            // panel6
-            // 
-            panel6.Controls.Add(TxtMensaje_62_RS);
-            panel6.Controls.Add(panel9);
-            panel6.Controls.Add(panel8);
-            panel6.Dock = DockStyle.Fill;
-            panel6.Location = new Point(348, 273);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(255, 410);
-            panel6.TabIndex = 18;
-            // 
-            // panel7
-            // 
-            panel7.Controls.Add(GroupBox);
-            panel7.Dock = DockStyle.Left;
-            panel7.Location = new Point(0, 273);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(348, 410);
-            panel7.TabIndex = 19;
-            // 
-            // panel8
-            // 
-            panel8.Dock = DockStyle.Top;
-            panel8.Location = new Point(0, 0);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(255, 26);
-            panel8.TabIndex = 16;
-            // 
-            // panel9
-            // 
-            panel9.Dock = DockStyle.Bottom;
-            panel9.Location = new Point(0, 382);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(255, 28);
-            panel9.TabIndex = 17;
-            // 
             // Usuario_62_RS
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -522,15 +523,15 @@
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             panel1.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
+            panel7.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
             panel2.ResumeLayout(false);
-            panel6.ResumeLayout(false);
-            panel6.PerformLayout();
-            panel7.ResumeLayout(false);
             ResumeLayout(false);
         }
 

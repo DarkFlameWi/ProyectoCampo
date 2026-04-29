@@ -1,6 +1,4 @@
 ﻿using BE_62_RS;
-using DAL_62_RS;
-using SEG_62_RS;
 using SEG_62_RS.Singleton;
 using System;
 using System.Collections.Generic;
@@ -8,7 +6,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace BLL_62_RS
+using DAL_62_RS;
+
+namespace SEG_62_RS
 {
     public class Usuario_62_RS
     {

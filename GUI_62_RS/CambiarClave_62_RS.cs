@@ -18,7 +18,7 @@ namespace GUI_62_RS
             InitializeComponent();
         }
 
-        BLL_62_RS.Usuario_62_RS BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
+        SEG_62_RS.Usuario_62_RS SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS();
         private void BtnCambiarContra_62_RS_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TxtContraNueva_62_RS.Text) || string.IsNullOrWhiteSpace(TxtRepContra_62_RS.Text)|| string.IsNullOrWhiteSpace(TxtContraActual_62_RS.Text))
@@ -33,7 +33,7 @@ namespace GUI_62_RS
             }
             try
             {
-                BLLusuario_62_RS.ActualizarClave_62_RS(TxtContraActual_62_RS.Text, TxtContraNueva_62_RS.Text, TxtRepContra_62_RS.Text);
+                SEGusuario_62_RS.ActualizarClave_62_RS(TxtContraActual_62_RS.Text, TxtContraNueva_62_RS.Text, TxtRepContra_62_RS.Text);
                 MessageBox.Show("Clave cambiada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }

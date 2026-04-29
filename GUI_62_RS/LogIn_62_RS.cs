@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SEG_62_RS;
 
 namespace GUI_62_RS
 {
@@ -16,7 +17,7 @@ namespace GUI_62_RS
         {
             InitializeComponent();
         }
-        BLL_62_RS.Usuario_62_RS bllUsuario_62_RS = new BLL_62_RS.Usuario_62_RS();
+        SEG_62_RS.Usuario_62_RS SEGUsuario_62_RS = new SEG_62_RS.Usuario_62_RS();
         BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
 
         private void BtnIniciarSesion_62_RS_Click(object sender, EventArgs e)
@@ -31,7 +32,7 @@ namespace GUI_62_RS
             try
             {
 
-                string mensaje_62_RS = bllUsuario_62_RS.Login_62_RS(TxtUsuario_62_RS.Text, TxtContra_62_RS.Text);
+                string mensaje_62_RS = SEGUsuario_62_RS.Login_62_RS(TxtUsuario_62_RS.Text, TxtContra_62_RS.Text);
 
                 MessageBox.Show(mensaje_62_RS, "Bienvenido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 

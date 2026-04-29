@@ -1,4 +1,5 @@
 ﻿using SEG_62_RS.Singleton;
+using SEG_62_RS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace GUI_62_RS
             TsslUsu_62_RS.Text = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
 
         }
-        BLL_62_RS.Usuario_62_RS BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
+        SEG_62_RS.Usuario_62_RS SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS();
         private void Administracion_62_RS_Load(object sender, EventArgs e)
         {
 
@@ -86,7 +87,7 @@ namespace GUI_62_RS
                 bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario, "Cierre de sesión", "Seguridad", "5");
                 try
                 {
-                    BLLusuario_62_RS.logout_62_RS();
+                    SEGusuario_62_RS.logout_62_RS();
 
                     Application.Restart();
                 }
