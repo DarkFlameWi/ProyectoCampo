@@ -11,7 +11,7 @@ namespace SEG_62_RS
     {
         public static string EncriptarMD5_62_RS(string input_62_RS)
         {
-            using (MD5 md5_62_RS = MD5.Create())
+            using (SHA256 md5_62_RS = SHA256.Create())
             {
                 byte[] inputBytes_62_RS = Encoding.ASCII.GetBytes(input_62_RS);
                 byte[] hashBytes_62_RS = md5_62_RS.ComputeHash(inputBytes_62_RS);
