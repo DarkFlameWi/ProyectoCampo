@@ -21,7 +21,7 @@ namespace GUI_62_RS
             TsslUsu_62_RS.Text = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
 
         }
-        SEG_62_RS.Usuario_62_RS SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS();
+        BLL_62_RS.Usuario_62_RS SEGusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
         private void Administracion_62_RS_Load(object sender, EventArgs e)
         {
 

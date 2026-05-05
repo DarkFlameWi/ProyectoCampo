@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BE_62_RS
+namespace SEG_62_RS
 {
     public interface Iusuario_62_RS
     {

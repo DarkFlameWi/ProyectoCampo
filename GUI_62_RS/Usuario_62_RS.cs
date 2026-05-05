@@ -16,15 +16,15 @@ namespace GUI_62_RS
 {
     public partial class Usuario_62_RS : Form
     {
-        BE_62_RS.Usuario_62_RS BEusuario_62_RS;
         SEG_62_RS.Usuario_62_RS SEGusuario_62_RS;
+        BLL_62_RS.Usuario_62_RS BLLusuario_62_RS;
         private int idSeleccionado_62_RS = 0;
         public Usuario_62_RS()
         {
             InitializeComponent();
 
-            BEusuario_62_RS = new BE_62_RS.Usuario_62_RS();
             SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS();
+            BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
 
             CargarDatosUsuarios_62_RS();
         }
@@ -46,7 +46,7 @@ namespace GUI_62_RS
         {
             try
             {
-                DataTable dt_62_RS = SEGusuario_62_RS.ListarUsuario_62_RS();
+                DataTable dt_62_RS = BLLusuario_62_RS.ListarUsuario_62_RS();
                 LblCantUsu_62_RS.Text = dt_62_RS.Rows.Count.ToString();
                 DgvUsu_62_RS.DataSource = dt_62_RS;
                 if (DgvUsu_62_RS.Columns.Count > 0)
@@ -76,7 +76,7 @@ namespace GUI_62_RS
         {
             try
             {
-                DgvUsu_62_RS.DataSource = SEGusuario_62_RS.ListarUsuario_62_RS();
+                DgvUsu_62_RS.DataSource = BLLusuario_62_RS.ListarUsuario_62_RS();
                 if (DgvUsu_62_RS.Columns.Contains("idusuario_62_RS"))
                     DgvUsu_62_RS.Columns["idusuario_62_RS"].Visible = false;
 
@@ -99,15 +99,15 @@ namespace GUI_62_RS
                     MessageBox.Show("Por favor, complete todos los campos obligatorios.");
                     return;
                 }
-                BEusuario_62_RS = new BE_62_RS.Usuario_62_RS
+                SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS
                 {
                     DNI_62_RS = txtDni_62_RS.Text,
                     Nombre_62_RS = TxtNombre_62_RS.Text,
                     Apellido_62_RS = TxtApellido_62_RS.Text,
                     Email_62_RS = TxtEmail_62_RS.Text
                 };
-                SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS();
-                SEGusuario_62_RS.AltaUsuario_62_RS(BEusuario_62_RS);
+                BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
+                BLLusuario_62_RS.AltaUsuario_62_RS(SEGusuario_62_RS);
                 MessageBox.Show("Usuario creado exitosamente.");
                 Limpiar();
             }
@@ -135,7 +135,7 @@ namespace GUI_62_RS
             }
             try
             {
-                var objUser_62_RS = new BE_62_RS.Usuario_62_RS
+                var objUser_62_RS = new SEG_62_RS.Usuario_62_RS
                 {
                     IdUsuario_62_RS = idSeleccionado_62_RS,
                     Nombre_62_RS = TxtNombre_62_RS.Text,
@@ -143,7 +143,7 @@ namespace GUI_62_RS
                     Email_62_RS = TxtEmail_62_RS.Text
                 };
 
-                SEGusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
+                BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
                 MessageBox.Show("Usuario actualizado con éxito.", "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex_62_RS)
@@ -183,7 +183,7 @@ namespace GUI_62_RS
             {
                 if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
 
-                SEGusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS);
+                BLLusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS);
                 MessageBox.Show("El usuario ha sido desbloqueado.", "Éxito");
             }
             catch (Exception ex_62_RS)
@@ -204,7 +204,7 @@ namespace GUI_62_RS
 
                 int actual_62_RS = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["Activo_62_RS"].Value);
 
-                SEGusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);
+                BLLusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);
                 MessageBox.Show("Estado de actividad modificado.");
             }
             catch (Exception ex_62_RS)

@@ -17,7 +17,7 @@ namespace GUI_62_RS
         {
             InitializeComponent();
         }
-        SEG_62_RS.Usuario_62_RS SEGUsuario_62_RS = new SEG_62_RS.Usuario_62_RS();
+        BLL_62_RS.Usuario_62_RS SEGUsuario_62_RS = new BLL_62_RS.Usuario_62_RS();
         BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
 
         private void BtnIniciarSesion_62_RS_Click(object sender, EventArgs e)
