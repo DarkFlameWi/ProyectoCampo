@@ -9,7 +9,7 @@ namespace SEG_62_RS
 {
     public class Encriptacion_62_RS
     {
-        public static string EncriptarMD5_62_RS(string input_62_RS)
+        public static string EncriptarSHA256_62_RS(string input_62_RS)
         {
             using (SHA256 md5_62_RS = SHA256.Create())
             {

@@ -20,7 +20,7 @@ namespace BLL_62_RS
         {
             try
             {
-                string passHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(txtPass_62_RS);
+                string passHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(txtPass_62_RS);
                 SEG_62_RS.Usuario_62_RS usuario_62_RS = usuarioDAL_62_RS.ValidarAcceso_62_RS(txtUser_62_RS, passHasheada_62_RS);
                 if (SingletonSession_62_RS.Instancia_62_RS.EstaAutenticado_62_RS())
                 {
@@ -72,7 +72,7 @@ namespace BLL_62_RS
                 user_62_RS.Estado_62_RS = false;
                 user_62_RS.UsU_62_RS = user_62_RS.Nombre_62_RS + user_62_RS.Apellido_62_RS;
                 string passProvisoria_62_RS = user_62_RS.DNI_62_RS + user_62_RS.Apellido_62_RS;
-                user_62_RS.Password_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(passProvisoria_62_RS);
+                user_62_RS.Password_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(passProvisoria_62_RS);
                 return usuarioDAL_62_RS.AltaUsuario_62_RS(user_62_RS);
             }
             catch (Exception ex)
@@ -132,14 +132,14 @@ namespace BLL_62_RS
                 throw new Exception("Todos los campos son obligatorios.");
 
             var usu_62_RS = SEG_62_RS.Singleton.SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
-            string Actual_62_Rs = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(valorActual_62_RS);
+            string Actual_62_Rs = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(valorActual_62_RS);
             if (Actual_62_Rs != usu_62_RS.password_62_RS)
                 throw new Exception("La clave actual es incorrecta.");
             if (ValorNuevo_62_RS != ValorRepetido_62_RS)
                 throw new Exception("La nueva clave y su repetición no coinciden.");
             if (valorActual_62_RS == ValorNuevo_62_RS)
                 throw new Exception("La nueva clave no puede ser igual a la actual.");
-            string nuevaHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarMD5_62_RS(ValorNuevo_62_RS);
+            string nuevaHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(ValorNuevo_62_RS);
             int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(usu_62_RS.usu_62_RS, nuevaHasheada_62_RS);
             if (filasAfectadas > 0)
             {
