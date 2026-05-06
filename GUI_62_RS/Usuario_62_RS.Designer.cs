@@ -134,13 +134,17 @@
             // 
             // DgvUsu_62_RS
             // 
+            DgvUsu_62_RS.AllowUserToAddRows = false;
+            DgvUsu_62_RS.AllowUserToDeleteRows = false;
             DgvUsu_62_RS.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DgvUsu_62_RS.Dock = DockStyle.Fill;
             DgvUsu_62_RS.Location = new Point(0, 0);
             DgvUsu_62_RS.Margin = new Padding(3, 4, 3, 4);
+            DgvUsu_62_RS.MultiSelect = false;
             DgvUsu_62_RS.Name = "DgvUsu_62_RS";
             DgvUsu_62_RS.RowHeadersWidth = 51;
-            DgvUsu_62_RS.Size = new Size(603, 221);
+            DgvUsu_62_RS.ShowEditingIcon = false;
+            DgvUsu_62_RS.Size = new Size(625, 221);
             DgvUsu_62_RS.TabIndex = 6;
             DgvUsu_62_RS.CellClick += DgvUsu_62_RS_CellClick;
             // 
@@ -157,6 +161,7 @@
             // 
             // BtnDesbloquear_62_RS
             // 
+            BtnDesbloquear_62_RS.Enabled = false;
             BtnDesbloquear_62_RS.Location = new Point(15, 106);
             BtnDesbloquear_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnDesbloquear_62_RS.Name = "BtnDesbloquear_62_RS";
@@ -168,6 +173,7 @@
             // 
             // BtnModificar_62_RS
             // 
+            BtnModificar_62_RS.Enabled = false;
             BtnModificar_62_RS.Location = new Point(15, 210);
             BtnModificar_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnModificar_62_RS.Name = "BtnModificar_62_RS";
@@ -179,6 +185,7 @@
             // 
             // BtnActivar_62_RS
             // 
+            BtnActivar_62_RS.Enabled = false;
             BtnActivar_62_RS.Location = new Point(15, 308);
             BtnActivar_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnActivar_62_RS.Name = "BtnActivar_62_RS";
@@ -190,6 +197,7 @@
             // 
             // BtnAplicar_62_RS
             // 
+            BtnAplicar_62_RS.Enabled = false;
             BtnAplicar_62_RS.Location = new Point(15, 405);
             BtnAplicar_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnAplicar_62_RS.Name = "BtnAplicar_62_RS";
@@ -197,9 +205,11 @@
             BtnAplicar_62_RS.TabIndex = 11;
             BtnAplicar_62_RS.Text = "Aplicar";
             BtnAplicar_62_RS.UseVisualStyleBackColor = true;
+            BtnAplicar_62_RS.Click += BtnAplicar_62_RS_Click;
             // 
             // BtnCancelar_62_RS
             // 
+            BtnCancelar_62_RS.Enabled = false;
             BtnCancelar_62_RS.Location = new Point(15, 501);
             BtnCancelar_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnCancelar_62_RS.Name = "BtnCancelar_62_RS";
@@ -207,6 +217,7 @@
             BtnCancelar_62_RS.TabIndex = 12;
             BtnCancelar_62_RS.Text = "Cancelar";
             BtnCancelar_62_RS.UseVisualStyleBackColor = true;
+            BtnCancelar_62_RS.Click += BtnCancelar_62_RS_Click;
             // 
             // BtnSalir_62_RS
             // 
@@ -222,6 +233,7 @@
             // GroupBox
             // 
             GroupBox.Controls.Add(tableLayoutPanel1);
+            GroupBox.Enabled = false;
             GroupBox.Location = new Point(16, 8);
             GroupBox.Margin = new Padding(3, 4, 3, 4);
             GroupBox.Name = "GroupBox";
@@ -411,7 +423,7 @@
             TxtMensaje_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtMensaje_62_RS.Multiline = true;
             TxtMensaje_62_RS.Name = "TxtMensaje_62_RS";
-            TxtMensaje_62_RS.Size = new Size(255, 356);
+            TxtMensaje_62_RS.Size = new Size(277, 356);
             TxtMensaje_62_RS.TabIndex = 15;
             // 
             // panel1
@@ -423,7 +435,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(603, 683);
+            panel1.Size = new Size(625, 683);
             panel1.TabIndex = 16;
             // 
             // panel6
@@ -434,7 +446,7 @@
             panel6.Dock = DockStyle.Fill;
             panel6.Location = new Point(348, 273);
             panel6.Name = "panel6";
-            panel6.Size = new Size(255, 410);
+            panel6.Size = new Size(277, 410);
             panel6.TabIndex = 18;
             // 
             // panel9
@@ -442,7 +454,7 @@
             panel9.Dock = DockStyle.Bottom;
             panel9.Location = new Point(0, 382);
             panel9.Name = "panel9";
-            panel9.Size = new Size(255, 28);
+            panel9.Size = new Size(277, 28);
             panel9.TabIndex = 17;
             // 
             // panel8
@@ -450,7 +462,7 @@
             panel8.Dock = DockStyle.Top;
             panel8.Location = new Point(0, 0);
             panel8.Name = "panel8";
-            panel8.Size = new Size(255, 26);
+            panel8.Size = new Size(277, 26);
             panel8.TabIndex = 16;
             // 
             // panel7
@@ -468,7 +480,7 @@
             panel4.Dock = DockStyle.Top;
             panel4.Location = new Point(0, 52);
             panel4.Name = "panel4";
-            panel4.Size = new Size(603, 221);
+            panel4.Size = new Size(625, 221);
             panel4.TabIndex = 17;
             // 
             // panel3
@@ -480,7 +492,7 @@
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(603, 52);
+            panel3.Size = new Size(625, 52);
             panel3.TabIndex = 16;
             // 
             // panel5
@@ -488,7 +500,7 @@
             panel5.Controls.Add(LblNumUsu_62_RS);
             panel5.Controls.Add(LblCantUsu_62_RS);
             panel5.Dock = DockStyle.Right;
-            panel5.Location = new Point(400, 0);
+            panel5.Location = new Point(422, 0);
             panel5.Name = "panel5";
             panel5.Size = new Size(203, 52);
             panel5.TabIndex = 6;
@@ -503,7 +515,7 @@
             panel2.Controls.Add(BtnActivar_62_RS);
             panel2.Controls.Add(BtnAplicar_62_RS);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(603, 0);
+            panel2.Location = new Point(625, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(167, 683);
             panel2.TabIndex = 17;
@@ -512,7 +524,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(770, 683);
+            ClientSize = new Size(792, 683);
             Controls.Add(panel1);
             Controls.Add(panel2);
             Margin = new Padding(3, 4, 3, 4);

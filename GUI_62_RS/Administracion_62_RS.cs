@@ -93,7 +93,7 @@ namespace GUI_62_RS
                 }
                 catch (Exception ex_62_RS)
                 {
-                    MessageBox.Show(ex_62_RS.Message);
+                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -103,8 +103,6 @@ namespace GUI_62_RS
             LogIn_62_RS login = new LogIn_62_RS();
             login.MdiParent = this;
             login.Show();
-
-            //Lanza bienvenido, arreglar Singleton
         }
     }
 }

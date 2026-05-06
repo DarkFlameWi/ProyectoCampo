@@ -19,16 +19,16 @@ namespace GUI_62_RS
         SEG_62_RS.Usuario_62_RS SEGusuario_62_RS;
         BLL_62_RS.Usuario_62_RS BLLusuario_62_RS;
         private int idSeleccionado_62_RS = 0;
+        private int idFuncion_62_RS = 0;
+
         public Usuario_62_RS()
         {
             InitializeComponent();
 
             SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS();
             BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
-
             CargarDatosUsuarios_62_RS();
         }
-
 
         public void Limpiar()
         {
@@ -64,12 +64,12 @@ namespace GUI_62_RS
                 }
                 else
                 {
-                    MessageBox.Show("No hay usuarios registrados actualmente.");
+                    MessageBox.Show("No hay usuarios registrados actualmente.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex_62_RS)
             {
-                MessageBox.Show("Error de Sistema: " + ex_62_RS.Message);
+                MessageBox.Show("Error de Sistema: " + ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ActualizarDgv_62_RS()
@@ -84,77 +84,43 @@ namespace GUI_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                MessageBox.Show("Error al actualizar la lista: " + ex_62_RS.Message);
+                MessageBox.Show("Error al actualizar la lista: " + ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
         private void BtnCrear_62_RS_Click(object sender, EventArgs e)
         {
+            TxtMensaje_62_RS.Text = "Se eligió la función Crear.";
+            idFuncion_62_RS = 1;
             BtnCrear_62_RS.Enabled = false;
-
-            try
-            {
-                if (string.IsNullOrWhiteSpace(txtDni_62_RS.Text) || string.IsNullOrWhiteSpace(TxtNombre_62_RS.Text) ||
-                    string.IsNullOrWhiteSpace(TxtApellido_62_RS.Text) || string.IsNullOrWhiteSpace(TxtEmail_62_RS.Text))
-                {
-                    MessageBox.Show("Por favor, complete todos los campos obligatorios.");
-                    return;
-                }
-                SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS
-                {
-                    DNI_62_RS = txtDni_62_RS.Text,
-                    Nombre_62_RS = TxtNombre_62_RS.Text,
-                    Apellido_62_RS = TxtApellido_62_RS.Text,
-                    Email_62_RS = TxtEmail_62_RS.Text
-                };
-                BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
-                BLLusuario_62_RS.AltaUsuario_62_RS(SEGusuario_62_RS);
-                MessageBox.Show("Usuario creado exitosamente.");
-                Limpiar();
-            }
-            catch (SqlException sqlEx)
-            {
-                MessageBox.Show("Error de base de datos: " + sqlEx.Message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al crear el usuario: " + ex.Message);
-            }
-            finally
-            {
-                BtnCrear_62_RS.Enabled = true;
-                ActualizarDgv_62_RS();
-            }
-
+            GroupBox.Enabled = true;
+            BtnAplicar_62_RS.Enabled = true;
+            BtnCancelar_62_RS.Enabled = true;
+        }
+        private void BtnDesbloquear_62_RS_Click(object sender, EventArgs e)
+        {
+            TxtMensaje_62_RS.Text = "Se eligió la función Desbloquear.";
+            idFuncion_62_RS = 2;
+            BtnDesbloquear_62_RS.Enabled = false;
+            BtnAplicar_62_RS.Enabled = true;
+            BtnCancelar_62_RS.Enabled = true;
         }
         private void BtnModificar_62_RS_Click(object sender, EventArgs e)
         {
-            if (idSeleccionado_62_RS == 0)
-            {
-                MessageBox.Show("Debe seleccionar un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            try
-            {
-                var objUser_62_RS = new SEG_62_RS.Usuario_62_RS
-                {
-                    IdUsuario_62_RS = idSeleccionado_62_RS,
-                    Nombre_62_RS = TxtNombre_62_RS.Text,
-                    Apellido_62_RS = TxtApellido_62_RS.Text,
-                    Email_62_RS = TxtEmail_62_RS.Text
-                };
+            TxtMensaje_62_RS.Text = "Se eligió la función Modificar.";
+            idFuncion_62_RS = 3;
+            BtnModificar_62_RS.Enabled = false;
+            GroupBox.Enabled = true;
+            BtnAplicar_62_RS.Enabled = true;
+            BtnCancelar_62_RS.Enabled = true;
+        }
 
-                BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
-                MessageBox.Show("Usuario actualizado con éxito.", "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex_62_RS)
-            {
-                MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                ActualizarDgv_62_RS();
-            }
-
+        private void BtnActivar_62_RS_Click(object sender, EventArgs e)
+        {
+            TxtMensaje_62_RS.Text = "Se eligió la función Activar.";
+            idFuncion_62_RS = 4;
+            BtnActivar_62_RS.Enabled = false;
+            BtnAplicar_62_RS.Enabled = true;
+            BtnCancelar_62_RS.Enabled = true;
         }
 
         private void DgvUsu_62_RS_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -168,58 +134,161 @@ namespace GUI_62_RS
                     TxtApellido_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["apellido_62_RS"].Value.ToString();
                     TxtEmail_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["email_62_RS"].Value.ToString();
                     txtDni_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["dni_62_RS"].Value.ToString();
+
+                    GroupBox.Enabled = false;
+                    BtnAplicar_62_RS.Enabled = false;
+                    BtnDesbloquear_62_RS.Enabled = true;
+                    BtnModificar_62_RS.Enabled = true;
+                    BtnActivar_62_RS.Enabled = true;
                 }
             }
             catch (Exception ex_62_RS)
             {
-                MessageBox.Show("Error al seleccionar el usuario: " + ex_62_RS.Message);
-            }
-
-        }
-
-        private void BtnDesbloquear_62_RS_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
-
-                BLLusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS);
-                MessageBox.Show("El usuario ha sido desbloqueado.", "Éxito");
-            }
-            catch (Exception ex_62_RS)
-            {
-                MessageBox.Show(ex_62_RS.Message);
-            }
-            finally
-            {
-                ActualizarDgv_62_RS();
-            }
-        }
-
-        private void BtnActivar_62_RS_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
-
-                int actual_62_RS = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["Activo_62_RS"].Value);
-
-                BLLusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);
-                MessageBox.Show("Estado de actividad modificado.");
-            }
-            catch (Exception ex_62_RS)
-            {
-                MessageBox.Show(ex_62_RS.Message);
-            }
-            finally
-            {
-                ActualizarDgv_62_RS();
+                MessageBox.Show("Error al seleccionar el usuario: " + ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void BtnSalir_62_RS_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void BtnAplicar_62_RS_Click(object sender, EventArgs e)
+        {
+            //APLICA SEGÚN FUNCIÓN
+            if (idFuncion_62_RS == 1)
+            {
+                //CREAR
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(txtDni_62_RS.Text) || string.IsNullOrWhiteSpace(TxtNombre_62_RS.Text) ||
+                        string.IsNullOrWhiteSpace(TxtApellido_62_RS.Text) || string.IsNullOrWhiteSpace(TxtEmail_62_RS.Text))
+                    {
+                        MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS
+                    {
+                        DNI_62_RS = txtDni_62_RS.Text,
+                        Nombre_62_RS = TxtNombre_62_RS.Text,
+                        Apellido_62_RS = TxtApellido_62_RS.Text,
+                        Email_62_RS = TxtEmail_62_RS.Text
+                    };
+                    BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
+                    BLLusuario_62_RS.AltaUsuario_62_RS(SEGusuario_62_RS);
+                    MessageBox.Show("Usuario creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Limpiar();
+                }
+                catch (SqlException sqlEx)
+                {
+                    MessageBox.Show("Error de base de datos: " + sqlEx.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    TxtMensaje_62_RS.Clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al crear el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    TxtMensaje_62_RS.Clear();
+                }
+                finally
+                {
+                    ActualizarDgv_62_RS();
+                    TxtMensaje_62_RS.Text = "Se creó el usuario.";
+                }
+            }
+            else if (idFuncion_62_RS == 2)
+            {
+                //DESBLOQUEAR
+                try
+                {
+                    if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
+
+                    BLLusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS);
+                    MessageBox.Show("El usuario ha sido desbloqueado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex_62_RS)
+                {
+                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    TxtMensaje_62_RS.Clear();
+                }
+                finally
+                {
+                    ActualizarDgv_62_RS();
+                    TxtMensaje_62_RS.Text = "Se desbloqueó el usuario.";
+                }
+            }
+            else if (idFuncion_62_RS == 3)
+            {
+                //MODIFICAR
+                if (idSeleccionado_62_RS == 0)
+                {
+                    MessageBox.Show("Debe seleccionar un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                try
+                {
+                    var objUser_62_RS = new SEG_62_RS.Usuario_62_RS
+                    {
+                        IdUsuario_62_RS = idSeleccionado_62_RS,
+                        Nombre_62_RS = TxtNombre_62_RS.Text,
+                        Apellido_62_RS = TxtApellido_62_RS.Text,
+                        Email_62_RS = TxtEmail_62_RS.Text
+                    };
+
+                    BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
+                    MessageBox.Show("Usuario actualizado con éxito.", "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex_62_RS)
+                {
+                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    TxtMensaje_62_RS.Clear();
+                }
+                finally
+                {
+                    ActualizarDgv_62_RS();
+                    TxtMensaje_62_RS.Text = "Se modificó el usuario.";
+                }
+            }
+            else if (idFuncion_62_RS == 4)
+            {
+                //ACTIVAR DESACTIVAR
+                try
+                {
+                    if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
+
+                    int actual_62_RS = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["Activo_62_RS"].Value);
+
+                    BLLusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);
+                    MessageBox.Show("Estado de actividad modificado.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex_62_RS)
+                {
+                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    TxtMensaje_62_RS.Clear();
+                }
+                finally
+                {
+                    ActualizarDgv_62_RS();
+                    TxtMensaje_62_RS.Text = "Se activó el usuario.";
+                }
+            }
+            GroupBox.Enabled = false;
+            BtnActivar_62_RS.Enabled = false;
+            BtnDesbloquear_62_RS.Enabled = false;
+            BtnModificar_62_RS.Enabled = false;
+            BtnAplicar_62_RS.Enabled = false;
+            BtnCancelar_62_RS.Enabled = false;
+        }
+
+        private void BtnCancelar_62_RS_Click(object sender, EventArgs e)
+        {
+            TxtMensaje_62_RS.Text = "Proceso cancelado.";
+            Limpiar();
+            GroupBox.Enabled = false;
+            BtnActivar_62_RS.Enabled = false;
+            BtnDesbloquear_62_RS.Enabled = false;
+            BtnModificar_62_RS.Enabled = false;
+            BtnAplicar_62_RS.Enabled = false;
+            BtnCancelar_62_RS.Enabled = false;
         }
     }
 }
