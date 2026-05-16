@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BE_62_RS;
 
 namespace SEG_62_RS.Singleton
 {

@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_62_RS;
-using BE_62_RS;
 using SEG_62_RS;
 using Microsoft.Data.SqlClient;
 

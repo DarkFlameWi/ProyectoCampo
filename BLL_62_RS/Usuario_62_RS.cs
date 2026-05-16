@@ -1,5 +1,4 @@
-﻿using BE_62_RS;
-using SEG_62_RS;
+﻿using SEG_62_RS;
 using SEG_62_RS.Singleton;
 using System;
 using System.Collections.Generic;
@@ -89,6 +88,7 @@ namespace BLL_62_RS
 
                 if (dt_62_RS == null || dt_62_RS.Rows.Count == 0)
                 {
+                    
                 }
                 return dt_62_RS;
             }
