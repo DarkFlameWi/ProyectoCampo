@@ -88,8 +88,7 @@ namespace GUI_62_RS
                 try
                 {
                     SEGusuario_62_RS.logout_62_RS();
-
-                    Application.Restart();
+                    this.Close();
                 }
                 catch (Exception ex_62_RS)
                 {

@@ -44,5 +44,14 @@ namespace BLL_62_RS
             }
         }
 
+        public DataTable FiltrarBitacora_62_RS(string login, string modulo, string evento, string criticidad, DateTime desde, DateTime hasta)
+        {
+            if (desde > hasta)
+            {
+                throw new Exception("La fecha de inicio ('Desde') no puede ser mayor que la fecha de fin ('Hasta').");
+            }
+            return dalBitacora_62_RS.FiltrarBitacora_62_RS(login, modulo, evento, criticidad, desde, hasta);
+        }
+
     }
 }

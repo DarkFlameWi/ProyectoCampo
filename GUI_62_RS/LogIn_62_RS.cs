@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SEG_62_RS;
+using SEG_62_RS.Singleton;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SEG_62_RS;
 
 namespace GUI_62_RS
 {
@@ -37,9 +38,20 @@ namespace GUI_62_RS
                 MessageBox.Show(mensaje_62_RS, "Bienvenido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 
                 bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Inicio de sesión exitoso", "Seguridad", "5");
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-
+                Administracion_62_RS admin = new Administracion_62_RS();
+                admin.FormClosed += (sender, args) => 
+                {
+                    if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS == null)
+                    {
+                        this.Show();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
+                };
+                admin.Show();
+                this.Hide();
             }
             catch (Exception ex_62_RS)
             {
