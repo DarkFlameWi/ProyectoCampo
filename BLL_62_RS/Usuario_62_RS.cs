@@ -72,6 +72,11 @@ namespace BLL_62_RS
                 user_62_RS.UsU_62_RS = user_62_RS.Nombre_62_RS + user_62_RS.Apellido_62_RS;
                 string passProvisoria_62_RS = user_62_RS.DNI_62_RS + user_62_RS.Apellido_62_RS;
                 user_62_RS.Password_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(passProvisoria_62_RS);
+                usuarioDAL_62_RS.Verificar_62_RS(user_62_RS);
+                if(usuarioDAL_62_RS.Verificar_62_RS(user_62_RS) > 0)
+                {
+                    throw new Exception("El DNI introducido ya existe.");
+                }
                 return usuarioDAL_62_RS.AltaUsuario_62_RS(user_62_RS);
             }
             catch (Exception ex)
@@ -80,11 +85,11 @@ namespace BLL_62_RS
             }
         }
 
-        public DataTable ListarUsuario_62_RS()
+        public DataTable ListarUsuario_62_RS(int tipousuario)
         {
             try
             {
-                DataTable dt_62_RS = usuarioDAL_62_RS.ListarUsuarios_62_RS();
+                DataTable dt_62_RS = usuarioDAL_62_RS.ListarUsuarios_62_RS(tipousuario);
 
                 if (dt_62_RS == null || dt_62_RS.Rows.Count == 0)
                 {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DAL_62_RS
 {
@@ -13,7 +14,6 @@ namespace DAL_62_RS
     {
         public SqlConnection Conexion = new SqlConnection();
         private SqlTransaction transaccion_62_RS;
-
         public void abrir()
         {
             //Notebook HORACIO
@@ -77,6 +77,31 @@ namespace DAL_62_RS
                 cerrar();
             }
             return filasafectadas;
+        }
+
+        public int Verificar(string query, SqlParameter[] parametros)
+        {
+            abrir();
+            SqlCommand cmd = new SqlCommand(query, Conexion);
+            cmd.CommandType = CommandType.Text;
+            if (parametros != null) cmd.Parameters.AddRange(parametros);
+
+            transaccion_62_RS = Conexion.BeginTransaction();
+            cmd.Transaction = transaccion_62_RS;
+            try
+            {
+                int filasafectadas_62_RS = Convert.ToInt32(cmd.ExecuteScalar());
+                transaccion_62_RS.Commit();
+                return filasafectadas_62_RS;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al ejecutar la consulta: " + ex.Message);
+            }
+            finally
+            {
+                cerrar();
+            }
         }
 
         public DataTable leer(string consulta, SqlParameter[] param)

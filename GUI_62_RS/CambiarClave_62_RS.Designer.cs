@@ -111,7 +111,9 @@
             Controls.Add(LblRepContra_62_RS);
             Controls.Add(LblContraNueva_62_RS);
             Controls.Add(lblContraActual_62_RS);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
             Name = "CambiarClave_62_RS";
             Text = "CambiarClave_62_RS";
             ResumeLayout(false);

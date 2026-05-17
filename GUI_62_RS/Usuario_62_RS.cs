@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BLL_62_RS;
 using SEG_62_RS;
 using Microsoft.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GUI_62_RS
 {
@@ -19,6 +20,7 @@ namespace GUI_62_RS
         BLL_62_RS.Usuario_62_RS BLLusuario_62_RS;
         private int idSeleccionado_62_RS = 0;
         private int idFuncion_62_RS = 0;
+        private int tipousuario = 1;
 
         public Usuario_62_RS()
         {
@@ -43,9 +45,18 @@ namespace GUI_62_RS
         }
         private void CargarDatosUsuarios_62_RS()
         {
+            txtDni_62_RS.Enabled = false;
+            TxtApellido_62_RS.Enabled = false;
+            TxtNombre_62_RS.Enabled = false;
+            TxtEmail_62_RS.Enabled = false;
+            TxtRol_62_RS.Enabled = false;
+            TxtLogIn_62_RS.Enabled = false;
+            TxtBloqueado_62_RS.Enabled = false;
+            TxtActivo_62_RS.Enabled = false;
+
             try
             {
-                DataTable dt_62_RS = BLLusuario_62_RS.ListarUsuario_62_RS();
+                DataTable dt_62_RS = BLLusuario_62_RS.ListarUsuario_62_RS(tipousuario);
                 LblCantUsu_62_RS.Text = dt_62_RS.Rows.Count.ToString();
                 DgvUsu_62_RS.DataSource = dt_62_RS;
                 if (DgvUsu_62_RS.Columns.Count > 0)
@@ -75,7 +86,9 @@ namespace GUI_62_RS
         {
             try
             {
-                DgvUsu_62_RS.DataSource = BLLusuario_62_RS.ListarUsuario_62_RS();
+                DatosUnabler();
+                DgvUsu_62_RS.DataSource = BLLusuario_62_RS.ListarUsuario_62_RS(tipousuario);
+                
                 if (DgvUsu_62_RS.Columns.Contains("idusuario_62_RS"))
                     DgvUsu_62_RS.Columns["idusuario_62_RS"].Visible = false;
 
@@ -89,9 +102,13 @@ namespace GUI_62_RS
         private void BtnCrear_62_RS_Click(object sender, EventArgs e)
         {
             TxtMensaje_62_RS.Text = "Se eligió la función Crear.";
+            Limpiar();
             idFuncion_62_RS = 1;
             BtnCrear_62_RS.Enabled = false;
             GroupBox.Enabled = true;
+
+            DatosEnabler(1, 1, 1);
+
             BtnAplicar_62_RS.Enabled = true;
             BtnCancelar_62_RS.Enabled = true;
         }
@@ -109,6 +126,9 @@ namespace GUI_62_RS
             idFuncion_62_RS = 3;
             BtnModificar_62_RS.Enabled = false;
             GroupBox.Enabled = true;
+
+            DatosEnabler(1, 1, 0);
+
             BtnAplicar_62_RS.Enabled = true;
             BtnCancelar_62_RS.Enabled = true;
         }
@@ -126,6 +146,7 @@ namespace GUI_62_RS
         {
             try
             {
+                DatosUnabler();
                 if (e.RowIndex >= 0)
                 {
                     idSeleccionado_62_RS = Convert.ToInt32(DgvUsu_62_RS.Rows[e.RowIndex].Cells["idusuario_62_RS"].Value);
@@ -271,6 +292,7 @@ namespace GUI_62_RS
                 }
             }
             GroupBox.Enabled = false;
+            BtnCrear_62_RS.Enabled = true;
             BtnActivar_62_RS.Enabled = false;
             BtnDesbloquear_62_RS.Enabled = false;
             BtnModificar_62_RS.Enabled = false;
@@ -282,12 +304,57 @@ namespace GUI_62_RS
         {
             TxtMensaje_62_RS.Text = "Proceso cancelado.";
             Limpiar();
+            DatosUnabler();
             GroupBox.Enabled = false;
+            BtnCrear_62_RS.Enabled = true;
             BtnActivar_62_RS.Enabled = false;
             BtnDesbloquear_62_RS.Enabled = false;
             BtnModificar_62_RS.Enabled = false;
             BtnAplicar_62_RS.Enabled = false;
             BtnCancelar_62_RS.Enabled = false;
+        }
+
+        private void DatosEnabler(int email, int rol, int demas)
+        {
+            if (email == 1)
+            {
+                TxtEmail_62_RS.Enabled = true;
+            }
+            if (rol == 1)
+            {
+                TxtRol_62_RS.Enabled = true;
+            }
+            if (demas == 1)
+            {
+                txtDni_62_RS.Enabled = true;
+                TxtApellido_62_RS.Enabled = true;
+                TxtNombre_62_RS.Enabled = true;
+            }
+            return;
+        }
+
+        private void DatosUnabler()
+        {
+            txtDni_62_RS.Enabled = false;
+            TxtApellido_62_RS.Enabled = false;
+            TxtNombre_62_RS.Enabled = false;
+            TxtEmail_62_RS.Enabled = false;
+            TxtRol_62_RS.Enabled = false;
+            TxtLogIn_62_RS.Enabled = false;
+            TxtBloqueado_62_RS.Enabled = false;
+            TxtActivo_62_RS.Enabled = false;
+        }
+
+        private void RbActivo_62_RS_CheckedChanged(object sender, EventArgs e)
+        {
+            tipousuario = 1;
+            ActualizarDgv_62_RS();
+        }
+
+        private void RbTodo_62_RS_CheckedChanged(object sender, EventArgs e)
+        {
+            tipousuario = 0;
+           ActualizarDgv_62_RS();
         }
     }
 }
