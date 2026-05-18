@@ -36,7 +36,7 @@ namespace GUI_62_RS
                 string mensaje_62_RS = SEGUsuario_62_RS.Login_62_RS(TxtUsuario_62_RS.Text, TxtContra_62_RS.Text);
 
                 MessageBox.Show(mensaje_62_RS, "Bienvenido", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
                 bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Inicio de sesión exitoso", "Seguridad", "5");
                 Administracion_62_RS admin = new Administracion_62_RS();
                 admin.FormClosed += (sender, args) => 

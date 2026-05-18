@@ -15,13 +15,16 @@ namespace DAL_62_RS
         public Accesos_62_RS accesos_62_RS = new Accesos_62_RS();
         public int AltaUsuario_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS)
         {
-            string sql_62_RS = @"INSERT INTO [Usuarios_62_RS] 
+            string sql_62_RS = null;
+            try
+            {
+                sql_62_RS = @"INSERT INTO [Usuarios_62_RS] 
                        (IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, 
                         dni_62_RS, usu_62_RS, password_62_RS, estado_62_RS, Activo_62_RS) 
                        VALUES 
                        (@idIdioma, @nom, @ape, @mail, @dni, @usu, @pass, @est, @act)";
 
-            SqlParameter[] parametros_62_RS = {
+                SqlParameter[] parametros_62_RS = {
                 new SqlParameter("@idIdioma", 1),
                 new SqlParameter("@nom", user_62_RS.Nombre_62_RS),
                 new SqlParameter("@ape", user_62_RS.Apellido_62_RS),
@@ -31,8 +34,39 @@ namespace DAL_62_RS
                 new SqlParameter("@pass", user_62_RS.Password_62_RS),
                 new SqlParameter("@est", user_62_RS.Estado_62_RS),
                 new SqlParameter("@act", user_62_RS.Activo_62_RS)
-            };
-            return accesos_62_RS.EscribirText(sql_62_RS, parametros_62_RS);
+                };
+                return accesos_62_RS.EscribirText(sql_62_RS, parametros_62_RS);
+            }
+            catch (Exception ex_62_RS)
+            {
+                throw new Exception("Error técnico en DAL al modificar: " + ex_62_RS.Message);
+            }
+        }
+
+        public int Verificar_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS, int tipo)
+        {
+            try
+            {
+                string sql_62_RS = null;
+                if (tipo == 1)
+                {
+                    //EXISTENCIA
+                    sql_62_RS = @"SELECT COUNT(*) FROM Usuarios_62_RS WHERE dni_62_RS = @dni";
+                }
+                if (tipo == 2)
+                {
+                    //BLOQUEO
+                    sql_62_RS = @"SELECT COUNT(*) FROM Usuarios_62_RS WHERE dni_62_RS = @dni AND estado_62_RS = 1";
+                }
+                SqlParameter[] parametros_62_RS = {
+                new SqlParameter("@dni", user_62_RS.DNI_62_RS),
+                };
+                return accesos_62_RS.Verificar(sql_62_RS, parametros_62_RS);
+            }
+            catch (Exception ex_62_RS)
+            {
+                throw new Exception("Error técnico en DAL al modificar: " + ex_62_RS.Message);
+            }
         }
 
         public int ModificarDatos_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS)
@@ -65,7 +99,7 @@ namespace DAL_62_RS
                 SqlParameter[] p_62_RS = {
                 new SqlParameter("@v", val_62_RS),
                 new SqlParameter("@id", user_62_RS)
-            };
+                };
                 return accesos_62_RS.EscribirText(sql_62_RS, p_62_RS);
             }
             catch (Exception ex_62_RS)
@@ -84,11 +118,20 @@ namespace DAL_62_RS
             return accesos_62_RS.EscribirText(sql_62_RS, p_62_RS);
         }
 
-        public DataTable ListarUsuarios_62_RS()
+        public DataTable ListarUsuarios_62_RS(int tipousuario)
         {
             try
             {
-                string query_62_RS = "SELECT idusuario_62_RS, IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, dni_62_RS, usu_62_RS, estado_62_RS, Activo_62_RS FROM Usuarios_62_RS";
+                string query_62_RS = null;
+                if (tipousuario == 0)
+                {
+                    query_62_RS = "SELECT idusuario_62_RS, IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, dni_62_RS, usu_62_RS, estado_62_RS, Activo_62_RS FROM Usuarios_62_RS";
+
+                }
+                if (tipousuario == 1)
+                {
+                    query_62_RS = "SELECT idusuario_62_RS, IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, dni_62_RS, usu_62_RS, estado_62_RS, Activo_62_RS FROM Usuarios_62_RS WHERE Activo_62_RS = 1";
+                }
                 return accesos_62_RS.LeerText_62_RS(query_62_RS);
             }
             catch (SqlException ex_62_RS)

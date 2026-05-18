@@ -58,7 +58,7 @@
             // LblRepContra_62_RS
             // 
             LblRepContra_62_RS.AutoSize = true;
-            LblRepContra_62_RS.Location = new Point(10, 107);
+            LblRepContra_62_RS.Location = new Point(10, 105);
             LblRepContra_62_RS.Name = "LblRepContra_62_RS";
             LblRepContra_62_RS.Size = new Size(138, 20);
             LblRepContra_62_RS.TabIndex = 2;
@@ -66,10 +66,10 @@
             // 
             // BtnCambiarContra_62_RS
             // 
-            BtnCambiarContra_62_RS.Location = new Point(71, 173);
+            BtnCambiarContra_62_RS.Location = new Point(14, 148);
             BtnCambiarContra_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnCambiarContra_62_RS.Name = "BtnCambiarContra_62_RS";
-            BtnCambiarContra_62_RS.Size = new Size(181, 80);
+            BtnCambiarContra_62_RS.Size = new Size(304, 106);
             BtnCambiarContra_62_RS.TabIndex = 3;
             BtnCambiarContra_62_RS.Text = "Cambiar Contraseña";
             BtnCambiarContra_62_RS.UseVisualStyleBackColor = true;
@@ -80,6 +80,7 @@
             TxtContraActual_62_RS.Location = new Point(152, 23);
             TxtContraActual_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtContraActual_62_RS.Name = "TxtContraActual_62_RS";
+            TxtContraActual_62_RS.PasswordChar = '●';
             TxtContraActual_62_RS.Size = new Size(166, 27);
             TxtContraActual_62_RS.TabIndex = 4;
             // 
@@ -88,14 +89,16 @@
             TxtContraNueva_62_RS.Location = new Point(152, 63);
             TxtContraNueva_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtContraNueva_62_RS.Name = "TxtContraNueva_62_RS";
+            TxtContraNueva_62_RS.PasswordChar = '●';
             TxtContraNueva_62_RS.Size = new Size(166, 27);
             TxtContraNueva_62_RS.TabIndex = 5;
             // 
             // TxtRepContra_62_RS
             // 
-            TxtRepContra_62_RS.Location = new Point(152, 107);
+            TxtRepContra_62_RS.Location = new Point(152, 105);
             TxtRepContra_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtRepContra_62_RS.Name = "TxtRepContra_62_RS";
+            TxtRepContra_62_RS.PasswordChar = '●';
             TxtRepContra_62_RS.Size = new Size(166, 27);
             TxtRepContra_62_RS.TabIndex = 6;
             // 
@@ -103,7 +106,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(349, 288);
+            ClientSize = new Size(334, 273);
             Controls.Add(TxtRepContra_62_RS);
             Controls.Add(TxtContraNueva_62_RS);
             Controls.Add(TxtContraActual_62_RS);
@@ -111,9 +114,11 @@
             Controls.Add(LblRepContra_62_RS);
             Controls.Add(LblContraNueva_62_RS);
             Controls.Add(lblContraActual_62_RS);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
             Name = "CambiarClave_62_RS";
-            Text = "CambiarClave_62_RS";
+            Text = "Cambiar clave";
             ResumeLayout(false);
             PerformLayout();
         }
