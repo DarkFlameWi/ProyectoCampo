@@ -72,8 +72,7 @@ namespace BLL_62_RS
                 user_62_RS.UsU_62_RS = user_62_RS.Nombre_62_RS + user_62_RS.Apellido_62_RS;
                 string passProvisoria_62_RS = user_62_RS.DNI_62_RS + user_62_RS.Apellido_62_RS;
                 user_62_RS.Password_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(passProvisoria_62_RS);
-                usuarioDAL_62_RS.Verificar_62_RS(user_62_RS);
-                if(usuarioDAL_62_RS.Verificar_62_RS(user_62_RS) > 0)
+                if(usuarioDAL_62_RS.Verificar_62_RS(user_62_RS,1) > 0)
                 {
                     throw new Exception("El DNI introducido ya existe.");
                 }
@@ -120,9 +119,25 @@ namespace BLL_62_RS
             }
         }
 
-        public void DesbloquearUsuario_62_RS(int id_62_RS)
+        public void DesbloquearUsuario_62_RS(int id_62_RS, SEG_62_RS.Usuario_62_RS user_62_RS)
         {
+            if (usuarioDAL_62_RS.Verificar_62_RS(user_62_RS, 2) == 0)
+            {
+                throw new Exception("El usuario no se encuentra bloqueado.");
+            }
             usuarioDAL_62_RS.ModificarEstado_62_RS(id_62_RS, "estado_62_RS", 0);
+            string NuevoPass_62_RS = user_62_RS.DNI_62_RS + user_62_RS.Apellido_62_RS;
+
+            string Actual_62_Rs = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(NuevoPass_62_RS);
+            int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(user_62_RS.UsU_62_RS, Actual_62_Rs);
+            if (filasAfectadas > 0)
+            {
+                user_62_RS.Password_62_RS = Actual_62_Rs;
+            }
+            else
+            {
+                throw new Exception("No se pudo actualizar la clave en la base de datos.");
+            }
         }
 
         public void AlternarActivo_62_RS(int id_62_RS, int valorActual_62_RS)

@@ -43,12 +43,21 @@ namespace DAL_62_RS
             }
         }
 
-        public int Verificar_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS)
+        public int Verificar_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS, int tipo)
         {
             try
             {
-                string sql_62_RS = @"SELECT COUNT(*) FROM Usuarios_62_RS WHERE dni_62_RS = @dni";
-
+                string sql_62_RS = null;
+                if (tipo == 1)
+                {
+                    //EXISTENCIA
+                    sql_62_RS = @"SELECT COUNT(*) FROM Usuarios_62_RS WHERE dni_62_RS = @dni";
+                }
+                if (tipo == 2)
+                {
+                    //BLOQUEO
+                    sql_62_RS = @"SELECT COUNT(*) FROM Usuarios_62_RS WHERE dni_62_RS = @dni AND estado_62_RS = 1";
+                }
                 SqlParameter[] parametros_62_RS = {
                 new SqlParameter("@dni", user_62_RS.DNI_62_RS),
                 };
@@ -90,7 +99,7 @@ namespace DAL_62_RS
                 SqlParameter[] p_62_RS = {
                 new SqlParameter("@v", val_62_RS),
                 new SqlParameter("@id", user_62_RS)
-            };
+                };
                 return accesos_62_RS.EscribirText(sql_62_RS, p_62_RS);
             }
             catch (Exception ex_62_RS)

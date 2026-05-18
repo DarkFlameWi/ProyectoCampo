@@ -45,15 +45,7 @@ namespace GUI_62_RS
         }
         private void CargarDatosUsuarios_62_RS()
         {
-            txtDni_62_RS.Enabled = false;
-            TxtApellido_62_RS.Enabled = false;
-            TxtNombre_62_RS.Enabled = false;
-            TxtEmail_62_RS.Enabled = false;
-            TxtRol_62_RS.Enabled = false;
-            TxtLogIn_62_RS.Enabled = false;
-            TxtBloqueado_62_RS.Enabled = false;
-            TxtActivo_62_RS.Enabled = false;
-
+            DatosUnabler_62_RS();
             try
             {
                 DataTable dt_62_RS = BLLusuario_62_RS.ListarUsuario_62_RS(tipousuario);
@@ -86,7 +78,7 @@ namespace GUI_62_RS
         {
             try
             {
-                DatosUnabler();
+                DatosUnabler_62_RS();
                 DgvUsu_62_RS.DataSource = BLLusuario_62_RS.ListarUsuario_62_RS(tipousuario);
                 
                 if (DgvUsu_62_RS.Columns.Contains("idusuario_62_RS"))
@@ -106,47 +98,40 @@ namespace GUI_62_RS
             idFuncion_62_RS = 1;
             BtnCrear_62_RS.Enabled = false;
             GroupBox.Enabled = true;
-
-            DatosEnabler(1, 1, 1);
-
-            BtnAplicar_62_RS.Enabled = true;
-            BtnCancelar_62_RS.Enabled = true;
+            DatosEnabler_62_RS(1, 1, 1);
+            BtnRestore_62_RS(1);
         }
         private void BtnDesbloquear_62_RS_Click(object sender, EventArgs e)
         {
             TxtMensaje_62_RS.Text = "Se eligió la función Desbloquear.";
+            DatosUnabler_62_RS();
             idFuncion_62_RS = 2;
-            BtnDesbloquear_62_RS.Enabled = false;
-            BtnAplicar_62_RS.Enabled = true;
-            BtnCancelar_62_RS.Enabled = true;
+            BtnRestore_62_RS(1);
         }
         private void BtnModificar_62_RS_Click(object sender, EventArgs e)
         {
             TxtMensaje_62_RS.Text = "Se eligió la función Modificar.";
+            DatosUnabler_62_RS();
             idFuncion_62_RS = 3;
             BtnModificar_62_RS.Enabled = false;
             GroupBox.Enabled = true;
-
-            DatosEnabler(1, 1, 0);
-
-            BtnAplicar_62_RS.Enabled = true;
-            BtnCancelar_62_RS.Enabled = true;
+            DatosEnabler_62_RS(1, 1, 0);
+            BtnRestore_62_RS(1);
         }
 
         private void BtnActivar_62_RS_Click(object sender, EventArgs e)
         {
             TxtMensaje_62_RS.Text = "Se eligió la función Activar.";
+            DatosUnabler_62_RS();
             idFuncion_62_RS = 4;
-            BtnActivar_62_RS.Enabled = false;
-            BtnAplicar_62_RS.Enabled = true;
-            BtnCancelar_62_RS.Enabled = true;
+            BtnRestore_62_RS(1);
         }
 
         private void DgvUsu_62_RS_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                DatosUnabler();
+                DatosUnabler_62_RS();
                 if (e.RowIndex >= 0)
                 {
                     idSeleccionado_62_RS = Convert.ToInt32(DgvUsu_62_RS.Rows[e.RowIndex].Cells["idusuario_62_RS"].Value);
@@ -185,6 +170,7 @@ namespace GUI_62_RS
                         string.IsNullOrWhiteSpace(TxtApellido_62_RS.Text) || string.IsNullOrWhiteSpace(TxtEmail_62_RS.Text))
                     {
                         MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        BtnRestore_62_RS(0);
                         return;
                     }
                     SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS
@@ -198,21 +184,21 @@ namespace GUI_62_RS
                     BLLusuario_62_RS.AltaUsuario_62_RS(SEGusuario_62_RS);
                     MessageBox.Show("Usuario creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Limpiar();
+                    TxtMensaje_62_RS.Text = "Se creó el usuario.";
                 }
                 catch (SqlException sqlEx)
                 {
                     MessageBox.Show("Error de base de datos: " + sqlEx.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    TxtMensaje_62_RS.Clear();
+                    TxtMensaje_62_RS.Text = sqlEx.Message;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error al crear el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    TxtMensaje_62_RS.Clear();
+                    TxtMensaje_62_RS.Text = ex.Message;
                 }
                 finally
                 {
                     ActualizarDgv_62_RS();
-                    TxtMensaje_62_RS.Text = "Se creó el usuario.";
                 }
             }
             else if (idFuncion_62_RS == 2)
@@ -222,18 +208,28 @@ namespace GUI_62_RS
                 {
                     if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
 
-                    BLLusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS);
+                    var objUser_62_RS = new SEG_62_RS.Usuario_62_RS
+                    {
+                        IdUsuario_62_RS = idSeleccionado_62_RS,
+                        DNI_62_RS = txtDni_62_RS.Text,
+                        Nombre_62_RS = TxtNombre_62_RS.Text,
+                        Apellido_62_RS = TxtApellido_62_RS.Text,
+                        Email_62_RS = TxtEmail_62_RS.Text
+                    };
+
+                    BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
+                    BLLusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS,objUser_62_RS);
                     MessageBox.Show("El usuario ha sido desbloqueado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TxtMensaje_62_RS.Text = "Se desbloqueó el usuario.";
                 }
                 catch (Exception ex_62_RS)
                 {
                     MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    TxtMensaje_62_RS.Clear();
+                    TxtMensaje_62_RS.Text = ex_62_RS.Message;
                 }
                 finally
                 {
                     ActualizarDgv_62_RS();
-                    TxtMensaje_62_RS.Text = "Se desbloqueó el usuario.";
                 }
             }
             else if (idFuncion_62_RS == 3)
@@ -242,6 +238,7 @@ namespace GUI_62_RS
                 if (idSeleccionado_62_RS == 0)
                 {
                     MessageBox.Show("Debe seleccionar un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    BtnRestore_62_RS(0);
                     return;
                 }
                 try
@@ -256,16 +253,16 @@ namespace GUI_62_RS
 
                     BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
                     MessageBox.Show("Usuario actualizado con éxito.", "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TxtMensaje_62_RS.Text = "Se modificó el usuario.";
                 }
                 catch (Exception ex_62_RS)
                 {
                     MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    TxtMensaje_62_RS.Clear();
+                    TxtMensaje_62_RS.Text = ex_62_RS.Message;
                 }
                 finally
                 {
                     ActualizarDgv_62_RS();
-                    TxtMensaje_62_RS.Text = "Se modificó el usuario.";
                 }
             }
             else if (idFuncion_62_RS == 4)
@@ -279,42 +276,30 @@ namespace GUI_62_RS
 
                     BLLusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);
                     MessageBox.Show("Estado de actividad modificado.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TxtMensaje_62_RS.Text = "Se activó el usuario.";
                 }
                 catch (Exception ex_62_RS)
                 {
                     MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    TxtMensaje_62_RS.Clear();
+                    TxtMensaje_62_RS.Text = ex_62_RS.Message;
                 }
                 finally
                 {
                     ActualizarDgv_62_RS();
-                    TxtMensaje_62_RS.Text = "Se activó el usuario.";
                 }
             }
-            GroupBox.Enabled = false;
-            BtnCrear_62_RS.Enabled = true;
-            BtnActivar_62_RS.Enabled = false;
-            BtnDesbloquear_62_RS.Enabled = false;
-            BtnModificar_62_RS.Enabled = false;
-            BtnAplicar_62_RS.Enabled = false;
-            BtnCancelar_62_RS.Enabled = false;
+            BtnRestore_62_RS(0);
         }
 
         private void BtnCancelar_62_RS_Click(object sender, EventArgs e)
         {
             TxtMensaje_62_RS.Text = "Proceso cancelado.";
             Limpiar();
-            DatosUnabler();
-            GroupBox.Enabled = false;
-            BtnCrear_62_RS.Enabled = true;
-            BtnActivar_62_RS.Enabled = false;
-            BtnDesbloquear_62_RS.Enabled = false;
-            BtnModificar_62_RS.Enabled = false;
-            BtnAplicar_62_RS.Enabled = false;
-            BtnCancelar_62_RS.Enabled = false;
+            DatosUnabler_62_RS();
+            BtnRestore_62_RS(0);
         }
 
-        private void DatosEnabler(int email, int rol, int demas)
+        private void DatosEnabler_62_RS(int email, int rol, int demas)
         {
             if (email == 1)
             {
@@ -333,7 +318,7 @@ namespace GUI_62_RS
             return;
         }
 
-        private void DatosUnabler()
+        private void DatosUnabler_62_RS()
         {
             txtDni_62_RS.Enabled = false;
             TxtApellido_62_RS.Enabled = false;
@@ -355,6 +340,29 @@ namespace GUI_62_RS
         {
             tipousuario = 0;
            ActualizarDgv_62_RS();
+        }
+
+        void BtnRestore_62_RS(int tipo)
+        {
+            if (tipo == 0)
+            {
+                GroupBox.Enabled = false;
+                BtnCrear_62_RS.Enabled = true;
+                BtnActivar_62_RS.Enabled = false;
+                BtnDesbloquear_62_RS.Enabled = false;
+                BtnModificar_62_RS.Enabled = false;
+                BtnAplicar_62_RS.Enabled = false;
+                BtnCancelar_62_RS.Enabled = false;
+            }
+            if (tipo == 1)
+            {
+                BtnCrear_62_RS.Enabled = false;
+                BtnActivar_62_RS.Enabled = false;
+                BtnDesbloquear_62_RS.Enabled = false;
+                BtnModificar_62_RS.Enabled = false;
+                BtnAplicar_62_RS.Enabled = true;
+                BtnCancelar_62_RS.Enabled = true;
+            }
         }
     }
 }
