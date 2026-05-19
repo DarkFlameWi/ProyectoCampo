@@ -52,6 +52,5 @@ namespace BLL_62_RS
             }
             return dalBitacora_62_RS.FiltrarBitacora_62_RS(login, modulo, evento, criticidad, desde, hasta);
         }
-
     }
 }
