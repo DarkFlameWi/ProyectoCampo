@@ -14,6 +14,7 @@ namespace BLL_62_RS
     {
         SEG_62_RS.Usuario_62_RS usuario_62_RS = new SEG_62_RS.Usuario_62_RS();
         DAL_62_RS.Usuario_62_RS usuarioDAL_62_RS = new DAL_62_RS.Usuario_62_RS();
+            BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
         private int intentosFallidos_62_RS = 0;
         public string Login_62_RS(string txtUser_62_RS, string txtPass_62_RS)
         {
@@ -32,6 +33,9 @@ namespace BLL_62_RS
                     {
                         BloquearUsuarioPorNombre_62_RS(txtUser_62_RS);
                         throw new Exception("Has superado los 3 intentos. El usuario ha sido bloqueado por seguridad.");
+                        bllBitacora_62_RS.InsertarBitacora_62_RS(txtUser_62_RS, "Bloquear Usuario", "Seguridad", "1");
+                        intentosFallidos_62_RS = 0;
+
                     }
                     throw new Exception($"Credenciales incorrectas. Intento {intentosFallidos_62_RS} de 3.");
                 }

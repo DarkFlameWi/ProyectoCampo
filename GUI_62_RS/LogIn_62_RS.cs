@@ -37,7 +37,7 @@ namespace GUI_62_RS
 
                 MessageBox.Show(mensaje_62_RS, "Bienvenido", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Inicio de sesión exitoso", "Seguridad", "5");
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Inicio de sesión exitoso", "Seguridad", "1");
                 Administracion_62_RS admin = new Administracion_62_RS();
                 admin.FormClosed += (sender, args) => 
                 {
@@ -56,7 +56,7 @@ namespace GUI_62_RS
             catch (Exception ex_62_RS)
             {
                 MessageBox.Show(ex_62_RS.Message, "Error de Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Intento de inicio de sesión fallido", "Seguridad", "5");
+               // bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Intento de inicio de sesión fallido", "Seguridad", "5");
                 TxtContra_62_RS.Clear();
                 TxtContra_62_RS.Focus();
             }

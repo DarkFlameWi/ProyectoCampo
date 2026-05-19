@@ -1,16 +1,17 @@
-﻿using System;
+﻿using BLL_62_RS;
+using Microsoft.Data.SqlClient;
+using SEG_62_RS;
+using SEG_62_RS.Singleton;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL_62_RS;
-using SEG_62_RS;
-using Microsoft.Data.SqlClient;
-using System.Diagnostics.CodeAnalysis;
 
 namespace GUI_62_RS
 {
@@ -18,6 +19,7 @@ namespace GUI_62_RS
     {
         SEG_62_RS.Usuario_62_RS SEGusuario_62_RS;
         BLL_62_RS.Usuario_62_RS BLLusuario_62_RS;
+        BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS;
         private int idSeleccionado_62_RS = 0;
         private int idFuncion_62_RS = 0;
         private int tipousuario = 1;
@@ -160,6 +162,7 @@ namespace GUI_62_RS
 
         private void BtnAplicar_62_RS_Click(object sender, EventArgs e)
         {
+            BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
             //APLICA SEGÚN FUNCIÓN
             if (idFuncion_62_RS == 1)
             {
@@ -183,6 +186,8 @@ namespace GUI_62_RS
                     BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
                     BLLusuario_62_RS.AltaUsuario_62_RS(SEGusuario_62_RS);
                     MessageBox.Show("Usuario creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Crear Usuario", "Seguridad", "1");
                     Limpiar();
                     TxtMensaje_62_RS.Text = "Se creó el usuario.";
                 }
@@ -219,6 +224,8 @@ namespace GUI_62_RS
 
                     BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
                     BLLusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS,objUser_62_RS);
+                    string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Desbloquear Usuario", "Seguridad", "1");
                     MessageBox.Show("El usuario ha sido desbloqueado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TxtMensaje_62_RS.Text = "Se desbloqueó el usuario.";
                 }
@@ -252,6 +259,8 @@ namespace GUI_62_RS
                     };
 
                     BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
+                    string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Modificar Usuario", "Seguridad", "1");
                     MessageBox.Show("Usuario actualizado con éxito.", "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TxtMensaje_62_RS.Text = "Se modificó el usuario.";
                 }
@@ -275,6 +284,8 @@ namespace GUI_62_RS
                     int actual_62_RS = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["Activo_62_RS"].Value);
 
                     BLLusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);
+                    string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Desactivar Usuario", "Seguridad", "1");
                     MessageBox.Show("Estado de actividad modificado.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TxtMensaje_62_RS.Text = "Se activó el usuario.";
                 }

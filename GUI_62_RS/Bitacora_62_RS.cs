@@ -38,7 +38,7 @@ namespace GUI_62_RS
         {
             CmbModulo_62_RS.Items.AddRange(new string[] { "Todos","Seguridad", "Administración", "Ventas", "Inventario" });
             CmbCriti_62_RS.Items.AddRange(new string[] { "Todos","1", "2", "3", "4", "5" });
-            CmbEvento_62_RS.Items.AddRange(new string[] { "Todos","Inicio de sesión exitoso", "Intento de inicio de sesión fallido", "Cierre de sesión", "Creación de usuario", "Modificación de usuario", "Eliminación de usuario" });
+            CmbEvento_62_RS.Items.AddRange(new string[] { "Todos","Inicio de sesión exitoso", "Cierre de sesión", "Crear usuario", "Desbloquear Usuario", "Modificar  usuario", "Eliminar  usuario","Cambio de clave","Bloquear Usuario" });
             DtpFecIni_62_RS.Value = DateTime.Now.AddDays(-3);
             DtpFecFin_62_RS.Value = DateTime.Now;
         }

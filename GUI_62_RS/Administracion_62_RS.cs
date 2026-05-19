@@ -84,7 +84,7 @@ namespace GUI_62_RS
                 BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
 
                 string nombreUsuario = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
-                bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario, "Cierre de sesión", "Seguridad", "5");
+                bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario, "Cierre de sesión", "Seguridad", "1");
                 try
                 {
                     SEGusuario_62_RS.logout_62_RS();
