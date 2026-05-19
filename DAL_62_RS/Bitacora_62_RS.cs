@@ -23,7 +23,7 @@ namespace DAL_62_RS
             sqlParameter[2] = new SqlParameter("@Descripcion_62_RS", BT_62_RS.Descripcion_62_RS);
             sqlParameter[3] = new SqlParameter("@Modulo_62_RS",BT_62_RS.Modulo_62_RS);
             sqlParameter[4] = new SqlParameter("@Criticidad_62_RS", BT_62_RS.Criticidad_62_RS);
-            FA = accesos_62_RS.escribir("CargarBitacora_62_RS", sqlParameter);
+            FA = accesos_62_RS.escribir_62_RS("CargarBitacora_62_RS", sqlParameter);
             return FA;
         }
 

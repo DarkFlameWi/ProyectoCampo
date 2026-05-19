@@ -14,15 +14,15 @@ namespace DAL_62_RS
     {
         public SqlConnection Conexion = new SqlConnection();
         private SqlTransaction transaccion_62_RS;
-        public void abrir()
+        public void abrir_62_RS()
         {
             //Notebook HORACIO
             //Conexion.ConnectionString = @"Data Source=HORACIO;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
 
             //PC HORACIO
-            //Conexion.ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
+            Conexion.ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
             //PC HANS
-            Conexion.ConnectionString = @"Data Source=DESKTOP-RG128MN;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
+            //Conexion.ConnectionString = @"Data Source=DESKTOP-RG128MN;Initial Catalog=ProyectoCampo_62_RS;Integrated Security=True;TrustServerCertificate=True";
 
             try
             {
@@ -34,7 +34,7 @@ namespace DAL_62_RS
             }
         }
 
-        public void cerrar()
+        public void cerrar_62_RS()
         {
             try
             {
@@ -49,11 +49,11 @@ namespace DAL_62_RS
             }
         }
 
-        public int escribir(string consulta, SqlParameter[] param)
+        public int escribir_62_RS(string consulta, SqlParameter[] param)
         {
             int filasafectadas = 0;
 
-            abrir();
+            abrir_62_RS();
 
             try
             {
@@ -74,14 +74,14 @@ namespace DAL_62_RS
             }
             finally
             {
-                cerrar();
+                cerrar_62_RS();
             }
             return filasafectadas;
         }
 
-        public int Verificar(string query, SqlParameter[] parametros)
+        public int Verificar_62_RS(string query, SqlParameter[] parametros)
         {
-            abrir();
+            abrir_62_RS();
             SqlCommand cmd = new SqlCommand(query, Conexion);
             cmd.CommandType = CommandType.Text;
             if (parametros != null) cmd.Parameters.AddRange(parametros);
@@ -100,14 +100,14 @@ namespace DAL_62_RS
             }
             finally
             {
-                cerrar();
+                cerrar_62_RS();
             }
         }
 
-        public DataTable leer(string consulta, SqlParameter[] param)
+        public DataTable leer_62_RS(string consulta, SqlParameter[] param)
         {
             DataTable dataTable = new DataTable();
-            abrir();
+            abrir_62_RS();
             try
             {
                 SqlCommand comando = new SqlCommand(consulta, Conexion);
@@ -128,16 +128,16 @@ namespace DAL_62_RS
             }
             finally
             {
-                cerrar();
+                cerrar_62_RS();
             }
             return dataTable;
 
         }
 
 
-        public int EscribirText(string query, SqlParameter[] parametros)
+        public int EscribirText_62_RS(string query, SqlParameter[] parametros)
         {
-            abrir();
+            abrir_62_RS();
             SqlCommand cmd = new SqlCommand(query, Conexion);
             cmd.CommandType = CommandType.Text;
             if (parametros != null) cmd.Parameters.AddRange(parametros);
@@ -157,13 +157,13 @@ namespace DAL_62_RS
             }
             finally
             {
-                cerrar();
+                cerrar_62_RS();
             }
         }
         public DataTable LeerText_62_RS(string consulta_62_RS, SqlParameter[] parametros_62_RS = null)
         {
             DataTable tabla_62_RS = new DataTable();
-            abrir();
+            abrir_62_RS();
 
             try
             {
@@ -189,7 +189,7 @@ namespace DAL_62_RS
             }
             finally
             {
-                cerrar();
+                cerrar_62_RS();
             }
         }
     }

@@ -35,7 +35,7 @@ namespace DAL_62_RS
                 new SqlParameter("@est", user_62_RS.Estado_62_RS),
                 new SqlParameter("@act", user_62_RS.Activo_62_RS)
                 };
-                return accesos_62_RS.EscribirText(sql_62_RS, parametros_62_RS);
+                return accesos_62_RS.EscribirText_62_RS(sql_62_RS, parametros_62_RS);
             }
             catch (Exception ex_62_RS)
             {
@@ -61,7 +61,7 @@ namespace DAL_62_RS
                 SqlParameter[] parametros_62_RS = {
                 new SqlParameter("@dni", user_62_RS.DNI_62_RS),
                 };
-                return accesos_62_RS.Verificar(sql_62_RS, parametros_62_RS);
+                return accesos_62_RS.Verificar_62_RS(sql_62_RS, parametros_62_RS);
             }
             catch (Exception ex_62_RS)
             {
@@ -83,7 +83,7 @@ namespace DAL_62_RS
                 new SqlParameter("@usu", user_62_RS.UsU_62_RS),
                 new SqlParameter("@id", user_62_RS.IdUsuario_62_RS)
             };
-                return accesos_62_RS.EscribirText(sql_62_RS, parametros_62_RS);
+                return accesos_62_RS.EscribirText_62_RS(sql_62_RS, parametros_62_RS);
             }
             catch (Exception ex_62_RS)
             {
@@ -100,7 +100,7 @@ namespace DAL_62_RS
                 new SqlParameter("@v", val_62_RS),
                 new SqlParameter("@id", user_62_RS)
                 };
-                return accesos_62_RS.EscribirText(sql_62_RS, p_62_RS);
+                return accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
             }
             catch (Exception ex_62_RS)
             {
@@ -115,7 +115,7 @@ namespace DAL_62_RS
             new SqlParameter("@val", valor_62_RS),
             new SqlParameter("@id", id_62_RS)
         };
-            return accesos_62_RS.EscribirText(sql_62_RS, p_62_RS);
+            return accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
         }
 
         public DataTable ListarUsuarios_62_RS(int tipousuario)
@@ -179,7 +179,7 @@ namespace DAL_62_RS
         new SqlParameter("@est", true),
         new SqlParameter("@u", usu_62_RS)
     };
-            accesos_62_RS.EscribirText(sql, p);
+            accesos_62_RS.EscribirText_62_RS(sql, p);
         }
 
         public int ActualizarClave_62_RS(string usu_62_RS, string nuevaClave_62_RS)
@@ -191,7 +191,7 @@ namespace DAL_62_RS
                     new SqlParameter("@usu", usu_62_RS),
                     new SqlParameter("@pass", nuevaClave_62_RS)
                 };
-                return accesos_62_RS.EscribirText(sql_62_RS, p_62_RS);
+                return accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
                 
             }
             catch (Exception ex) { throw ex; }

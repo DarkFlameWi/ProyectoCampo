@@ -14,7 +14,7 @@ namespace BLL_62_RS
     {
         SEG_62_RS.Usuario_62_RS usuario_62_RS = new SEG_62_RS.Usuario_62_RS();
         DAL_62_RS.Usuario_62_RS usuarioDAL_62_RS = new DAL_62_RS.Usuario_62_RS();
-            BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
+        BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
         private int intentosFallidos_62_RS = 0;
         public string Login_62_RS(string txtUser_62_RS, string txtPass_62_RS)
         {
