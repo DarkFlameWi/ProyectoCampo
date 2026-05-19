@@ -96,6 +96,24 @@ namespace GUI_62_RS
 
         private void DgvBit_62_RS_SelectionChanged(object sender, EventArgs e)
         {
+            /*  if (DgvBit_62_RS.CurrentRow != null)
+              {
+                  if (DgvBit_62_RS.Columns.Contains("Nombre_62_RS") && DgvBit_62_RS.Columns.Contains("Apellido_62_RS"))
+                  {
+                      TxtNombre_62_RS.Text = DgvBit_62_RS.CurrentRow.Cells["Nombre_62_RS"].Value?.ToString() ?? "";
+                      TxtApellido_62_RS.Text = DgvBit_62_RS.CurrentRow.Cells["Apellido_62_RS"].Value?.ToString() ?? "";
+                  }
+              }
+              else
+              {
+                  TxtNombre_62_RS.Text = "Sin usuario seleccionado";
+                  TxtApellido_62_RS.Text = "Sin usuario seleccionado";
+              }*/
+            UsuarioEjecucion_62_Rs();
+        }
+
+        private void UsuarioEjecucion_62_Rs()
+        {
             if (DgvBit_62_RS.CurrentRow != null)
             {
                 if (DgvBit_62_RS.Columns.Contains("Nombre_62_RS") && DgvBit_62_RS.Columns.Contains("Apellido_62_RS"))
@@ -110,7 +128,6 @@ namespace GUI_62_RS
                 TxtApellido_62_RS.Text = "Sin usuario seleccionado";
             }
         }
-
         private void BtnAplicar_62_RS_Click(object sender, EventArgs e)
         {
             try
@@ -129,6 +146,7 @@ namespace GUI_62_RS
                 MessageBox.Show("Error al filtrar la bitácora: " + ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             LimpiarCampos_62_RS();
+            UsuarioEjecucion_62_Rs();
         }
 
         private int filaActualImpresion = 0;
@@ -225,6 +243,7 @@ namespace GUI_62_RS
 
         private void BtnLimpiar_62_RS_Click(object sender, EventArgs e)
         {
+            LimpiarCampos_62_RS();
 
         }
     }

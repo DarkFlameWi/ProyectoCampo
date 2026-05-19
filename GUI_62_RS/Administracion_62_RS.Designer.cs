@@ -44,6 +44,7 @@
             cambiarClaveToolStripMenuItem = new ToolStripMenuItem();
             cambiarIdiomaToolStripMenuItem = new ToolStripMenuItem();
             logOutToolStripMenuItem = new ToolStripMenuItem();
+            logInToolStripMenuItem = new ToolStripMenuItem();
             ventasToolStripMenuItem = new ToolStripMenuItem();
             carritoToolStripMenuItem = new ToolStripMenuItem();
             facturarToolStripMenuItem = new ToolStripMenuItem();
@@ -58,7 +59,6 @@
             ayudaToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             TsslUsu_62_RS = new ToolStripStatusLabel();
-            logInToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -158,23 +158,30 @@
             // cambiarClaveToolStripMenuItem
             // 
             cambiarClaveToolStripMenuItem.Name = "cambiarClaveToolStripMenuItem";
-            cambiarClaveToolStripMenuItem.Size = new Size(224, 26);
+            cambiarClaveToolStripMenuItem.Size = new Size(199, 26);
             cambiarClaveToolStripMenuItem.Text = "Cambiar Clave";
             cambiarClaveToolStripMenuItem.Click += cambiarClaveToolStripMenuItem_Click;
             // 
             // cambiarIdiomaToolStripMenuItem
             // 
             cambiarIdiomaToolStripMenuItem.Name = "cambiarIdiomaToolStripMenuItem";
-            cambiarIdiomaToolStripMenuItem.Size = new Size(224, 26);
+            cambiarIdiomaToolStripMenuItem.Size = new Size(199, 26);
             cambiarIdiomaToolStripMenuItem.Text = "Cambiar Idioma";
             cambiarIdiomaToolStripMenuItem.Click += cambiarIdiomaToolStripMenuItem_Click;
             // 
             // logOutToolStripMenuItem
             // 
             logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            logOutToolStripMenuItem.Size = new Size(224, 26);
+            logOutToolStripMenuItem.Size = new Size(199, 26);
             logOutToolStripMenuItem.Text = "Log Out";
             logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
+            // 
+            // logInToolStripMenuItem
+            // 
+            logInToolStripMenuItem.Name = "logInToolStripMenuItem";
+            logInToolStripMenuItem.Size = new Size(199, 26);
+            logInToolStripMenuItem.Text = "Log In";
+            logInToolStripMenuItem.Click += logInToolStripMenuItem_Click;
             // 
             // ventasToolStripMenuItem
             // 
@@ -268,13 +275,6 @@
             TsslUsu_62_RS.Size = new Size(151, 20);
             TsslUsu_62_RS.Text = "toolStripStatusLabel1";
             // 
-            // logInToolStripMenuItem
-            // 
-            logInToolStripMenuItem.Name = "logInToolStripMenuItem";
-            logInToolStripMenuItem.Size = new Size(224, 26);
-            logInToolStripMenuItem.Text = "Log In";
-            logInToolStripMenuItem.Click += logInToolStripMenuItem_Click;
-            // 
             // Administracion_62_RS
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -286,6 +286,7 @@
             Margin = new Padding(3, 4, 3, 4);
             Name = "Administracion_62_RS";
             Text = "Administracion";
+            FormClosing += Administracion_62_RS_FormClosing;
             Load += Administracion_62_RS_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

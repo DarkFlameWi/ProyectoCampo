@@ -103,5 +103,35 @@ namespace GUI_62_RS
             login.MdiParent = this;
             login.Show();
         }
+
+        private void Administracion_62_RS_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var confirmacion_62_RS = MessageBox.Show("¿Está seguro que desea salir?", "Cerrar Sesión",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmacion_62_RS == DialogResult.Yes)
+            {
+                try
+                {
+                    BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
+
+                string nombreUsuario = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
+                bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario, "Cierre de sesión", "Seguridad", "1");
+               
+                    SEGusuario_62_RS.logout_62_RS();
+                    Environment.Exit(0);
+                }
+                catch (Exception ex_62_RS)
+                {
+                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+
+
+        }
     }
 }

@@ -139,6 +139,7 @@
             // 
             // TxtNombre_62_RS
             // 
+            TxtNombre_62_RS.Enabled = false;
             TxtNombre_62_RS.Location = new Point(193, 12);
             TxtNombre_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtNombre_62_RS.Name = "TxtNombre_62_RS";
@@ -147,6 +148,7 @@
             // 
             // TxtApellido_62_RS
             // 
+            TxtApellido_62_RS.Enabled = false;
             TxtApellido_62_RS.Location = new Point(480, 13);
             TxtApellido_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtApellido_62_RS.Name = "TxtApellido_62_RS";
