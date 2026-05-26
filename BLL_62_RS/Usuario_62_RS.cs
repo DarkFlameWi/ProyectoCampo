@@ -157,17 +157,17 @@ namespace BLL_62_RS
 
             var usu_62_RS = SEG_62_RS.Singleton.SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
             string Actual_62_Rs = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(valorActual_62_RS);
-            if (Actual_62_Rs != usu_62_RS.password_62_RS)
+            if (Actual_62_Rs != usu_62_RS.Password_62_RS)
                 throw new Exception("La clave actual es incorrecta.");
             if (ValorNuevo_62_RS != ValorRepetido_62_RS)
                 throw new Exception("La nueva clave y su repetición no coinciden.");
             if (valorActual_62_RS == ValorNuevo_62_RS)
                 throw new Exception("La nueva clave no puede ser igual a la actual.");
             string nuevaHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(ValorNuevo_62_RS);
-            int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(usu_62_RS.usu_62_RS, nuevaHasheada_62_RS);
+            int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(usu_62_RS.UsU_62_RS, nuevaHasheada_62_RS);
             if (filasAfectadas > 0)
             {
-                usu_62_RS.password_62_RS = nuevaHasheada_62_RS;
+                usu_62_RS.Password_62_RS = nuevaHasheada_62_RS;
             }
             else
             {

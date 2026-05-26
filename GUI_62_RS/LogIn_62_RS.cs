@@ -34,29 +34,38 @@ namespace GUI_62_RS
             {
 
                 string mensaje_62_RS = SEGUsuario_62_RS.Login_62_RS(TxtUsuario_62_RS.Text, TxtContra_62_RS.Text);
-
-                MessageBox.Show(mensaje_62_RS, "Bienvenido", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Inicio de sesión exitoso", "Seguridad", "1");
-                Administracion_62_RS admin = new Administracion_62_RS();
-                admin.FormClosed += (sender, args) => 
+                string contra = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.DNI_62_RS + SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.Apellido_62_RS;
+                string contraHash = Encriptacion_62_RS.EncriptarSHA256_62_RS(contra);
+                if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.Password_62_RS == contraHash)
                 {
-                    if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS == null)
+                    MessageBox.Show(mensaje_62_RS, "Debe cambiar la contraseña primero", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CambiarClave_62_RS cambiar = new CambiarClave_62_RS();
+                    cambiar.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show(mensaje_62_RS, "Bienvenido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Inicio de sesión exitoso", "Seguridad", "1");
+                    Administracion_62_RS admin = new Administracion_62_RS();
+                    admin.FormClosed += (sender, args) =>
                     {
-                        this.Show();
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
-                };
-                admin.Show();
-                this.Hide();
+                        if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS == null)
+                        {
+                            this.Show();
+                        }
+                        else
+                        {
+                            this.Close();
+                        }
+                    };
+                    admin.Show();
+                    this.Hide();
+                }
             }
             catch (Exception ex_62_RS)
             {
                 MessageBox.Show(ex_62_RS.Message, "Error de Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-               // bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Intento de inicio de sesión fallido", "Seguridad", "5");
                 TxtContra_62_RS.Clear();
                 TxtContra_62_RS.Focus();
             }

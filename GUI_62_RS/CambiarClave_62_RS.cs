@@ -37,10 +37,13 @@ namespace GUI_62_RS
             try
             {
                 SEGusuario_62_RS.ActualizarClave_62_RS(TxtContraActual_62_RS.Text, TxtContraNueva_62_RS.Text, TxtRepContra_62_RS.Text);
-                string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
+                string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
                 bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Cambio de clave", "Seguridad", "1");
                 MessageBox.Show("Clave cambiada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                SingletonSession_62_RS.Instancia_62_RS.CerrarSesion_62_RS();
+                Application.Restart();
+
+
             }
             catch (Exception ex) 
             {

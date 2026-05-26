@@ -8,14 +8,14 @@ namespace SEG_62_RS.Singleton
 {
     public class Sesion_62_RS
     {
-        Iusuario_62_RS _usuario_62_RS;
+        Usuario_62_RS _usuario_62_RS;
 
-        public Iusuario_62_RS Usuario_62_RS
+        public Usuario_62_RS Usuario_62_RS
         {
             get { return _usuario_62_RS; }
         }
 
-        public void IniciarSesion_62_RS(Iusuario_62_RS usuario_62_RS)
+        public void IniciarSesion_62_RS(Usuario_62_RS usuario_62_RS)
         {
             _usuario_62_RS = usuario_62_RS;
         }

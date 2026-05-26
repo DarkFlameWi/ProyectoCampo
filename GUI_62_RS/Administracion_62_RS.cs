@@ -18,7 +18,7 @@ namespace GUI_62_RS
         public Administracion_62_RS()
         {
             InitializeComponent();
-            TsslUsu_62_RS.Text = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
+            TsslUsu_62_RS.Text = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
 
         }
         BLL_62_RS.Usuario_62_RS SEGusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
@@ -76,25 +76,7 @@ namespace GUI_62_RS
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var confirmacion_62_RS = MessageBox.Show("¿Está seguro que desea salir?", "Cerrar Sesión",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (confirmacion_62_RS == DialogResult.Yes)
-            {
-                BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
-
-                string nombreUsuario = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
-                bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario, "Cierre de sesión", "Seguridad", "1");
-                try
-                {
-                    SEGusuario_62_RS.logout_62_RS();
-                    this.Close();
-                }
-                catch (Exception ex_62_RS)
-                {
-                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            this.Close();
         }
 
         private void logInToolStripMenuItem_Click(object sender, EventArgs e)
@@ -106,31 +88,35 @@ namespace GUI_62_RS
 
         private void Administracion_62_RS_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var confirmacion_62_RS = MessageBox.Show("¿Está seguro que desea salir?", "Cerrar Sesión",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS == null)
+            {
+                return;
+            }
+            var confirmacion_62_RS = MessageBox.Show("¿Está seguro que desea cerrar sesión y volver al inicio?", "Cerrar Sesión",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirmacion_62_RS == DialogResult.Yes)
             {
                 try
                 {
-                    BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
+                    if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS != null)
+                    {
+                        BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
+                        string nombreUsuario = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
 
-                string nombreUsuario = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.usu_62_RS;
-                bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario, "Cierre de sesión", "Seguridad", "1");
-               
-                    SEGusuario_62_RS.logout_62_RS();
-                    Environment.Exit(0);
+                        bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario, "Cierre de sesión", "Seguridad", "1");
+                        SEGusuario_62_RS.logout_62_RS();
+                    }
                 }
                 catch (Exception ex_62_RS)
                 {
-                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex_62_RS.Message, "Error al cerrar sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
                 e.Cancel = true;
             }
-
 
         }
     }

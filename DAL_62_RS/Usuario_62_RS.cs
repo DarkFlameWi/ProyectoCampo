@@ -162,6 +162,7 @@ namespace DAL_62_RS
                         Email_62_RS = dr_62_RS["email_62_RS"].ToString(),
                         UsU_62_RS = dr_62_RS["usu_62_RS"].ToString(),
                         Password_62_RS = dr_62_RS["password_62_RS"].ToString(),
+                        DNI_62_RS = dr_62_RS["dni_62_RS"].ToString(),
                         Estado_62_RS = Convert.ToBoolean(dr_62_RS["estado_62_RS"]),
                         Activo_62_RS = Convert.ToBoolean(dr_62_RS["Activo_62_RS"]),
                         IdIdioma = Convert.ToInt32(dr_62_RS["IdIdioma_62_RS"])
