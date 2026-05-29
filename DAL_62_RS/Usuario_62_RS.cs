@@ -7,12 +7,17 @@ using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using SEG_62_RS;
+using SEG_62_RS.Singleton;
 
 namespace DAL_62_RS
 {
     public class Usuario_62_RS
     {
         public Accesos_62_RS accesos_62_RS = new Accesos_62_RS();
+        private string Traducir(string clave)
+        {
+            return SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS[clave];
+        }
         public int AltaUsuario_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS)
         {
             string sql_62_RS = null;
@@ -39,10 +44,9 @@ namespace DAL_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                throw new Exception("Error técnico en DAL al modificar: " + ex_62_RS.Message);
+                throw new Exception(Traducir("Exc_DAL_ErrorAlta") + ex_62_RS.Message);
             }
         }
-
         public int Verificar_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS, int tipo)
         {
             try
@@ -65,10 +69,9 @@ namespace DAL_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                throw new Exception("Error técnico en DAL al modificar: " + ex_62_RS.Message);
+                throw new Exception(Traducir("Exc_DAL_ErrorVerificar") + ex_62_RS.Message);
             }
         }
-
         public int ModificarDatos_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS)
         {
             try
@@ -87,10 +90,9 @@ namespace DAL_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                throw new Exception("Error técnico en DAL al modificar: " + ex_62_RS.Message);
+                throw new Exception(Traducir("Exc_DAL_ErrorModificar") + ex_62_RS.Message);
             }
         }
-
         public int ModificarEstado_62_RS(int user_62_RS, string col_62_RS, int val_62_RS)
         {
             try
@@ -104,10 +106,9 @@ namespace DAL_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                throw new Exception($"Error técnico en DAL al actualizar {col_62_RS}: " + ex_62_RS.Message);
+                throw new Exception(Traducir("Exc_DAL_ErrorActualizar") + col_62_RS + ": " + ex_62_RS.Message);
             }
         }
-
         public int ModificarBit_62_RS(int id_62_RS, string columna_62_RS, int valor_62_RS)
         {
             string sql_62_RS = $"UPDATE [Usuarios_62_RS] SET {columna_62_RS} = @val WHERE idusuario_62_RS = @id";
@@ -117,7 +118,6 @@ namespace DAL_62_RS
         };
             return accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
         }
-
         public DataTable ListarUsuarios_62_RS(int tipousuario)
         {
             try
@@ -136,7 +136,7 @@ namespace DAL_62_RS
             }
             catch (SqlException ex_62_RS)
             {
-                throw new Exception("Error técnico en la base de datos al intentar listar usuarios. Detalle: " + ex_62_RS.Message);
+                throw new Exception(Traducir("Exc_DAL_ErrorListar") + ex_62_RS.Message);
             }
         }
         public SEG_62_RS.Usuario_62_RS ValidarAcceso_62_RS(string user_62_RS, string pass_62_RS)
@@ -170,9 +170,8 @@ namespace DAL_62_RS
                 }
                 return null;
             }
-            catch (Exception ex_62_RS) { throw new Exception("Error en DAL: " + ex_62_RS.Message); }
+            catch (Exception ex_62_RS) { throw new Exception(Traducir("Exc_DAL_ErrorGenerico") + ex_62_RS.Message); }
         }
-
         public void BloquearUsuario_62_RS(string usu_62_RS)
         {
             string sql = "UPDATE Usuarios_62_RS SET estado_62_RS = @est WHERE usu_62_RS = @u";
@@ -182,7 +181,6 @@ namespace DAL_62_RS
     };
             accesos_62_RS.EscribirText_62_RS(sql, p);
         }
-
         public int ActualizarClave_62_RS(string usu_62_RS, string nuevaClave_62_RS)
         {
             try
@@ -196,6 +194,23 @@ namespace DAL_62_RS
                 
             }
             catch (Exception ex) { throw ex; }
+        }
+        public int ActualizarIdiomaUsuario_62_RS(int idUsuario_62_RS, int idIdioma_62_RS)
+        {
+            try
+            {
+                string sql_62_RS = "UPDATE Usuarios_62_RS SET IdIdioma_62_RS = @idIdioma WHERE idusuario_62_RS = @id";
+                SqlParameter[] p_62_RS =
+                {
+                    new SqlParameter("@idIdioma", idIdioma_62_RS),
+                    new SqlParameter("@id", idUsuario_62_RS)
+                };
+                return accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
+            }
+            catch (Exception ex_62_RS)
+            {
+                throw new Exception(Traducir("Exc_DAL_ErrorActualizarIdioma") + ex_62_RS.Message);
+            }
         }
     }
 

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SEG_62_RS.Singleton;
 
 namespace BLL_62_RS
 {
@@ -40,7 +41,8 @@ namespace BLL_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                throw new Exception("Error al procesar la lista de usuarios: " + ex_62_RS.Message);
+                string msjTraducido = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Exc_BLL_ErrorProcesarBitacora"];
+                throw new Exception(msjTraducido + ex_62_RS.Message);
             }
         }
 
@@ -48,7 +50,8 @@ namespace BLL_62_RS
         {
             if (desde > hasta)
             {
-                throw new Exception("La fecha de inicio ('Desde') no puede ser mayor que la fecha de fin ('Hasta').");
+                string msjValidacion = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Exc_BLL_ErrorFechaDesdeMayorHasta"];
+                throw new Exception(msjValidacion);
             }
             return dalBitacora_62_RS.FiltrarBitacora_62_RS(login, modulo, evento, criticidad, desde, hasta);
         }

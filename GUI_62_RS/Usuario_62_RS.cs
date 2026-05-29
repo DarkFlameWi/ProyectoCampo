@@ -1,7 +1,7 @@
-﻿using BLL_62_RS;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using SEG_62_RS;
 using SEG_62_RS.Singleton;
+using SEG_62_RS.Observer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace GUI_62_RS
 {
-    public partial class Usuario_62_RS : Form
+    public partial class Usuario_62_RS : Form, IObservadorIdioma_62_RS
     {
         SEG_62_RS.Usuario_62_RS SEGusuario_62_RS;
         BLL_62_RS.Usuario_62_RS BLLusuario_62_RS;
@@ -31,6 +31,18 @@ namespace GUI_62_RS
             SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS();
             BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
             CargarDatosUsuarios_62_RS();
+            SingletonSession_62_RS.Instancia_62_RS.SuscribirObservador_62_RS(this);
+            ActualizarIdioma_62_RS(SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS);
+        }
+
+        private string Traducir(string clave)
+        {
+            var idiomaActual = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS;
+            if (idiomaActual != null && idiomaActual.Traducciones_62_RS.ContainsKey(clave))
+            {
+                return idiomaActual.Traducciones_62_RS[clave];
+            }
+            return clave;
         }
 
         public void Limpiar()
@@ -58,22 +70,22 @@ namespace GUI_62_RS
                     if (DgvUsu_62_RS.Columns.Contains("idusuario_62_RS"))
                         DgvUsu_62_RS.Columns["idusuario_62_RS"].Visible = false;
 
-                    DgvUsu_62_RS.Columns["nombre_62_RS"].HeaderText = "Nombre";
-                    DgvUsu_62_RS.Columns["apellido_62_RS"].HeaderText = "Apellido";
-                    DgvUsu_62_RS.Columns["email_62_RS"].HeaderText = "Correo Electrónico";
-                    DgvUsu_62_RS.Columns["dni_62_RS"].HeaderText = "D.N.I.";
-                    DgvUsu_62_RS.Columns["usu_62_RS"].HeaderText = "Usuario";
-                    DgvUsu_62_RS.Columns["estado_62_RS"].HeaderText = "Bloqueado";
-                    DgvUsu_62_RS.Columns["Activo_62_RS"].HeaderText = "Activo";
+                    DgvUsu_62_RS.Columns["nombre_62_RS"].HeaderText = Traducir("DgvCol_Usu_Nombre");
+                    DgvUsu_62_RS.Columns["apellido_62_RS"].HeaderText = Traducir("DgvCol_Usu_Apellido");
+                    DgvUsu_62_RS.Columns["email_62_RS"].HeaderText = Traducir("DgvCol_Usu_Email");
+                    DgvUsu_62_RS.Columns["dni_62_RS"].HeaderText = Traducir("DgvCol_Usu_DNI");
+                    DgvUsu_62_RS.Columns["usu_62_RS"].HeaderText = Traducir("DgvCol_Usu_Usuario");
+                    DgvUsu_62_RS.Columns["estado_62_RS"].HeaderText = Traducir("DgvCol_Usu_Bloqueado");
+                    DgvUsu_62_RS.Columns["Activo_62_RS"].HeaderText = Traducir("DgvCol_Usu_Activo");
                 }
                 else
                 {
-                    MessageBox.Show("No hay usuarios registrados actualmente.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(Traducir("Msg_Usu_SinRegistros"), Traducir("Msg_Usu_Atencion"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex_62_RS)
             {
-                MessageBox.Show("Error de Sistema: " + ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Traducir("Msg_Usu_ErrorSistema") + ex_62_RS.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ActualizarDgv_62_RS()
@@ -82,7 +94,6 @@ namespace GUI_62_RS
             {
                 DatosUnabler_62_RS();
                 DgvUsu_62_RS.DataSource = BLLusuario_62_RS.ListarUsuario_62_RS(tipousuario);
-                
                 if (DgvUsu_62_RS.Columns.Contains("idusuario_62_RS"))
                     DgvUsu_62_RS.Columns["idusuario_62_RS"].Visible = false;
 
@@ -90,12 +101,12 @@ namespace GUI_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                MessageBox.Show("Error al actualizar la lista: " + ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(Traducir("Msg_Usu_ErrorActualizar") + ex_62_RS.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
         private void BtnCrear_62_RS_Click(object sender, EventArgs e)
         {
-            TxtMensaje_62_RS.Text = "Se eligió la función Crear.";
+            TxtMensaje_62_RS.Text = Traducir("Msg_Usu_TxtCrear");
             Limpiar();
             idFuncion_62_RS = 1;
             BtnCrear_62_RS.Enabled = false;
@@ -105,14 +116,14 @@ namespace GUI_62_RS
         }
         private void BtnDesbloquear_62_RS_Click(object sender, EventArgs e)
         {
-            TxtMensaje_62_RS.Text = "Se eligió la función Desbloquear.";
+            TxtMensaje_62_RS.Text = Traducir("Msg_Usu_TxtDesbloquear"); 
             DatosUnabler_62_RS();
             idFuncion_62_RS = 2;
             BtnRestore_62_RS(1);
         }
         private void BtnModificar_62_RS_Click(object sender, EventArgs e)
         {
-            TxtMensaje_62_RS.Text = "Se eligió la función Modificar.";
+            TxtMensaje_62_RS.Text = Traducir("Msg_Usu_TxtModificar"); 
             DatosUnabler_62_RS();
             idFuncion_62_RS = 3;
             BtnModificar_62_RS.Enabled = false;
@@ -120,15 +131,13 @@ namespace GUI_62_RS
             DatosEnabler_62_RS(1, 1, 0);
             BtnRestore_62_RS(1);
         }
-
         private void BtnActivar_62_RS_Click(object sender, EventArgs e)
         {
-            TxtMensaje_62_RS.Text = "Se eligió la función Activar.";
+            TxtMensaje_62_RS.Text = Traducir("Msg_Usu_TxtActivar");
             DatosUnabler_62_RS();
             idFuncion_62_RS = 4;
             BtnRestore_62_RS(1);
         }
-
         private void DgvUsu_62_RS_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -141,7 +150,6 @@ namespace GUI_62_RS
                     TxtApellido_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["apellido_62_RS"].Value.ToString();
                     TxtEmail_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["email_62_RS"].Value.ToString();
                     txtDni_62_RS.Text = DgvUsu_62_RS.Rows[e.RowIndex].Cells["dni_62_RS"].Value.ToString();
-
                     GroupBox.Enabled = false;
                     BtnAplicar_62_RS.Enabled = false;
                     BtnDesbloquear_62_RS.Enabled = true;
@@ -151,15 +159,13 @@ namespace GUI_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                MessageBox.Show("Error al seleccionar el usuario: " + ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Traducir("Msg_Usu_ErrorSeleccionar") + ex_62_RS.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void BtnSalir_62_RS_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void BtnAplicar_62_RS_Click(object sender, EventArgs e)
         {
             BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
@@ -172,8 +178,7 @@ namespace GUI_62_RS
                     if (string.IsNullOrWhiteSpace(txtDni_62_RS.Text) || string.IsNullOrWhiteSpace(TxtNombre_62_RS.Text) ||
                         string.IsNullOrWhiteSpace(TxtApellido_62_RS.Text) || string.IsNullOrWhiteSpace(TxtEmail_62_RS.Text))
                     {
-                        MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        BtnRestore_62_RS(0);
+                        MessageBox.Show(Traducir("Msg_Usu_CamposVacios"), Traducir("Msg_Usu_Atencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning); BtnRestore_62_RS(0);
                         return;
                     }
                     SEGusuario_62_RS = new SEG_62_RS.Usuario_62_RS
@@ -185,20 +190,16 @@ namespace GUI_62_RS
                     };
                     BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
                     BLLusuario_62_RS.AltaUsuario_62_RS(SEGusuario_62_RS);
-                    MessageBox.Show("Usuario creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Crear Usuario", "Seguridad", "1");
-                    Limpiar();
-                    TxtMensaje_62_RS.Text = "Se creó el usuario.";
+                    MessageBox.Show(Traducir("Msg_Usu_ExitoCreacion"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar();
+                    TxtMensaje_62_RS.Text = Traducir("Msg_Usu_CreacionExitosa");
                 }
                 catch (SqlException sqlEx)
                 {
-                    MessageBox.Show("Error de base de datos: " + sqlEx.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    TxtMensaje_62_RS.Text = sqlEx.Message;
+                    MessageBox.Show(Traducir("Msg_Usu_ErrorBD") + sqlEx.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error); TxtMensaje_62_RS.Text = sqlEx.Message;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al crear el usuario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Traducir("Msg_Usu_ErrorCrear") + ex.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     TxtMensaje_62_RS.Text = ex.Message;
                 }
                 finally
@@ -211,8 +212,7 @@ namespace GUI_62_RS
                 //DESBLOQUEAR
                 try
                 {
-                    if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
-
+                    if (idSeleccionado_62_RS == 0) throw new Exception(Traducir("Msg_Usu_ValidacionSelect"));
                     var objUser_62_RS = new SEG_62_RS.Usuario_62_RS
                     {
                         IdUsuario_62_RS = idSeleccionado_62_RS,
@@ -223,15 +223,13 @@ namespace GUI_62_RS
                     };
 
                     BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
-                    BLLusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS,objUser_62_RS);
-                    string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Desbloquear Usuario", "Seguridad", "1");
-                    MessageBox.Show("El usuario ha sido desbloqueado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    TxtMensaje_62_RS.Text = "Se desbloqueó el usuario.";
+                    BLLusuario_62_RS.DesbloquearUsuario_62_RS(idSeleccionado_62_RS, objUser_62_RS);
+                    MessageBox.Show(Traducir("Msg_Usu_ExitoDesbloqueo"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TxtMensaje_62_RS.Text = Traducir("Msg_Usu_DesbloqueoExitoso");
                 }
                 catch (Exception ex_62_RS)
                 {
-                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex_62_RS.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     TxtMensaje_62_RS.Text = ex_62_RS.Message;
                 }
                 finally
@@ -244,7 +242,7 @@ namespace GUI_62_RS
                 //MODIFICAR
                 if (idSeleccionado_62_RS == 0)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Traducir("Msg_Usu_ValidacionLista"), Traducir("Msg_Usu_Atencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     BtnRestore_62_RS(0);
                     return;
                 }
@@ -259,14 +257,12 @@ namespace GUI_62_RS
                     };
 
                     BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
-                    string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Modificar Usuario", "Seguridad", "1");
-                    MessageBox.Show("Usuario actualizado con éxito.", "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    TxtMensaje_62_RS.Text = "Se modificó el usuario.";
+                    MessageBox.Show(Traducir("Msg_Usu_ExitoModificacion"), Traducir("Msg_Usu_SistemaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TxtMensaje_62_RS.Text = Traducir("Msg_Usu_ModificacionExitosa");
                 }
                 catch (Exception ex_62_RS)
                 {
-                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex_62_RS.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     TxtMensaje_62_RS.Text = ex_62_RS.Message;
                 }
                 finally
@@ -279,19 +275,16 @@ namespace GUI_62_RS
                 //ACTIVAR DESACTIVAR
                 try
                 {
-                    if (idSeleccionado_62_RS == 0) throw new Exception("Seleccione un usuario de la grilla.");
-
+                    if (idSeleccionado_62_RS == 0) throw new Exception(Traducir("Msg_Usu_ValidacionSelect"));
                     int actual_62_RS = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["Activo_62_RS"].Value);
 
                     BLLusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);
-                    string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Desactivar Usuario", "Seguridad", "1");
-                    MessageBox.Show("Estado de actividad modificado.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    TxtMensaje_62_RS.Text = "Se activó el usuario.";
+                    MessageBox.Show(Traducir("Msg_Usu_ExitoActividad"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TxtMensaje_62_RS.Text = Traducir("Msg_Usu_ActividadExitosa");
                 }
                 catch (Exception ex_62_RS)
                 {
-                    MessageBox.Show(ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex_62_RS.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     TxtMensaje_62_RS.Text = ex_62_RS.Message;
                 }
                 finally
@@ -301,15 +294,12 @@ namespace GUI_62_RS
             }
             BtnRestore_62_RS(0);
         }
-
         private void BtnCancelar_62_RS_Click(object sender, EventArgs e)
         {
-            TxtMensaje_62_RS.Text = "Proceso cancelado.";
-            Limpiar();
+            TxtMensaje_62_RS.Text = Traducir("Msg_Usu_Cancelado"); Limpiar();
             DatosUnabler_62_RS();
             BtnRestore_62_RS(0);
         }
-
         private void DatosEnabler_62_RS(int email, int rol, int demas)
         {
             if (email == 1)
@@ -328,7 +318,6 @@ namespace GUI_62_RS
             }
             return;
         }
-
         private void DatosUnabler_62_RS()
         {
             txtDni_62_RS.Enabled = false;
@@ -340,19 +329,16 @@ namespace GUI_62_RS
             TxtBloqueado_62_RS.Enabled = false;
             TxtActivo_62_RS.Enabled = false;
         }
-
         private void RbActivo_62_RS_CheckedChanged(object sender, EventArgs e)
         {
             tipousuario = 1;
             ActualizarDgv_62_RS();
         }
-
         private void RbTodo_62_RS_CheckedChanged(object sender, EventArgs e)
         {
             tipousuario = 0;
-           ActualizarDgv_62_RS();
+            ActualizarDgv_62_RS();
         }
-
         void BtnRestore_62_RS(int tipo)
         {
             if (tipo == 0)
@@ -375,5 +361,39 @@ namespace GUI_62_RS
                 BtnCancelar_62_RS.Enabled = true;
             }
         }
+        public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
+        {
+            if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
+                return;
+
+            if (idioma.Traducciones_62_RS.ContainsKey(this.Name))
+                this.Text = idioma.Traducciones_62_RS[this.Name];
+            TraducirControles_62_RS(this.Controls, idioma);
+            if (DgvUsu_62_RS.DataSource != null)
+            {
+                CargarDatosUsuarios_62_RS();
+            }
+        }
+        private void TraducirControles_62_RS(Control.ControlCollection controles, Idioma_62_RS idioma)
+        {
+            foreach (Control ctrl in controles)
+            {
+                if (idioma.Traducciones_62_RS.ContainsKey(ctrl.Name))
+                {
+                    ctrl.Text = idioma.Traducciones_62_RS[ctrl.Name];
+                }
+                if (ctrl.HasChildren)
+                {
+                    TraducirControles_62_RS(ctrl.Controls, idioma);
+                }
+            }
+        }
+
+        private void Usuario_62_RS_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SingletonSession_62_RS.Instancia_62_RS.DesuscribirObservador_62_RS(this);
+
+        }
     }
+
 }

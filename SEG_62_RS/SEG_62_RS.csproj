@@ -10,4 +10,13 @@
     <ProjectReference Include="..\BE_62_RS\BE_62_RS.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="idiomas\en-US.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="idiomas\es-AR.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

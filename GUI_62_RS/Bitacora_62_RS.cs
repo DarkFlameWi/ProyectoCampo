@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SEG_62_RS.Observer;
+using SEG_62_RS.Singleton;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,9 +11,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace GUI_62_RS
 {
-    public partial class Bitacora_62_RS : Form
+    public partial class Bitacora_62_RS : Form, IObservadorIdioma_62_RS
     {
         SEG_62_RS.Bitacora_62_RS SEGBitacora_62_RS;
         BLL_62_RS.Bitcaora_62_RS BLLBitacora_62_RS;
@@ -23,6 +26,8 @@ namespace GUI_62_RS
             BLLBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
             CargarDatosBitacora_62_RS();
             CargarCmb();
+            SingletonSession_62_RS.Instancia_62_RS.SuscribirObservador_62_RS(this);
+            ActualizarIdioma_62_RS(SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS);
         }
         void LimpiarCampos_62_RS()
         {
@@ -50,6 +55,8 @@ namespace GUI_62_RS
             {
                 DataTable dt_62_RS = BLLBitacora_62_RS.ListarBitacora_62_RS();
                 DgvBit_62_RS.DataSource = dt_62_RS;
+                var traducciones = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS;
+
                 if (DgvBit_62_RS.Columns.Count > 0)
                 {
                     if (DgvBit_62_RS.Columns.Contains("IdBitacora_62_RS"))
@@ -59,12 +66,12 @@ namespace GUI_62_RS
                     if (DgvBit_62_RS.Columns.Contains("Apellido_62_RS"))
                         DgvBit_62_RS.Columns["Apellido_62_RS"].Visible = false;
 
-                    DgvBit_62_RS.Columns["Usu_62_RS"].HeaderText = "Login";
-                    DgvBit_62_RS.Columns["Fecha_62_RS"].HeaderText = "Fecha";
-                    DgvBit_62_RS.Columns["Hora_62_RS"].HeaderText = "Hora";
-                    DgvBit_62_RS.Columns["Descripcion_62_RS"].HeaderText = "Evento";
-                    DgvBit_62_RS.Columns["Modulo_62_RS"].HeaderText = "Modulo";
-                    DgvBit_62_RS.Columns["Criticidad_62_RS"].HeaderText = "Criticidad";
+                    DgvBit_62_RS.Columns["Usu_62_RS"].HeaderText = traducciones["DgvCol_Bit_Login"];
+                    DgvBit_62_RS.Columns["Fecha_62_RS"].HeaderText = traducciones["DgvCol_Bit_Fecha"];
+                    DgvBit_62_RS.Columns["Hora_62_RS"].HeaderText = traducciones["DgvCol_Bit_Hora"];
+                    DgvBit_62_RS.Columns["Descripcion_62_RS"].HeaderText = traducciones["DgvCol_Bit_Evento"];
+                    DgvBit_62_RS.Columns["Modulo_62_RS"].HeaderText = traducciones["DgvCol_Bit_Modulo"];
+                    DgvBit_62_RS.Columns["Criticidad_62_RS"].HeaderText = traducciones["DgvCol_Bit_Criticidad"];
 
                     if (CmbLogin_62_RS.Items.Count == 0)
                     {
@@ -80,12 +87,13 @@ namespace GUI_62_RS
                 }
                 else
                 {
-                    MessageBox.Show("No hay bitácora registrada.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(traducciones["Msg_Bitacora_SinRegistros"], traducciones["Msg_Bitacora_Atencion"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex_62_RS)
             {
-                MessageBox.Show("Error de Sistema: " + ex_62_RS.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var traducciones = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS;
+                MessageBox.Show(traducciones["Msg_Bitacora_ErrorSistema"] + ex_62_RS.Message, traducciones["Msg_Bitacora_ErrorTitulo"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -93,25 +101,10 @@ namespace GUI_62_RS
         {
             this.Close();
         }
-
         private void DgvBit_62_RS_SelectionChanged(object sender, EventArgs e)
         {
-            /*  if (DgvBit_62_RS.CurrentRow != null)
-              {
-                  if (DgvBit_62_RS.Columns.Contains("Nombre_62_RS") && DgvBit_62_RS.Columns.Contains("Apellido_62_RS"))
-                  {
-                      TxtNombre_62_RS.Text = DgvBit_62_RS.CurrentRow.Cells["Nombre_62_RS"].Value?.ToString() ?? "";
-                      TxtApellido_62_RS.Text = DgvBit_62_RS.CurrentRow.Cells["Apellido_62_RS"].Value?.ToString() ?? "";
-                  }
-              }
-              else
-              {
-                  TxtNombre_62_RS.Text = "Sin usuario seleccionado";
-                  TxtApellido_62_RS.Text = "Sin usuario seleccionado";
-              }*/
             UsuarioEjecucion_62_Rs();
         }
-
         private void UsuarioEjecucion_62_Rs()
         {
             if (DgvBit_62_RS.CurrentRow != null)
@@ -124,8 +117,9 @@ namespace GUI_62_RS
             }
             else
             {
-                TxtNombre_62_RS.Text = "Sin usuario seleccionado";
-                TxtApellido_62_RS.Text = "Sin usuario seleccionado";
+                string msgSinUsuario = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Msg_Bitacora_SinUsuarioSelect"];
+                TxtNombre_62_RS.Text = msgSinUsuario;
+                TxtApellido_62_RS.Text = msgSinUsuario;
             }
         }
         private void BtnAplicar_62_RS_Click(object sender, EventArgs e)
@@ -148,14 +142,11 @@ namespace GUI_62_RS
             LimpiarCampos_62_RS();
             UsuarioEjecucion_62_Rs();
         }
-
         private int filaActualImpresion = 0;
-
         private void BtnImprimir_62_RS_Click(object sender, EventArgs e)
         {
             Imprimir_62_RS();
         }
-
         private void Imprimir_62_RS()
         {
             PrintDocument doc = new PrintDocument();
@@ -169,13 +160,10 @@ namespace GUI_62_RS
             {
                 DgvBit_62_RS.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 filaActualImpresion = 0;
-
-                //doc.BeginPrint += new PrintEventHandler(ContenidoImprimir_62_RS);
                 doc.PrintPage += new PrintPageEventHandler(ContenidoImprimir_62_RS);
                 doc.Print();
             }
         }
-
         private void ContenidoImprimir_62_RS(object sender, PrintPageEventArgs e)
         {
             Font fuenteTitulo = new Font("Arial", 24, FontStyle.Bold);
@@ -185,14 +173,14 @@ namespace GUI_62_RS
             int x = e.MarginBounds.Left;
             int y = e.MarginBounds.Top;
             int altoFila = 25;
+
             if (filaActualImpresion == 0)
             {
-                string titulo = "REPORTE DE BITÁCOTA";
+                string titulo = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Print_Bitacora_Titulo"];
                 e.Graphics.DrawString(titulo, fuenteTitulo, Brushes.Black, x, y);
                 y += 40;
             }
-
-            foreach (DataGridViewColumn col in DgvBit_62_RS.Columns)
+                foreach (DataGridViewColumn col in DgvBit_62_RS.Columns)
             {
                 if (col.Visible)
                 {
@@ -240,11 +228,38 @@ namespace GUI_62_RS
             }
             e.HasMorePages = false;
         }
-
         private void BtnLimpiar_62_RS_Click(object sender, EventArgs e)
         {
             LimpiarCampos_62_RS();
 
+        }
+        public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
+        {
+            if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
+                return;
+
+            if (idioma.Traducciones_62_RS.ContainsKey(this.Name))
+                this.Text = idioma.Traducciones_62_RS[this.Name];
+            TraducirControles_62_RS(this.Controls, idioma);
+        }
+
+        private void TraducirControles_62_RS(Control.ControlCollection controles, Idioma_62_RS idioma)
+        {
+            foreach (Control ctrl in controles)
+            {
+                if (idioma.Traducciones_62_RS.ContainsKey(ctrl.Name))
+                {
+                    ctrl.Text = idioma.Traducciones_62_RS[ctrl.Name];
+                }
+                if (ctrl.HasChildren)
+                {
+                    TraducirControles_62_RS(ctrl.Controls, idioma);
+                }
+            }
+        }
+        private void Bitacora_62_RS_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SingletonSession_62_RS.Instancia_62_RS.DesuscribirObservador_62_RS(this);
         }
     }
 }

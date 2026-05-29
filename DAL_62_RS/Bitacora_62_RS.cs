@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Reflection.Metadata;
+using SEG_62_RS.Singleton;
 namespace DAL_62_RS
 {
     public class Bitacora_62_RS
@@ -36,7 +37,8 @@ namespace DAL_62_RS
             }
             catch (SqlException ex_62_RS)
             {
-                throw new Exception("Error técnico en la base de datos al intentar listar usuarios. Detalle: " + ex_62_RS.Message);
+                string msjListar = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Exc_DAL_ErrorListarBitacora"];
+                throw new Exception(msjListar + ex_62_RS.Message);
             }
         }
 
@@ -87,7 +89,8 @@ namespace DAL_62_RS
             }
             catch (SqlException ex_62_RS)
             {
-                throw new Exception("Error técnico en la base de datos al filtrar la bitácora. Detalle: " + ex_62_RS.Message);
+                string msjFiltrar = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Exc_DAL_ErrorFiltrarBitacora"];
+                throw new Exception(msjFiltrar + ex_62_RS.Message);
             }
         }
     }
