@@ -190,5 +190,34 @@
   "Exc_BLL_ErrorFechaDesdeMayorHasta": "La fecha de inicio ('Desde') no puede ser mayor que la fecha de fin ('Hasta').",
   "Exc_DAL_ErrorActualizarIdioma": "Error técnico en DAL al actualizar idioma: ",
   "Exc_BLL_ActualizarIdiomaSinRegistro": "No se encontró el usuario para actualizar el idioma.",
-  "Exc_BLL_ErrorLogicaIdioma": "Lógica de Negocio al actualizar idioma: "
+  "Exc_BLL_ErrorLogicaIdioma": "Lógica de Negocio al actualizar idioma: ",
+  "Exc_BLL_NombreVacio": "El nombre no puede estar vacío.",
+  "Exc_BLL_ErrorFam": "Error de negocio al gestionar Familia: ",
+  "Exc_BLL_ErrorRol": "Error de negocio al gestionar Rol: ",
+  "Exc_BLL_ErrorConfigRol": "Error al configurar los permisos del Rol: ",
+  "Exc_BLL_ErrorConfigFam": "Error al configurar las patentes de la Familia: ",
+  "Bit_ConfigRol": "Se configuraron los permisos del Rol ID: ",
+  "Bit_ConfigFam": "Se configuraron las patentes de la Familia ID: ",
+
+  "Perfiles_62_RS": "Gestión de Perfiles y Permisos",
+
+  "BtnNuevo_62_RS": "Nueva Familia",
+  "BtnGuardar_62_RS": "Guardar Familia",
+  "BtnCancelar_62_RS": "Cancelar",
+  "BtnConfigurarFami_62_RS": "Aplicar Patentes a Familia",
+
+  "BtnAltaRol_62_RS": "Guardar Rol",
+  "BtnBajaRol_62_RS": "Limpiar Campos",
+  "BtnModificarRol_62_RS": "Aplicar Permisos al Rol",
+
+  "TvNode_FamiliasDisp": "Familias Disponibles",
+  "TvNode_PatentesDisp": "Patentes Disponibles",
+  "Txt_FamDescDefecto": "Familia de permisos",
+
+  "Msg_Perf_ErrorCargar": "Error al cargar datos: ",
+  "Msg_Perf_FamGuardada": "Familia guardada con éxito.",
+  "Msg_Perf_FamConfigurada": "Patentes asignadas correctamente a la familia.",
+  "Msg_Perf_RolGuardado": "Rol guardado con éxito.",
+  "Msg_Perf_RolConfigurado": "Permisos configurados correctamente para el Rol.",
+  "Msg_Perf_ConflictoTitulo": "Conflictos de Permisos"
 }

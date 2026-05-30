@@ -30,7 +30,9 @@ namespace GUI_62_RS
         }
         private void PerfilrestoolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Perfiles_62_RS perfiles_62_RS = new Perfiles_62_RS();
+            perfiles_62_RS.MdiParent = this;
+            perfiles_62_RS.Show();
         }
         private void UsuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {

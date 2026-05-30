@@ -190,6 +190,34 @@
   "Exc_BLL_ErrorFechaDesdeMayorHasta": "The start date ('From') cannot be greater than the end date ('To').",
   "Exc_DAL_ErrorActualizarIdioma": "Technical error in DAL while updating language: ",
   "Exc_BLL_ActualizarIdiomaSinRegistro": "User not found to update language.",
-  "Exc_BLL_ErrorLogicaIdioma": "Business logic error when updating language: "
+  "Exc_BLL_ErrorLogicaIdioma": "Business logic error when updating language: ",
+  "Exc_BLL_NombreVacio": "The name cannot be empty.",
+  "Exc_BLL_ErrorFam": "Business error managing Family: ",
+  "Exc_BLL_ErrorRol": "Business error managing Role: ",
+  "Exc_BLL_ErrorConfigRol": "Error configuring Role permissions: ",
+  "Exc_BLL_ErrorConfigFam": "Error configuring Family patents: ",
+  "Bit_ConfigRol": "Permissions configured for Role ID: ",
+  "Bit_ConfigFam": "Patents configured for Family ID: ",
 
+  "Perfiles_62_RS": "Profiles and Permissions Management",
+
+  "BtnNuevo_62_RS": "New Family",
+  "BtnGuardar_62_RS": "Save Family",
+  "BtnCancelar_62_RS": "Cancel",
+  "BtnConfigurarFami_62_RS": "Apply Patents to Family",
+
+  "BtnAltaRol_62_RS": "Save Role",
+  "BtnBajaRol_62_RS": "Clear Fields",
+  "BtnModificarRol_62_RS": "Apply Permissions to Role",
+
+  "TvNode_FamiliasDisp": "Available Families",
+  "TvNode_PatentesDisp": "Available Patents",
+  "Txt_FamDescDefecto": "Permission family",
+
+  "Msg_Perf_ErrorCargar": "Error loading data: ",
+  "Msg_Perf_FamGuardada": "Family saved successfully.",
+  "Msg_Perf_FamConfigurada": "Patents successfully assigned to the family.",
+  "Msg_Perf_RolGuardado": "Role saved successfully.",
+  "Msg_Perf_RolConfigurado": "Permissions successfully configured for the Role.",
+  "Msg_Perf_ConflictoTitulo": "Permission Conflicts"
 }
