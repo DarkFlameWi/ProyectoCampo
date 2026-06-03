@@ -37,33 +37,36 @@
             // TxtUsu_62_RS
             // 
             TxtUsu_62_RS.Enabled = false;
-            TxtUsu_62_RS.Location = new Point(32, 12);
+            TxtUsu_62_RS.Location = new Point(37, 16);
+            TxtUsu_62_RS.Margin = new Padding(3, 4, 3, 4);
             TxtUsu_62_RS.Name = "TxtUsu_62_RS";
-            TxtUsu_62_RS.Size = new Size(178, 23);
+            TxtUsu_62_RS.Size = new Size(203, 27);
             TxtUsu_62_RS.TabIndex = 0;
             // 
             // LblIdioma_62_RS
             // 
             LblIdioma_62_RS.AutoSize = true;
-            LblIdioma_62_RS.Location = new Point(32, 53);
+            LblIdioma_62_RS.Location = new Point(37, 71);
             LblIdioma_62_RS.Name = "LblIdioma_62_RS";
-            LblIdioma_62_RS.Size = new Size(134, 15);
+            LblIdioma_62_RS.Size = new Size(173, 20);
             LblIdioma_62_RS.TabIndex = 1;
             LblIdioma_62_RS.Text = "Eliga el idioma deseado:";
             // 
             // cmbIdioma_62_RS
             // 
             cmbIdioma_62_RS.FormattingEnabled = true;
-            cmbIdioma_62_RS.Location = new Point(32, 71);
+            cmbIdioma_62_RS.Location = new Point(37, 95);
+            cmbIdioma_62_RS.Margin = new Padding(3, 4, 3, 4);
             cmbIdioma_62_RS.Name = "cmbIdioma_62_RS";
-            cmbIdioma_62_RS.Size = new Size(178, 23);
+            cmbIdioma_62_RS.Size = new Size(203, 28);
             cmbIdioma_62_RS.TabIndex = 2;
             // 
             // BtnIdioma_62_RS
             // 
-            BtnIdioma_62_RS.Location = new Point(32, 104);
+            BtnIdioma_62_RS.Location = new Point(37, 139);
+            BtnIdioma_62_RS.Margin = new Padding(3, 4, 3, 4);
             BtnIdioma_62_RS.Name = "BtnIdioma_62_RS";
-            BtnIdioma_62_RS.Size = new Size(178, 62);
+            BtnIdioma_62_RS.Size = new Size(203, 83);
             BtnIdioma_62_RS.TabIndex = 3;
             BtnIdioma_62_RS.Text = "Cambiar Idioma";
             BtnIdioma_62_RS.UseVisualStyleBackColor = true;
@@ -71,14 +74,20 @@
             // 
             // CambiarIdioma_62_RS
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(237, 178);
+            ClientSize = new Size(271, 237);
             Controls.Add(BtnIdioma_62_RS);
             Controls.Add(cmbIdioma_62_RS);
             Controls.Add(LblIdioma_62_RS);
             Controls.Add(TxtUsu_62_RS);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "CambiarIdioma_62_RS";
+            ShowIcon = false;
+            ShowInTaskbar = false;
             Text = "Cambio de idioma";
             FormClosed += CambiarIdioma_62_RS_FormClosed;
             ResumeLayout(false);
