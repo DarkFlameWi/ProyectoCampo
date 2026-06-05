@@ -219,5 +219,24 @@
   "Msg_Perf_FamConfigurada": "Patents successfully assigned to the family.",
   "Msg_Perf_RolGuardado": "Role saved successfully.",
   "Msg_Perf_RolConfigurado": "Permissions successfully configured for the Role.",
-  "Msg_Perf_ConflictoTitulo": "Permission Conflicts"
+  "Msg_Perf_ConflictoTitulo": "Permission Conflicts",
+
+  "Exc_BLL_DirInvalido": "The selected destination folder is invalid.",
+  "Exc_BLL_ErrorBackup": "Error generating backup: ",
+  "Exc_BLL_ArchivoInvalido": "The selected .bak file does not exist.",
+  "Exc_BLL_ErrorRestore": "Error restoring database: ",
+
+  "Backup_62_RS": "Backup and Restore Management",
+  "RbBackup_62_RS": "Backup",
+  "RbRestore_62_RS": "Restore",
+  "LblDirectorio_62_RS": "Directory",
+  "BtnBuscar_62_RS": "Browse",
+  "BtnEjecutar_62_RS": "Execute",
+
+  "Msg_Bkp_SeleccioneOpcion": "Please select whether you want to perform a Backup or a Restore.",
+  "Msg_Bkp_RutaVacia": "Please select a directory or file before continuing.",
+  "Msg_Bkp_ExitoBackup": "The backup was generated successfully.",
+  "Msg_Bkp_ConfirmarRestore": "WARNING: Are you sure you want to overwrite the current database? Any unsaved data will be permanently lost.",
+  "Msg_Bkp_ConfirmarTitulo": "Critical Confirmation",
+  "Msg_Bkp_ExitoRestore": "Restore completed successfully."
 }

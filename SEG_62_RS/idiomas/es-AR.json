@@ -219,5 +219,24 @@
   "Msg_Perf_FamConfigurada": "Patentes asignadas correctamente a la familia.",
   "Msg_Perf_RolGuardado": "Rol guardado con éxito.",
   "Msg_Perf_RolConfigurado": "Permisos configurados correctamente para el Rol.",
-  "Msg_Perf_ConflictoTitulo": "Conflictos de Permisos"
+  "Msg_Perf_ConflictoTitulo": "Conflictos de Permisos",
+
+  "Exc_BLL_DirInvalido": "La carpeta de destino seleccionada no es válida.",
+  "Exc_BLL_ErrorBackup": "Error al generar la copia de seguridad: ",
+  "Exc_BLL_ArchivoInvalido": "El archivo .bak seleccionado no existe.",
+  "Exc_BLL_ErrorRestore": "Error al restaurar la base de datos: ",
+
+  "Backup_62_RS": "Gestión de Copias de Seguridad",
+  "RbBackup_62_RS": "Backup",
+  "RbRestore_62_RS": "Restore",
+  "LblDirectorio_62_RS": "Directorio",
+  "BtnBuscar_62_RS": "Buscar",
+  "BtnEjecutar_62_RS": "Ejecutar",
+
+  "Msg_Bkp_SeleccioneOpcion": "Por favor, seleccione si desea realizar un Backup o un Restore.",
+  "Msg_Bkp_RutaVacia": "Por favor, seleccione un directorio o archivo antes de continuar.",
+  "Msg_Bkp_ExitoBackup": "La copia de seguridad se ha generado con éxito.",
+  "Msg_Bkp_ConfirmarRestore": "ATENCIÓN: ¿Está seguro que desea sobrescribir la base de datos actual? Cualquier dato no guardado se perderá irremediablemente.",
+  "Msg_Bkp_ConfirmarTitulo": "Confirmación Crítica",
+  "Msg_Bkp_ExitoRestore": "Restauración finalizada con éxito."
 }
