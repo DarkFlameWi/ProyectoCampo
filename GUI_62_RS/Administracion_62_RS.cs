@@ -49,13 +49,12 @@ namespace GUI_62_RS
             bitacora_62_RS.Show();
         }
 
-        private void backUpToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Backup_62_RS backup_62_RS = new Backup_62_RS();
+            backup_62_RS.MdiParent = this;
+            backup_62_RS.Show();
 
         }
 
