@@ -71,7 +71,17 @@ namespace BLL_62_RS
         }
         private void BloquearUsuarioPorNombre_62_RS(string nombreUsuario_62_RS)
         {
-            usuarioDAL_62_RS.BloquearUsuario_62_RS(nombreUsuario_62_RS);
+            SEG_62_RS.Usuario_62_RS usuarioABloquear = usuarioDAL_62_RS.ObtenerUsuarioPorNombre_62_RS(nombreUsuario_62_RS);
+
+            if (usuarioABloquear != null)
+            {
+                usuarioABloquear.Estado_62_RS = true;
+                SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
+                usuarioABloquear.Dvh_62_RS = motorDV.CalcularDVH_62_RS(usuarioABloquear);
+                usuarioDAL_62_RS.BloquearUsuario_62_RS(nombreUsuario_62_RS, (int)usuarioABloquear.Dvh_62_RS);
+                BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+                gestorDvv.RecalcularDVVTabla_62_RS("Usuarios_62_RS");
+            }
         }
         public int AltaUsuario_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS)
         {
@@ -87,8 +97,15 @@ namespace BLL_62_RS
                     throw new Exception(Traducir("Exc_BLL_DniExistente"));
                 }
                 string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
+                int idGenerado = usuarioDAL_62_RS.AltaUsuario_62_RS(user_62_RS);
+                user_62_RS.IdUsuario_62_RS = idGenerado;
+                SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
+                int dvhCalculado = motorDV.CalcularDVH_62_RS(user_62_RS);
+                usuarioDAL_62_RS.ActualizarDVH_62_RS(idGenerado, dvhCalculado);
+                BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+                gestorDvv.RecalcularDVVTabla_62_RS("Usuarios_62_RS");
                 bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Crear Usuario", "Administracion", "1");
-                return usuarioDAL_62_RS.AltaUsuario_62_RS(user_62_RS);
+                return idGenerado;
             }
             catch (Exception ex)
             {
@@ -117,11 +134,14 @@ namespace BLL_62_RS
             try
             {
                 user_62_RS.UsU_62_RS = user_62_RS.Nombre_62_RS + user_62_RS.Apellido_62_RS;
-
+                SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
+                user_62_RS.Dvh_62_RS = motorDV.CalcularDVH_62_RS(user_62_RS);
                 if (usuarioDAL_62_RS.ModificarDatos_62_RS(user_62_RS) == 0)
                 {
                     throw new Exception(Traducir("Exc_BLL_ModificarSinRegistro"));
                 }
+                BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+                gestorDvv.RecalcularDVVTabla_62_RS("Usuarios_62_RS");
                 string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
                 bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Modificar Usuario", "Administracion", "1");
             }
@@ -136,14 +156,21 @@ namespace BLL_62_RS
             {
                 throw new Exception(Traducir("Exc_BLL_UsuNoBloqueado"));
             }
-            usuarioDAL_62_RS.ModificarEstado_62_RS(id_62_RS, "estado_62_RS", 0);
-            string NuevoPass_62_RS = user_62_RS.DNI_62_RS + user_62_RS.Apellido_62_RS;
 
+            SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
+
+            user_62_RS.Estado_62_RS = false;
+            user_62_RS.Dvh_62_RS = motorDV.CalcularDVH_62_RS(user_62_RS);
+            usuarioDAL_62_RS.ModificarEstado_62_RS(id_62_RS, "estado_62_RS", 0, (int)user_62_RS.Dvh_62_RS);
+            string NuevoPass_62_RS = user_62_RS.DNI_62_RS + user_62_RS.Apellido_62_RS;
             string Actual_62_Rs = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(NuevoPass_62_RS);
-            int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(user_62_RS.UsU_62_RS, Actual_62_Rs);
+            user_62_RS.Password_62_RS = Actual_62_Rs;
+            user_62_RS.Dvh_62_RS = motorDV.CalcularDVH_62_RS(user_62_RS);
+            int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(user_62_RS.UsU_62_RS, Actual_62_Rs, (int)user_62_RS.Dvh_62_RS);
+            BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+            gestorDvv.RecalcularDVVTabla_62_RS("Usuarios_62_RS");
             if (filasAfectadas > 0)
             {
-                user_62_RS.Password_62_RS = Actual_62_Rs;
                 string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
                 bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Desbloquear Usuario", "Administracion", "1");
             }
@@ -152,18 +179,21 @@ namespace BLL_62_RS
                 throw new Exception(Traducir("Exc_BLL_ErrorBDClave"));
             }
         }
-        public void AlternarActivo_62_RS(int id_62_RS, int valorActual_62_RS)
+        public void AlternarActivo_62_RS(SEG_62_RS.Usuario_62_RS user_62_RS)
         {
-            int nuevoVal_62_RS = (valorActual_62_RS == 1) ? 0 : 1;
-            usuarioDAL_62_RS.ModificarEstado_62_RS(id_62_RS, "Activo_62_RS", nuevoVal_62_RS);
-            string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
-            bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Desactivar Usuario", "Administracion", "1");
+            user_62_RS.Activo_62_RS = !user_62_RS.Activo_62_RS;
+            SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
+            user_62_RS.Dvh_62_RS = motorDV.CalcularDVH_62_RS(user_62_RS);
+            int valorParaDAL_62_RS = user_62_RS.Activo_62_RS ? 1 : 0;
+            usuarioDAL_62_RS.ModificarEstado_62_RS(user_62_RS.IdUsuario_62_RS, "Activo_62_RS", valorParaDAL_62_RS, (int)user_62_RS.Dvh_62_RS); string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
+            BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+            gestorDvv.RecalcularDVVTabla_62_RS("Usuarios_62_RS");
+            bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Activar/Desactivar Usuario", "Administracion", "1");
         }
         public int ActualizarClave_62_RS(string valorActual_62_RS, string ValorNuevo_62_RS, string ValorRepetido_62_RS)
         {
             if (string.IsNullOrEmpty(valorActual_62_RS) || string.IsNullOrEmpty(ValorNuevo_62_RS) || string.IsNullOrEmpty(ValorRepetido_62_RS))
                 throw new Exception(Traducir("Exc_BLL_CamposObligatorios"));
-
             var usu_62_RS = SEG_62_RS.Singleton.SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
             string Actual_62_Rs = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(valorActual_62_RS);
             if (Actual_62_Rs != usu_62_RS.Password_62_RS)
@@ -173,30 +203,48 @@ namespace BLL_62_RS
             if (valorActual_62_RS == ValorNuevo_62_RS)
                 throw new Exception(Traducir("Exc_BLL_ClaveIgualActual"));
             string nuevaHasheada_62_RS = SEG_62_RS.Encriptacion_62_RS.EncriptarSHA256_62_RS(ValorNuevo_62_RS);
-            int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(usu_62_RS.UsU_62_RS, nuevaHasheada_62_RS);
+            string passwordAnterior_62_RS = usu_62_RS.Password_62_RS;
+            usu_62_RS.Password_62_RS = nuevaHasheada_62_RS;
+            SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
+            int nuevoDvh = motorDV.CalcularDVH_62_RS(usu_62_RS);
+            usu_62_RS.Dvh_62_RS = nuevoDvh;
+            int filasAfectadas = usuarioDAL_62_RS.ActualizarClave_62_RS(usu_62_RS.UsU_62_RS, nuevaHasheada_62_RS, nuevoDvh);
+
             if (filasAfectadas > 0)
             {
-                usu_62_RS.Password_62_RS = nuevaHasheada_62_RS;
-                string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
+                BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+                gestorDvv.RecalcularDVVTabla_62_RS("Usuarios_62_RS");
+                string nombreUsuario_62_RS = usu_62_RS.UsU_62_RS;
                 bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Cambio de clave", "Usuario", "1");
             }
             else
             {
+                usu_62_RS.Password_62_RS = passwordAnterior_62_RS;
                 throw new Exception(Traducir("Exc_BLL_ErrorBDClave"));
             }
+
             return filasAfectadas;
         }
         public void ActualizarIdiomaUsuario_62_RS(int idUsuario_62_RS, int idIdioma_62_RS)
         {
             try
             {
-                if (usuarioDAL_62_RS.ActualizarIdiomaUsuario_62_RS(idUsuario_62_RS, idIdioma_62_RS) == 0)
+                var usu_62_RS = SEG_62_RS.Singleton.SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+                int idiomaAnterior = usu_62_RS.IdIdioma;
+                usu_62_RS.IdIdioma = idIdioma_62_RS;
+                SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
+                int nuevoDvh = motorDV.CalcularDVH_62_RS(usu_62_RS);
+                usu_62_RS.Dvh_62_RS = nuevoDvh;
+                if (usuarioDAL_62_RS.ActualizarIdiomaUsuario_62_RS(idUsuario_62_RS, idIdioma_62_RS, nuevoDvh) == 0)
                 {
+
+                    usu_62_RS.IdIdioma = idiomaAnterior;
                     throw new Exception(Traducir("Exc_BLL_ActualizarIdiomaSinRegistro"));
                 }
-                string nombreUsuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
+                BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+                gestorDvv.RecalcularDVVTabla_62_RS("Usuarios_62_RS");
+                string nombreUsuario_62_RS = usu_62_RS.UsU_62_RS;
                 bllBitacora_62_RS.InsertarBitacora_62_RS(nombreUsuario_62_RS, "Cambio de Idioma", "Usuario", "1");
-
             }
             catch (Exception ex_62_RS)
             {

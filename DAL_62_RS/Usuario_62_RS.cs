@@ -77,38 +77,35 @@ namespace DAL_62_RS
             try
             {
                 string sql_62_RS = @"UPDATE [Usuarios_62_RS] 
-                                SET nombre_62_RS = @nom, apellido_62_RS = @ape, email_62_RS = @mail, usu_62_RS = @usu, IdRol_62_RS = @idRol
-                                WHERE idusuario_62_RS = @id";
+                        SET nombre_62_RS = @nom, apellido_62_RS = @ape, email_62_RS = @mail, 
+                            usu_62_RS = @usu, IdRol_62_RS = @idRol, Dvh_62_RS = @dvh
+                        WHERE idusuario_62_RS = @id";
                 SqlParameter[] parametros_62_RS = {
-                new SqlParameter("@nom", user_62_RS.Nombre_62_RS),
-                new SqlParameter("@ape", user_62_RS.Apellido_62_RS),
-                new SqlParameter("@mail", user_62_RS.Email_62_RS),
-                new SqlParameter("@usu", user_62_RS.UsU_62_RS),
-                new SqlParameter("@idRol", user_62_RS.IdRol_62_RS),
-                new SqlParameter("@id", user_62_RS.IdUsuario_62_RS)
-            };
+            new SqlParameter("@nom", user_62_RS.Nombre_62_RS),
+            new SqlParameter("@ape", user_62_RS.Apellido_62_RS),
+            new SqlParameter("@mail", user_62_RS.Email_62_RS),
+            new SqlParameter("@usu", user_62_RS.UsU_62_RS),
+            new SqlParameter("@idRol", user_62_RS.IdRol_62_RS),
+            new SqlParameter("@dvh", user_62_RS.Dvh_62_RS),
+            new SqlParameter("@id", user_62_RS.IdUsuario_62_RS)
+        };
                 return accesos_62_RS.EscribirText_62_RS(sql_62_RS, parametros_62_RS);
             }
-            catch (Exception ex_62_RS)
-            {
-                throw new Exception(Traducir("Exc_DAL_ErrorModificar") + ex_62_RS.Message);
-            }
+            catch (Exception ex_62_RS) { throw new Exception(Traducir("Exc_DAL_ErrorModificar") + ex_62_RS.Message); }
         }
-        public int ModificarEstado_62_RS(int user_62_RS, string col_62_RS, int val_62_RS)
+        public int ModificarEstado_62_RS(int id_62_RS, string col_62_RS, int val_62_RS, int nuevoDvh_62_RS)
         {
             try
             {
-                string sql_62_RS = $"UPDATE [Usuarios_62_RS] SET {col_62_RS} = @v WHERE idusuario_62_RS = @id";
+                string sql_62_RS = $"UPDATE [Usuarios_62_RS] SET {col_62_RS} = @v, Dvh_62_RS = @dvh WHERE idusuario_62_RS = @id";
                 SqlParameter[] p_62_RS = {
-                new SqlParameter("@v", val_62_RS),
-                new SqlParameter("@id", user_62_RS)
-                };
+            new SqlParameter("@v", val_62_RS),
+            new SqlParameter("@dvh", nuevoDvh_62_RS),
+            new SqlParameter("@id", id_62_RS)
+        };
                 return accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
             }
-            catch (Exception ex_62_RS)
-            {
-                throw new Exception(Traducir("Exc_DAL_ErrorActualizar") + col_62_RS + ": " + ex_62_RS.Message);
-            }
+            catch (Exception ex_62_RS) { throw new Exception(Traducir("Exc_DAL_ErrorActualizar") + col_62_RS + ": " + ex_62_RS.Message); }
         }
         public int ModificarBit_62_RS(int id_62_RS, string columna_62_RS, int valor_62_RS)
         {
@@ -126,12 +123,12 @@ namespace DAL_62_RS
                 string query_62_RS = null;
                 if (tipousuario == 0)
                 {
-                    query_62_RS = "SELECT idusuario_62_RS, IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, dni_62_RS, usu_62_RS, estado_62_RS, Activo_62_RS, IdRol_62_RS FROM Usuarios_62_RS";
+                    query_62_RS = "SELECT idusuario_62_RS, IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, dni_62_RS, usu_62_RS,password_62_RS, estado_62_RS, Activo_62_RS, IdRol_62_RS FROM Usuarios_62_RS";
 
                 }
                 if (tipousuario == 1)
                 {
-                    query_62_RS = "SELECT idusuario_62_RS, IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, dni_62_RS, usu_62_RS, estado_62_RS, Activo_62_RS, IdRol_62_RS FROM Usuarios_62_RS WHERE Activo_62_RS = 1";
+                    query_62_RS = "SELECT idusuario_62_RS, IdIdioma_62_RS, nombre_62_RS, apellido_62_RS, email_62_RS, dni_62_RS, usu_62_RS,password_62_RS, estado_62_RS, Activo_62_RS, IdRol_62_RS FROM Usuarios_62_RS WHERE Activo_62_RS = 1";
                 }
                 return accesos_62_RS.LeerText_62_RS(query_62_RS);
             }
@@ -174,39 +171,42 @@ namespace DAL_62_RS
             }
             catch (Exception ex_62_RS) { throw new Exception(Traducir("Exc_DAL_ErrorGenerico") + ex_62_RS.Message); }
         }
-        public void BloquearUsuario_62_RS(string usu_62_RS)
+        public void BloquearUsuario_62_RS(string usu_62_RS, int nuevoDvh_62_RS)
         {
-            string sql = "UPDATE Usuarios_62_RS SET estado_62_RS = @est WHERE usu_62_RS = @u";
+            string sql = "UPDATE Usuarios_62_RS SET estado_62_RS = @est, Dvh_62_RS = @dvh WHERE usu_62_RS = @u";
             SqlParameter[] p = {
         new SqlParameter("@est", true),
+        new SqlParameter("@dvh", nuevoDvh_62_RS),
         new SqlParameter("@u", usu_62_RS)
     };
             accesos_62_RS.EscribirText_62_RS(sql, p);
         }
-        public int ActualizarClave_62_RS(string usu_62_RS, string nuevaClave_62_RS)
+        public int ActualizarClave_62_RS(string usu_62_RS, string nuevaClave_62_RS, int nuevoDvh_62_RS)
         {
             try
             {
-                string sql_62_RS = "UPDATE Usuarios_62_RS SET password_62_RS = @pass WHERE usu_62_RS = @usu";
-                SqlParameter[] p_62_RS = { 
-                    new SqlParameter("@usu", usu_62_RS),
-                    new SqlParameter("@pass", nuevaClave_62_RS)
-                };
+                string sql_62_RS = "UPDATE Usuarios_62_RS SET password_62_RS = @pass, Dvh_62_RS = @dvh WHERE usu_62_RS = @usu";
+                SqlParameter[] p_62_RS = {
+            new SqlParameter("@usu", usu_62_RS),
+            new SqlParameter("@pass", nuevaClave_62_RS),
+            new SqlParameter("@dvh", nuevoDvh_62_RS)
+        };
                 return accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
-                
             }
             catch (Exception ex) { throw ex; }
         }
-        public int ActualizarIdiomaUsuario_62_RS(int idUsuario_62_RS, int idIdioma_62_RS)
+        public int ActualizarIdiomaUsuario_62_RS(int idUsuario_62_RS, int idIdioma_62_RS, int nuevoDvh_62_RS)
         {
             try
             {
-                string sql_62_RS = "UPDATE Usuarios_62_RS SET IdIdioma_62_RS = @idIdioma WHERE idusuario_62_RS = @id";
+                string sql_62_RS = "UPDATE Usuarios_62_RS SET IdIdioma_62_RS = @idIdioma, Dvh_62_RS = @dvh WHERE idusuario_62_RS = @id";
+
                 SqlParameter[] p_62_RS =
                 {
-                    new SqlParameter("@idIdioma", idIdioma_62_RS),
-                    new SqlParameter("@id", idUsuario_62_RS)
-                };
+            new SqlParameter("@idIdioma", idIdioma_62_RS),
+            new SqlParameter("@dvh", nuevoDvh_62_RS),
+            new SqlParameter("@id", idUsuario_62_RS)
+        };
                 return accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
             }
             catch (Exception ex_62_RS)
@@ -222,6 +222,39 @@ namespace DAL_62_RS
         new SqlParameter("@id", idUsuario)
     };
             accesos_62_RS.EscribirText_62_RS(sql, p);
+        }
+        public SEG_62_RS.Usuario_62_RS ObtenerUsuarioPorNombre_62_RS(string usu_62_RS)
+        {
+            try
+            {
+                string query_62_RS = "SELECT * FROM Usuarios_62_RS WHERE usu_62_RS = @u";
+                SqlParameter[] p_62_RS = {
+            new SqlParameter("@u", usu_62_RS)
+        };
+
+                DataTable dt_62_RS = accesos_62_RS.LeerText_62_RS(query_62_RS, p_62_RS);
+
+                if (dt_62_RS != null && dt_62_RS.Rows.Count > 0)
+                {
+                    DataRow dr_62_RS = dt_62_RS.Rows[0];
+                    return new SEG_62_RS.Usuario_62_RS
+                    {
+                        IdUsuario_62_RS = Convert.ToInt32(dr_62_RS["idusuario_62_RS"]),
+                        Nombre_62_RS = dr_62_RS["nombre_62_RS"].ToString(),
+                        Apellido_62_RS = dr_62_RS["apellido_62_RS"].ToString(),
+                        Email_62_RS = dr_62_RS["email_62_RS"].ToString(),
+                        UsU_62_RS = dr_62_RS["usu_62_RS"].ToString(),
+                        Password_62_RS = dr_62_RS["password_62_RS"].ToString(),
+                        DNI_62_RS = dr_62_RS["dni_62_RS"].ToString(),
+                        Estado_62_RS = Convert.ToBoolean(dr_62_RS["estado_62_RS"]),
+                        Activo_62_RS = Convert.ToBoolean(dr_62_RS["Activo_62_RS"]),
+                        IdIdioma = Convert.ToInt32(dr_62_RS["IdIdioma_62_RS"]),
+                        IdRol_62_RS = Convert.ToInt32(dr_62_RS["IdRol_62_RS"])
+                    };
+                }
+                return null;
+            }
+            catch (Exception ex_62_RS) { throw new Exception(Traducir("Exc_DAL_ErrorGenerico") + ex_62_RS.Message); }
         }
     }
 }

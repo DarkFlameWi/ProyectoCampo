@@ -14,7 +14,6 @@ namespace BLL_62_RS
 
         public int InsertarBitacora_62_RS(string usuario, string descripcion, string modulo, string criticida)
         {
-
             SEG_62_RS.Bitacora_62_RS bitacora = new SEG_62_RS.Bitacora_62_RS
             {
                 Usu_62_RS = usuario,
@@ -23,8 +22,14 @@ namespace BLL_62_RS
                 Modulo_62_RS = modulo,
                 Criticidad_62_RS = criticida
             };
-            return dalBitacora_62_RS.insertarbitacora_62_RS(bitacora);
-
+            int idGenerado = dalBitacora_62_RS.insertarbitacora_62_RS(bitacora);
+            bitacora.IdBitacora_62_RS = idGenerado;
+            SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
+            bitacora.Dvh_62_RS = motorDV.CalcularDVH_62_RS(bitacora);
+            dalBitacora_62_RS.ActualizarDVH_62_RS(idGenerado, bitacora.Dvh_62_RS);
+            BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+            gestorDvv.RecalcularDVVTabla_62_RS("Bitacora_62_RS");
+            return idGenerado;
         }
 
         public DataTable ListarBitacora_62_RS()

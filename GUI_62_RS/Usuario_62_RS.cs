@@ -397,13 +397,24 @@ namespace GUI_62_RS
             }
             else if (idFuncion_62_RS == 4)
             {
-                //ACTIVAR DESACTIVAR
                 try
                 {
                     if (idSeleccionado_62_RS == 0) throw new Exception(Traducir("Msg_Usu_ValidacionSelect"));
-                    int actual_62_RS = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["Activo_62_RS"].Value);
+                    SEG_62_RS.Usuario_62_RS usuarioMapeado_62_RS = new SEG_62_RS.Usuario_62_RS();
 
-                    BLLusuario_62_RS.AlternarActivo_62_RS(idSeleccionado_62_RS, actual_62_RS);
+                    usuarioMapeado_62_RS.IdUsuario_62_RS = idSeleccionado_62_RS;
+                    usuarioMapeado_62_RS.Nombre_62_RS = DgvUsu_62_RS.CurrentRow.Cells["nombre_62_RS"].Value.ToString();
+                    usuarioMapeado_62_RS.Apellido_62_RS = DgvUsu_62_RS.CurrentRow.Cells["apellido_62_RS"].Value.ToString();
+                    usuarioMapeado_62_RS.Email_62_RS = DgvUsu_62_RS.CurrentRow.Cells["email_62_RS"].Value.ToString();
+                    usuarioMapeado_62_RS.DNI_62_RS = DgvUsu_62_RS.CurrentRow.Cells["dni_62_RS"].Value.ToString();
+                    usuarioMapeado_62_RS.UsU_62_RS = DgvUsu_62_RS.CurrentRow.Cells["usu_62_RS"].Value.ToString();
+                    usuarioMapeado_62_RS.Password_62_RS = DgvUsu_62_RS.CurrentRow.Cells["password_62_RS"].Value.ToString(); // ¡Vital para el DVH!
+                    usuarioMapeado_62_RS.IdRol_62_RS = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["IdRol_62_RS"].Value);
+                    if (DgvUsu_62_RS.CurrentRow.Cells["IdIdioma_62_RS"].Value != DBNull.Value)
+                        usuarioMapeado_62_RS.IdIdioma = Convert.ToInt32(DgvUsu_62_RS.CurrentRow.Cells["IdIdioma_62_RS"].Value);
+                    usuarioMapeado_62_RS.Activo_62_RS = Convert.ToBoolean(DgvUsu_62_RS.CurrentRow.Cells["Activo_62_RS"].Value);
+                    usuarioMapeado_62_RS.Estado_62_RS = Convert.ToBoolean(DgvUsu_62_RS.CurrentRow.Cells["estado_62_RS"].Value);
+                    BLLusuario_62_RS.AlternarActivo_62_RS(usuarioMapeado_62_RS);
                     MessageBox.Show(Traducir("Msg_Usu_ExitoActividad"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TxtMensaje_62_RS.Text = Traducir("Msg_Usu_ActividadExitosa");
                 }

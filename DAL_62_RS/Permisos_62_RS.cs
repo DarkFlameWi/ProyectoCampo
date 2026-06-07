@@ -19,69 +19,78 @@ namespace DAL_62_RS
         {
             try
             {
-                string sql = "INSERT INTO Roles_62_RS (Nombre_62_RS, Descripcion_62_RS) VALUES (@nom, @desc)";
+                string sql = "INSERT INTO Roles_62_RS (Nombre_62_RS, Descripcion_62_RS, Activo_62_RS) VALUES (@nom, @desc, 1); SELECT SCOPE_IDENTITY();";
                 SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS) };
-                return accesos_62_RS.EscribirText_62_RS(sql, p);
+                return accesos_62_RS.EscribirYDevolverId_62_RS(sql, p);
             }
             catch (Exception ex) { throw new Exception("Error al crear Rol: " + ex.Message); }
         }
-        public int ModificarRol_62_RS(int idRol_62_RS, string nombre_62_RS, string descripcion_62_RS)
+        public int ModificarRol_62_RS(int idRol_62_RS, string nombre_62_RS, string descripcion_62_RS, int dvh)
         {
             try
             {
-                string sql = "UPDATE Roles_62_RS SET Nombre_62_RS = @nom, Descripcion_62_RS = @desc WHERE IdRol_62_RS = @id";
-                SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS), new SqlParameter("@id", idRol_62_RS) };
+                string sql = "UPDATE Roles_62_RS SET Nombre_62_RS = @nom, Descripcion_62_RS = @desc, Dvh_62_RS = @dvh WHERE IdRol_62_RS = @id";
+                SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS), new SqlParameter("@dvh", dvh), new SqlParameter("@id", idRol_62_RS) };
                 return accesos_62_RS.EscribirText_62_RS(sql, p);
             }
             catch (Exception ex) { throw new Exception("Error al modificar Rol: " + ex.Message); }
         }
-        public int BajaRol_62_RS(int idRol_62_RS)
+        public int BajaRol_62_RS(int idRol_62_RS, int dvh)
         {
             try
             {
-                string sql = "UPDATE Roles_62_RS SET Activo_62_RS = 0 WHERE IdRol_62_RS = @id";
-                SqlParameter[] p = { new SqlParameter("@id", idRol_62_RS) };
+                string sql = "UPDATE Roles_62_RS SET Activo_62_RS = 0, Dvh_62_RS = @dvh WHERE IdRol_62_RS = @id";
+                SqlParameter[] p = { new SqlParameter("@dvh", dvh), new SqlParameter("@id", idRol_62_RS) };
                 return accesos_62_RS.EscribirText_62_RS(sql, p);
             }
             catch (Exception ex) { throw new Exception("Error al dar de baja el Rol: " + ex.Message); }
         }
-
-
+        public void ActualizarDVH_Rol_62_RS(int idRol, int dvh)
+        {
+            string sql = "UPDATE Roles_62_RS SET Dvh_62_RS = @dvh WHERE IdRol_62_RS = @id";
+            SqlParameter[] p = { new SqlParameter("@dvh", dvh), new SqlParameter("@id", idRol) };
+            accesos_62_RS.EscribirText_62_RS(sql, p);
+        }
 
         // familias
         public int AltaFamilia_62_RS(string nombre_62_RS, string descripcion_62_RS)
         {
             try
             {
-                string sql = "INSERT INTO Familias_62_RS (Nombre_62_RS, Descripcion_62_RS) VALUES (@nom, @desc)";
+                string sql = "INSERT INTO Familias_62_RS (Nombre_62_RS, Descripcion_62_RS, Activo_62_RS) VALUES (@nom, @desc, 1); SELECT SCOPE_IDENTITY();";
                 SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS) };
-                return accesos_62_RS.EscribirText_62_RS(sql, p);
+                return accesos_62_RS.EscribirYDevolverId_62_RS(sql, p);
             }
             catch (Exception ex) { throw new Exception("Error al crear Familia: " + ex.Message); }
         }
 
-        public int ModificarFamilia_62_RS(int idFamilia_62_RS, string nombre_62_RS, string descripcion_62_RS)
+        public int ModificarFamilia_62_RS(int idFamilia_62_RS, string nombre_62_RS, string descripcion_62_RS, int dvh)
         {
             try
             {
-                string sql = "UPDATE Familias_62_RS SET Nombre_62_RS = @nom, Descripcion_62_RS = @desc WHERE IdFamilia_62_RS = @id";
-                SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS), new SqlParameter("@id", idFamilia_62_RS) };
+                string sql = "UPDATE Familias_62_RS SET Nombre_62_RS = @nom, Descripcion_62_RS = @desc, Dvh_62_RS = @dvh WHERE IdFamilia_62_RS = @id";
+                SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS), new SqlParameter("@dvh", dvh), new SqlParameter("@id", idFamilia_62_RS) };
                 return accesos_62_RS.EscribirText_62_RS(sql, p);
             }
             catch (Exception ex) { throw new Exception("Error al modificar Familia: " + ex.Message); }
         }
 
-        public int BajaFamilia_62_RS(int idFamilia_62_RS)
+        public int BajaFamilia_62_RS(int idFamilia_62_RS, int dvh)
         {
             try
             {
-                string sql = "UPDATE Familias_62_RS SET Activo_62_RS = 0 WHERE IdFamilia_62_RS = @id";
-                SqlParameter[] p = { new SqlParameter("@id", idFamilia_62_RS) };
+                string sql = "UPDATE Familias_62_RS SET Activo_62_RS = 0, Dvh_62_RS = @dvh WHERE IdFamilia_62_RS = @id";
+                SqlParameter[] p = { new SqlParameter("@dvh", dvh), new SqlParameter("@id", idFamilia_62_RS) };
                 return accesos_62_RS.EscribirText_62_RS(sql, p);
             }
             catch (Exception ex) { throw new Exception("Error al dar de baja la Familia: " + ex.Message); }
         }
-
+        public void ActualizarDVH_Familia_62_RS(int idFamilia, int dvh)
+        {
+            string sql = "UPDATE Familias_62_RS SET Dvh_62_RS = @dvh WHERE IdFamilia_62_RS = @id";
+            SqlParameter[] p = { new SqlParameter("@dvh", dvh), new SqlParameter("@id", idFamilia) };
+            accesos_62_RS.EscribirText_62_RS(sql, p);
+        }
         // RELACIONES
         public int VincularPatenteARol_62_RS(int idRol_62_RS, int idPatente_62_RS) =>
      accesos_62_RS.EscribirText_62_RS("INSERT INTO Rol_Patente_62_RS (IdRol_62_RS, IdPatente_62_RS) VALUES (@idRol, @idPat)", new[] { new SqlParameter("@idRol", idRol_62_RS), new SqlParameter("@idPat", idPatente_62_RS) });

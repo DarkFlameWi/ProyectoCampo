@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SEG_62_RS.Composite
 {
-    public class Rol_62_RS : Permiso_62_RS
+    public class Rol_62_RS : Permiso_62_RS, IVerificable_62_RS
     {
         private List<Permiso_62_RS> _hijos_62_RS;
         public string Descripcion_62_RS { get; set; }

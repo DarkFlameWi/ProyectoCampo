@@ -20,6 +20,11 @@ namespace SEG_62_RS
 
             return asciiValueSum;
         }
+        public int CalcularDVH_62_RS(IVerificable_62_RS entidad)
+        {
+            string cadenaFila = entidad.GenerarCadenaDVH_62_RS();
+            return ConvertToAscii_62_RS(cadenaFila);
+        }
         public int CalcularDVV_62_RS(List<int> todosLosDvh)
         {
             int dvv = 0;

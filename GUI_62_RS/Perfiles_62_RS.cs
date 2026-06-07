@@ -265,7 +265,9 @@ namespace GUI_62_RS
             {
                 try
                 {
-                    bllPermisos_62_RS.BajaFamilia_62_RS(idFamiliaSeleccionada_62_RS);
+                    string nombreFam = TxtNombreFamilia_62_RS.Text;
+                    string descFam = TxtDescFamilia_62_RS.Text;
+                    bllPermisos_62_RS.BajaFamilia_62_RS(idFamiliaSeleccionada_62_RS, nombreFam, descFam);
                     MessageBox.Show(Traducir("Msg_Perf_FamEliminada"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarListasBase_62_RS();
                 }
@@ -274,7 +276,6 @@ namespace GUI_62_RS
                     MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
         }
 
 
@@ -329,7 +330,13 @@ namespace GUI_62_RS
             if (idRolSeleccionado_62_RS == 0) return;
             try
             {
-                bllPermisos_62_RS.BajaRol_62_RS(idRolSeleccionado_62_RS);
+                // 1. Capturamos el nombre y la descripción desde los TextBox de la pantalla
+                string nombreRol = TxtNombreRol_62_RS.Text;
+                string descRol = TxtDescRol_62_RS.Text;
+
+                // 2. Le pasamos los 3 parámetros a la BLL
+                bllPermisos_62_RS.BajaRol_62_RS(idRolSeleccionado_62_RS, nombreRol, descRol);
+
                 MessageBox.Show(Traducir("Msg_Perf_RolEliminado"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 TxtNombreRol_62_RS.Clear();
@@ -341,7 +348,6 @@ namespace GUI_62_RS
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
         private void BtnModificarRol_62_RS_Click(object sender, EventArgs e)
         {

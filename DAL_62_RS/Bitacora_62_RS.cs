@@ -16,16 +16,26 @@ namespace DAL_62_RS
 
         public int insertarbitacora_62_RS(SEG_62_RS.Bitacora_62_RS BT_62_RS)
         {
-            int FA = 0;
+            try
+            {
+                string sql_62_RS = @"INSERT INTO [Bitacora_62_RS] 
+                           (Usu_62_RS, FechaCambio_62_RS, Descripcion_62_RS, Modulo_62_RS, Criticidad_62_RS) 
+                           VALUES 
+                           (@Usu_62_RS, @FechaCambio_62_RS, @Descripcion_62_RS, @Modulo_62_RS, @Criticidad_62_RS);
+                           SELECT SCOPE_IDENTITY();";
 
-            SqlParameter[] sqlParameter = new SqlParameter[5];
-            sqlParameter[0] = new SqlParameter("@Usu_62_RS", BT_62_RS.Usu_62_RS);
-            sqlParameter[1] = new SqlParameter("@FechaCambio_62_RS",BT_62_RS.FechaCambio_62_RS);
-            sqlParameter[2] = new SqlParameter("@Descripcion_62_RS", BT_62_RS.Descripcion_62_RS);
-            sqlParameter[3] = new SqlParameter("@Modulo_62_RS",BT_62_RS.Modulo_62_RS);
-            sqlParameter[4] = new SqlParameter("@Criticidad_62_RS", BT_62_RS.Criticidad_62_RS);
-            FA = accesos_62_RS.escribir_62_RS("CargarBitacora_62_RS", sqlParameter);
-            return FA;
+                SqlParameter[] sqlParameter = new SqlParameter[5];
+                sqlParameter[0] = new SqlParameter("@Usu_62_RS", BT_62_RS.Usu_62_RS);
+                sqlParameter[1] = new SqlParameter("@FechaCambio_62_RS", BT_62_RS.FechaCambio_62_RS);
+                sqlParameter[2] = new SqlParameter("@Descripcion_62_RS", BT_62_RS.Descripcion_62_RS);
+                sqlParameter[3] = new SqlParameter("@Modulo_62_RS", BT_62_RS.Modulo_62_RS);
+                sqlParameter[4] = new SqlParameter("@Criticidad_62_RS", BT_62_RS.Criticidad_62_RS);
+                return accesos_62_RS.EscribirYDevolverId_62_RS(sql_62_RS, sqlParameter);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en DAL al insertar Bitacora: " + ex.Message);
+            }
         }
 
         public DataTable ListarBitacora_62_RS()
@@ -91,6 +101,22 @@ namespace DAL_62_RS
             {
                 string msjFiltrar = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Exc_DAL_ErrorFiltrarBitacora"];
                 throw new Exception(msjFiltrar + ex_62_RS.Message);
+            }
+        }
+        public void ActualizarDVH_62_RS(int idBitacora_62_RS, int dvh_62_RS)
+        {
+            try
+            {
+                string sql_62_RS = "UPDATE Bitacora_62_RS SET Dvh_62_RS = @dvh WHERE IdBitacora_62_RS = @id";
+                SqlParameter[] p_62_RS = {
+            new SqlParameter("@dvh", dvh_62_RS),
+            new SqlParameter("@id", idBitacora_62_RS)
+        };
+                accesos_62_RS.EscribirText_62_RS(sql_62_RS, p_62_RS);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar DVH en Bitacora: " + ex.Message);
             }
         }
     }
