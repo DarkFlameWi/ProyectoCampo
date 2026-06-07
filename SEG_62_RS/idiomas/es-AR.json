@@ -112,7 +112,7 @@
 
   "Msg_Login_CredencialesVacias": "Por favor, ingrese sus credenciales.",
   "Msg_Login_Atencion": "Atención",
-  "Msg_Login_CambioClave_Titulo": "Debe cambiar la contraseña primero",
+  "Msg_Login_CambiarClave": "Cambio de Seguridad Requerido",
   "Msg_Login_Bienvenido_Titulo": "Bienvenido",
   "Msg_Login_Error_Titulo": "Error de Inicio de Sesión",
 
@@ -123,6 +123,7 @@
   "DgvCol_Usu_Usuario": "Usuario",
   "DgvCol_Usu_Bloqueado": "Bloqueado",
   "DgvCol_Usu_Activo": "Activo",
+  "DgvCol_Usu_Rol": "Rol",
 
   "Msg_Usu_Atencion": "Atención",
   "Msg_Usu_ErrorTitulo": "Error",
@@ -195,20 +196,30 @@
   "Exc_BLL_ErrorFam": "Error de negocio al gestionar Familia: ",
   "Exc_BLL_ErrorRol": "Error de negocio al gestionar Rol: ",
   "Exc_BLL_ErrorConfigRol": "Error al configurar los permisos del Rol: ",
-  "Exc_BLL_ErrorConfigFam": "Error al configurar las patentes de la Familia: ",
+  "Exc_BLL_ErrorConfigFam": "Error al configurar los permisos de la Familia: ",
+  "Exc_Comp_PermisoDuplicado": "Conflicto de negocio: El permiso ya existe en la estructura -> ",
+  "Exc_Comp_OperacionInvalida": "Operación no permitida: No se pueden agregar o quitar hijos de una patente individual.",
+
   "Bit_ConfigRol": "Se configuraron los permisos del Rol ID: ",
-  "Bit_ConfigFam": "Se configuraron las patentes de la Familia ID: ",
+  "Bit_ConfigFam": "Se configuraron los permisos de la Familia ID: ",
+  "Bit_BajaRol": "Baja lógica de Rol ID: ",
+  "Bit_BajaFam": "Baja lógica de Familia ID: ",
 
   "Perfiles_62_RS": "Gestión de Perfiles y Permisos",
 
   "BtnNuevo_62_RS": "Nueva Familia",
-  "BtnGuardar_62_RS": "Guardar Familia",
-  "BtnCancelar_62_RS": "Cancelar",
-  "BtnConfigurarFami_62_RS": "Aplicar Patentes a Familia",
+  "BtnGuardar_62_RS": "Guardar Cambios",
+  "BtnCancelar_62_RS": "Eliminar Familia",
+  "BtnConfigurarFami_62_RS": "Aplicar Permisos a Familia",
 
   "BtnAltaRol_62_RS": "Guardar Rol",
-  "BtnBajaRol_62_RS": "Limpiar Campos",
+  "BtnBajaRol_62_RS": "Eliminar Rol",
   "BtnModificarRol_62_RS": "Aplicar Permisos al Rol",
+
+  "LblNombreFami_62_RS": "NOMBRE",
+  "LblDescrFami_62_RS": "DESCRIPCION",
+  "LblNombreRol_62_RS": "Nombre",
+  "LblDescrRol_62_RS": "Descripcion",
 
   "TvNode_FamiliasDisp": "Familias Disponibles",
   "TvNode_PatentesDisp": "Patentes Disponibles",
@@ -216,10 +227,15 @@
 
   "Msg_Perf_ErrorCargar": "Error al cargar datos: ",
   "Msg_Perf_FamGuardada": "Familia guardada con éxito.",
-  "Msg_Perf_FamConfigurada": "Patentes asignadas correctamente a la familia.",
+  "Msg_Perf_FamConfigurada": "Permisos asignados correctamente a la familia.",
+  "Msg_Perf_FamEliminada": "Familia dada de baja con éxito.",
+  "Msg_Perf_ConfirmarBaja": "¿Está seguro que desea dar de baja este elemento?",
   "Msg_Perf_RolGuardado": "Rol guardado con éxito.",
   "Msg_Perf_RolConfigurado": "Permisos configurados correctamente para el Rol.",
+  "Msg_Perf_RolEliminado": "Rol dado de baja con éxito.",
   "Msg_Perf_ConflictoTitulo": "Conflictos de Permisos",
+  "Msg_Perf_SeleccioneFam": "Debe seleccionar una familia de la lista.",
+  "Msg_Perf_SeleccionePermisos": "Debe seleccionar al menos un permiso para asignar.",
 
   "Exc_BLL_DirInvalido": "La carpeta de destino seleccionada no es válida.",
   "Exc_BLL_ErrorBackup": "Error al generar la copia de seguridad: ",

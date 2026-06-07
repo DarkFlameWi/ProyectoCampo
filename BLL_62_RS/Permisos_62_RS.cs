@@ -1,5 +1,6 @@
 ﻿using DAL_62_RS;
 using SEG_62_RS.Composite;
+using SEG_62_RS.Excepciones;
 using SEG_62_RS.Singleton;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace BLL_62_RS
             }
             return clave;
         }
+ 
+
         public List<Patente_62_RS> ObtenerPatentes_62_RS()
         {
             return dalPermisos_62_RS.ObtenerPatentes_62_RS();
@@ -39,6 +42,9 @@ namespace BLL_62_RS
         {
             return dalPermisos_62_RS.ListarRolesBase_62_RS();
         }
+
+
+
         public void GuardarFamilia_62_RS(int id_62_RS, string nombre_62_RS, string descripcion_62_RS)
         {
             try
@@ -46,15 +52,17 @@ namespace BLL_62_RS
                 if (string.IsNullOrWhiteSpace(nombre_62_RS))
                     throw new Exception(Traducir("Exc_BLL_NombreVacio"));
 
-                if (id_62_RS == 0) // Es un Alta
+                string usuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
+
+                if (id_62_RS == 0)
                 {
                     dalPermisos_62_RS.AltaFamilia_62_RS(nombre_62_RS, descripcion_62_RS);
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS, "Alta de Familia: " + nombre_62_RS, "Permisos", "2");
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Alta de Familia: " + nombre_62_RS, "Administracion", "2");
                 }
-                else // Es una Modificación
+                else
                 {
                     dalPermisos_62_RS.ModificarFamilia_62_RS(id_62_RS, nombre_62_RS, descripcion_62_RS);
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS, "Modificación de Familia: " + nombre_62_RS, "Permisos", "2");
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Modificación de Familia: " + nombre_62_RS, "Administracion", "2");
                 }
             }
             catch (Exception ex)
@@ -62,32 +70,68 @@ namespace BLL_62_RS
                 throw new Exception(Traducir("Exc_BLL_ErrorFam") + ex.Message);
             }
         }
-
-        public void ConfigurarFamilia_62_RS(Familia_62_RS familiaBase, List<Patente_62_RS> patentesAAsignar)
+        public void BajaFamilia_62_RS(int idFamilia_62_RS)
         {
             try
             {
-                Familia_62_RS familiaTemp = new Familia_62_RS(familiaBase.Nombre_62_RS) { Id_62_RS = familiaBase.Id_62_RS };
+                dalPermisos_62_RS.BajaFamilia_62_RS(idFamilia_62_RS);
 
-                foreach (var patente in patentesAAsignar)
-                {
-                    familiaTemp.AgregarHijo_62_RS(patente);
-                }
-
-                dalPermisos_62_RS.LimpiarPatentesDeFamilia_62_RS(familiaBase.Id_62_RS);
-
-                foreach (var patente in patentesAAsignar)
-                {
-                    dalPermisos_62_RS.VincularPatenteAFamilia_62_RS(familiaBase.Id_62_RS, patente.Id_62_RS);
-                }
-
-                bllBitacora_62_RS.InsertarBitacora_62_RS(SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS, Traducir("Bit_ConfigFam") + familiaBase.Id_62_RS, "Permisos", "3");
+                string usuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, Traducir("Bit_BajaFam") + idFamilia_62_RS, "Administracion", "2");
             }
             catch (Exception ex)
             {
-                throw new Exception(Traducir("Exc_BLL_ErrorConfigFam") + ex.Message);
+                throw new Exception(Traducir("Exc_BLL_ErrorFam") + ex.Message);
             }
         }
+        public void SincronizarPermisosFamilia_62_RS(Familia_62_RS familiaBase, List<Permiso_62_RS> permisosDeseados)
+        {
+            try
+            {
+                Familia_62_RS familiaActual = dalPermisos_62_RS.ObtenerFamiliaPorId_62_RS(familiaBase.Id_62_RS);
+                if (familiaActual == null) throw new Exception("La familia no existe. Guarde la familia primero.");
+                foreach (var permisoActual in familiaActual.ObtenerHijos_62_RS())
+                {
+                    bool sigueTildado = permisosDeseados.Any(p => p.Id_62_RS == permisoActual.Id_62_RS && p.GetType() == permisoActual.GetType());
+                    if (!sigueTildado)
+                    {
+                        if (permisoActual is Familia_62_RS)
+                            dalPermisos_62_RS.RevocarFamiliaDeFamilia_62_RS(familiaBase.Id_62_RS, permisoActual.Id_62_RS);
+                        else
+                            dalPermisos_62_RS.RevocarPatenteDeFamilia_62_RS(familiaBase.Id_62_RS, permisoActual.Id_62_RS);
+                    }
+                }
+                Familia_62_RS familiaValidacion = new Familia_62_RS(familiaBase.Nombre_62_RS) { Id_62_RS = familiaBase.Id_62_RS };
+                foreach (var p in familiaActual.ObtenerHijos_62_RS().Where(act => permisosDeseados.Any(des => des.Id_62_RS == act.Id_62_RS && des.GetType() == act.GetType())))
+                    familiaValidacion.AgregarHijo_62_RS(p);
+                foreach (var permisoNuevo in permisosDeseados)
+                {
+                    bool yaLoTenia = familiaActual.ObtenerHijos_62_RS().Any(p => p.Id_62_RS == permisoNuevo.Id_62_RS && p.GetType() == permisoNuevo.GetType());
+                    if (!yaLoTenia)
+                    {
+                        familiaValidacion.AgregarHijo_62_RS(permisoNuevo);
+                        if (permisoNuevo is Familia_62_RS)
+                            dalPermisos_62_RS.VincularFamiliaAFamilia_62_RS(familiaBase.Id_62_RS, permisoNuevo.Id_62_RS);
+                        else
+                            dalPermisos_62_RS.VincularPatenteAFamilia_62_RS(familiaBase.Id_62_RS, permisoNuevo.Id_62_RS);
+                    }
+                }
+
+                string usuario = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario, Traducir("Bit_ConfigFam") + familiaBase.Id_62_RS, "Administracion", "3");
+            }
+            catch (PermisoDuplicadoExcepcion_62_RS exDup)
+            {
+                throw new Exception(Traducir("Exc_Comp_PermisoDuplicado") + exDup.NombrePermiso_62_RS);
+            }
+            catch (OperacionInvalidaExcepcion_62_RS)
+            {
+                throw new Exception(Traducir("Exc_Comp_OperacionInvalida"));
+            }
+        }
+
+
+
 
         public void GuardarRol_62_RS(int id_62_RS, string nombre_62_RS, string descripcion_62_RS)
         {
@@ -96,15 +140,17 @@ namespace BLL_62_RS
                 if (string.IsNullOrWhiteSpace(nombre_62_RS))
                     throw new Exception(Traducir("Exc_BLL_NombreVacio"));
 
-                if (id_62_RS == 0) // Alta
+                string usuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
+
+                if (id_62_RS == 0)
                 {
                     dalPermisos_62_RS.AltaRol_62_RS(nombre_62_RS, descripcion_62_RS);
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS, "Alta de Rol: " + nombre_62_RS, "Permisos", "2");
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Alta de Rol: " + nombre_62_RS, "Administracion", "2");
                 }
-                else // Modificación
+                else
                 {
                     dalPermisos_62_RS.ModificarRol_62_RS(id_62_RS, nombre_62_RS, descripcion_62_RS);
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS, "Modificación de Rol: " + nombre_62_RS, "Permisos", "2");
+                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Modificación de Rol: " + nombre_62_RS, "Administracion", "2");
                 }
             }
             catch (Exception ex)
@@ -112,37 +158,71 @@ namespace BLL_62_RS
                 throw new Exception(Traducir("Exc_BLL_ErrorRol") + ex.Message);
             }
         }
-
-        public void ConfigurarRol_62_RS(Rol_62_RS rolBase, List<Permiso_62_RS> permisosAAsignar)
+        public void BajaRol_62_RS(int idRol_62_RS)
         {
             try
             {
-                Rol_62_RS rolTemp = new Rol_62_RS(rolBase.Nombre_62_RS) { Id_62_RS = rolBase.Id_62_RS };
+                dalPermisos_62_RS.BajaRol_62_RS(idRol_62_RS);
 
-                foreach (var permiso in permisosAAsignar)
-                {
-                    rolTemp.AgregarHijo_62_RS(permiso);
-                }
-                dalPermisos_62_RS.LimpiarFamiliasDeRol_62_RS(rolBase.Id_62_RS);
-                dalPermisos_62_RS.LimpiarPatentesDeRol_62_RS(rolBase.Id_62_RS);
-                foreach (var permiso in permisosAAsignar)
-                {
-                    if (permiso is Familia_62_RS)
-                    {
-                        dalPermisos_62_RS.VincularFamiliaARol_62_RS(rolBase.Id_62_RS, permiso.Id_62_RS);
-                    }
-                    else if (permiso is Patente_62_RS)
-                    {
-                        dalPermisos_62_RS.VincularPatenteARol_62_RS(rolBase.Id_62_RS, permiso.Id_62_RS);
-                    }
-                }
-                bllBitacora_62_RS.InsertarBitacora_62_RS(SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS, Traducir("Bit_ConfigRol") + rolBase.Id_62_RS, "Permisos", "3");
+                string usuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, Traducir("Bit_BajaRol") + idRol_62_RS, "Administracion", "2");
             }
             catch (Exception ex)
             {
-                throw new Exception(Traducir("Exc_BLL_ErrorConfigRol") + ex.Message);
+                throw new Exception(Traducir("Exc_BLL_ErrorRol") + ex.Message);
             }
         }
+        public void SincronizarPermisosRol_62_RS(Rol_62_RS rolBase, List<Permiso_62_RS> permisosDeseados)
+        {
+            try
+            {
+                Rol_62_RS rolActual = dalPermisos_62_RS.ObtenerRolUsuario_62_RS(rolBase.Id_62_RS);
+                if (rolActual == null) throw new Exception("El rol no existe. Guarde el rol primero.");
+
+                foreach (var permisoActual in rolActual.ObtenerHijos_62_RS())
+                {
+                    bool sigueTildado = permisosDeseados.Any(p => p.Id_62_RS == permisoActual.Id_62_RS && p.GetType() == permisoActual.GetType());
+                    if (!sigueTildado)
+                    {
+                        if (permisoActual is Familia_62_RS)
+                            dalPermisos_62_RS.RevocarFamiliaDeRol_62_RS(rolBase.Id_62_RS, permisoActual.Id_62_RS);
+                        else
+                            dalPermisos_62_RS.RevocarPatenteDeRol_62_RS(rolBase.Id_62_RS, permisoActual.Id_62_RS);
+                    }
+                }
+
+                Rol_62_RS rolValidacion = new Rol_62_RS(rolBase.Nombre_62_RS) { Id_62_RS = rolBase.Id_62_RS };
+
+                foreach (var p in rolActual.ObtenerHijos_62_RS().Where(act => permisosDeseados.Any(des => des.Id_62_RS == act.Id_62_RS && des.GetType() == act.GetType())))
+                    rolValidacion.AgregarHijo_62_RS(p);
+
+                foreach (var permisoNuevo in permisosDeseados)
+                {
+                    bool yaLoTenia = rolActual.ObtenerHijos_62_RS().Any(p => p.Id_62_RS == permisoNuevo.Id_62_RS && p.GetType() == permisoNuevo.GetType());
+                    if (!yaLoTenia)
+                    {
+                        rolValidacion.AgregarHijo_62_RS(permisoNuevo);
+
+                        if (permisoNuevo is Familia_62_RS)
+                            dalPermisos_62_RS.VincularFamiliaARol_62_RS(rolBase.Id_62_RS, permisoNuevo.Id_62_RS);
+                        else
+                            dalPermisos_62_RS.VincularPatenteARol_62_RS(rolBase.Id_62_RS, permisoNuevo.Id_62_RS);
+                    }
+                }
+
+                string usuario = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario, Traducir("Bit_ConfigRol") + rolBase.Id_62_RS, "Administracion", "3");
+            }
+            catch (PermisoDuplicadoExcepcion_62_RS exDup)
+            {
+                throw new Exception(Traducir("Exc_Comp_PermisoDuplicado") + exDup.NombrePermiso_62_RS);
+            }
+            catch (OperacionInvalidaExcepcion_62_RS)
+            {
+                throw new Exception(Traducir("Exc_Comp_OperacionInvalida"));
+            }
+        }
+
 
     }
 }

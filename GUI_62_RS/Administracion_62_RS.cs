@@ -22,12 +22,19 @@ namespace GUI_62_RS
             TsslUsu_62_RS.Text = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.UsU_62_RS;
 
         }
+
+
         BLL_62_RS.Usuario_62_RS SEGusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
+
+        
         private void Administracion_62_RS_Load(object sender, EventArgs e)
         {
             SingletonSession_62_RS.Instancia_62_RS.SuscribirObservador_62_RS(this);
             ActualizarIdioma_62_RS(SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS);
+            AplicarSeguridad_62_RS();
         }
+
+
         private void PerfilrestoolStripMenuItem_Click(object sender, EventArgs e)
         {
             Perfiles_62_RS perfiles_62_RS = new Perfiles_62_RS();
@@ -41,15 +48,12 @@ namespace GUI_62_RS
             usuario_62_RS.Show();
 
         }
-
         private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Bitacora_62_RS bitacora_62_RS = new Bitacora_62_RS();
             bitacora_62_RS.MdiParent = this;
             bitacora_62_RS.Show();
         }
-
-
         private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Backup_62_RS backup_62_RS = new Backup_62_RS();
@@ -57,12 +61,10 @@ namespace GUI_62_RS
             backup_62_RS.Show();
 
         }
-
         private void digVerificacorToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
-
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CambiarClave_62_RS cambiarClave_62_RS = new CambiarClave_62_RS();
@@ -75,19 +77,16 @@ namespace GUI_62_RS
             cambiarIdioma_62_RS.MdiParent = this;
             cambiarIdioma_62_RS.Show();
         }
-
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void logInToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LogIn_62_RS login = new LogIn_62_RS();
             login.MdiParent = this;
             login.Show();
         }
-
         private void Administracion_62_RS_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS == null)
@@ -120,6 +119,8 @@ namespace GUI_62_RS
             }
 
         }
+
+
 
         public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
         {
@@ -159,6 +160,101 @@ namespace GUI_62_RS
                 {
                     TraducirItemsMenu_62_RS(menuItem.DropDownItems, idioma);
                 }
+            }
+        }
+        private void AplicarSeguridad_62_RS()
+        {
+            var usuarioActivo = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+
+            if (usuarioActivo != null && usuarioActivo.Rol_62_RS != null)
+            {
+                // =========================================================================
+                // 1. ADMIN
+                // =========================================================================
+                bool verAdminPadre = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(1);
+                bool verUsuarios = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(2);
+                bool verBitacora = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(3);
+                bool verPerfiles = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(11);
+                bool verRestore = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(12);
+                bool verDigito = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(13);
+
+                UsuariosToolStripMenuItem.Visible = verUsuarios;
+                bitacoraToolStripMenuItem.Visible = verBitacora;
+                PerfilrestoolStripMenuItem.Visible = verPerfiles;
+                restoreToolStripMenuItem.Visible = verRestore;
+                digVerificacorToolStripMenuItem.Visible = verDigito;
+
+                adminToolStripMenuItem.Visible = (verAdminPadre || verUsuarios || verBitacora || verPerfiles || verRestore || verDigito);
+
+                // =========================================================================
+                // 2. PREFERENCIAS DE USUARIO
+                // =========================================================================
+                bool verIdioma = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(4);
+                bool verClave = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(5);
+
+                cambiarIdiomaToolStripMenuItem.Visible = verIdioma;
+                cambiarClaveToolStripMenuItem.Visible = verClave;
+
+                usuarioToolStripMenuItem.Visible = (verIdioma || verClave);
+
+                // =========================================================================
+                // 3. MAESTROS
+                // =========================================================================
+                bool verProd = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(14);
+                bool verCli = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(15);
+                bool verProv = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(16);
+
+                productosToolStripMenuItem.Visible = verProd;
+                clientesToolStripMenuItem.Visible = verCli;
+                proovedoresToolStripMenuItem.Visible = verProv;
+
+                maestroToolStripMenuItem.Visible = (verProd || verCli || verProv);
+
+                // =========================================================================
+                // 4. VENTAS
+                // =========================================================================
+                bool verCarrito = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(17);
+                bool verFacturar = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(18);
+                bool verDespachar = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(19);
+
+                carritoToolStripMenuItem.Visible = verCarrito;
+                facturarToolStripMenuItem.Visible = verFacturar;
+                despacharToolStripMenuItem.Visible = verDespachar;
+
+                ventasToolStripMenuItem.Visible = (verCarrito || verFacturar || verDespachar);
+
+                // =========================================================================
+                // 5. COMPRAS
+                // =========================================================================
+                bool verSoli = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(20);
+                bool verOrden = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(21);
+                bool verRecep = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(22);
+
+                solicitudToolStripMenuItem.Visible = verSoli;
+                ordenCompraToolStripMenuItem.Visible = verOrden;
+                recepcionToolStripMenuItem.Visible = verRecep;
+
+                comprasToolStripMenuItem.Visible = (verSoli || verOrden || verRecep);
+
+                // =========================================================================
+                // 6. REPORTES
+                // =========================================================================
+                bool verRepVen = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(23);
+                bool verRepCom = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(24);
+
+                reporteVentasToolStripMenuItem.Visible = verRepVen;
+                reporteComprasToolStripMenuItem.Visible = verRepCom;
+
+                reportesToolStripMenuItem.Visible = (verRepVen || verRepCom);
+            }
+            else
+            {
+                adminToolStripMenuItem.Visible = false;
+                maestroToolStripMenuItem.Visible = false;
+                ventasToolStripMenuItem.Visible = false;
+                comprasToolStripMenuItem.Visible = false;
+                reportesToolStripMenuItem.Visible = false;
+                usuarioToolStripMenuItem.Visible = false;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SEG_62_RS.Observer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SEG_62_RS
 {
-    public class Usuario_62_RS:Iusuario_62_RS
+    public class Usuario_62_RS:Iusuario_62_RS, IVerificable_62_RS
     {
 		private int idusuario_62_RS;
 		public int IdUsuario_62_RS
@@ -77,9 +78,27 @@ namespace SEG_62_RS
 			get { return password_62_RS; }
 			set { password_62_RS = value; }
 		}
+        private int dvh_62_RS;
+        public int Dvh_62_RS
+        {
+            get { return dvh_62_RS; }
+            set { dvh_62_RS = value; }
+        }
 
+		private int idrol_62_RS;
+		public int IdRol_62_RS
+		{
+			get { return idrol_62_RS; }
+			set { idrol_62_RS = value; }
+		}
 
-		int Iusuario_62_RS.IdUsuario_62_RS { get { return IdUsuario_62_RS; } set { IdUsuario_62_RS = value; } }
+        public Composite.Rol_62_RS Rol_62_RS { get; set; }
+        public string GenerarCadenaDVH_62_RS()
+        {
+            return $"{IdUsuario_62_RS}{IdIdioma}{Nombre_62_RS}{Apellido_62_RS}{Email_62_RS}{DNI_62_RS}{UsU_62_RS}{Password_62_RS}{Estado_62_RS}{Activo_62_RS}{IdRol_62_RS}";
+        }
+
+        int Iusuario_62_RS.IdUsuario_62_RS { get { return IdUsuario_62_RS; } set { IdUsuario_62_RS = value; } }
 		string Iusuario_62_RS.usu_62_RS { get { return usu_62_RS; } set { usu_62_RS = value; } }
 		string Iusuario_62_RS.password_62_RS { get { return password_62_RS; } set { password_62_RS = value; } }	
 

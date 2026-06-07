@@ -16,89 +16,18 @@ namespace GUI_62_RS
     public partial class Perfiles_62_RS : Form, IObservadorIdioma_62_RS
     {
         BLL_62_RS.Permisos_62_RS bllPermisos_62_RS;
+        private int idFamiliaSeleccionada_62_RS = 0;
+        private int idRolSeleccionado_62_RS = 0;
         public Perfiles_62_RS()
         {
             InitializeComponent();
             bllPermisos_62_RS = new BLL_62_RS.Permisos_62_RS();
             SingletonSession_62_RS.Instancia_62_RS.SuscribirObservador_62_RS(this);
             ActualizarIdioma_62_RS(SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS);
+            AplicarSeguridad_62_RS();
         }
-        private int idFamiliaSeleccionada_62_RS = 0;
-        private int idRolSeleccionado_62_RS = 0;
-        private string Traducir(string clave)
-        {
-            return SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS[clave];
-        }
-        private void Perfiles_62_RS_Load(object sender, EventArgs e)
-        {
 
-        }
-        private void BtnNuevo_62_RS_Click(object sender, EventArgs e)
-        {
-            idFamiliaSeleccionada_62_RS = 0;
-            TxtNombreFamilia_62_RS.Clear();
-            TxtDescFamilia_62_RS.Clear();
-            TxtNombreFamilia_62_RS.Focus();
-            for (int i = 0; i < ChklPatentes_62_RS.Items.Count; i++)
-                ChklPatentes_62_RS.SetItemChecked(i, false);
-        }
-        private void CargarListasBase_62_RS()
-        {
-            try
-            {
-                LbFamilias_62_RS.DataSource = bllPermisos_62_RS.ObtenerFamilias_62_RS();
-                LbFamilias_62_RS.DisplayMember = "Nombre_62_RS";
-                LbFamilias_62_RS.ValueMember = "Id_62_RS";
 
-                LbRol_62_RS.DataSource = bllPermisos_62_RS.ListarRolesBase_62_RS();
-                LbRol_62_RS.DisplayMember = "Nombre_62_RS";
-                LbRol_62_RS.ValueMember = "IdRol_62_RS";
-
-                ChklPatentes_62_RS.DataSource = bllPermisos_62_RS.ObtenerPatentes_62_RS();
-                ChklPatentes_62_RS.DisplayMember = "Nombre_62_RS";
-                ChklPatentes_62_RS.ValueMember = "Id_62_RS";
-
-                LlenarTreeAsignador_62_RS();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void DibujarArbol_62_RS(TreeNode nodoPadre, IList<Permiso_62_RS> permisosHijos)
-        {
-            foreach (var permiso in permisosHijos)
-            {
-                TreeNode nuevoNodo = new TreeNode(permiso.Nombre_62_RS);
-                nuevoNodo.Tag = permiso.Id_62_RS;
-                if (permiso.ObtenerHijos_62_RS().Count > 0)
-                {
-                    DibujarArbol_62_RS(nuevoNodo, permiso.ObtenerHijos_62_RS());
-                }
-                nodoPadre.Nodes.Add(nuevoNodo);
-            }
-        }
-        private void LlenarTreeAsignador_62_RS()
-        {
-            TvFamiliaPatente_62_RS.Nodes.Clear();
-            TreeNode nodoFamilias = new TreeNode(Traducir("TvNode_FamiliasDisp"));
-            TreeNode nodoPatentes = new TreeNode(Traducir("TvNode_PatentesDisp"));
-            foreach (var fam in bllPermisos_62_RS.ObtenerFamilias_62_RS())
-            {
-                TreeNode n = new TreeNode(fam.Nombre_62_RS);
-                n.Tag = fam;
-                nodoFamilias.Nodes.Add(n);
-            }
-            foreach (var pat in bllPermisos_62_RS.ObtenerPatentes_62_RS())
-            {
-                TreeNode n = new TreeNode(pat.Nombre_62_RS);
-                n.Tag = pat;
-                nodoPatentes.Nodes.Add(n);
-            }
-
-            TvFamiliaPatente_62_RS.Nodes.Add(nodoFamilias);
-            TvFamiliaPatente_62_RS.Nodes.Add(nodoPatentes);
-        }
         public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
         {
             if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
@@ -122,6 +51,235 @@ namespace GUI_62_RS
                 }
             }
         }
+        private string Traducir(string clave)
+        {
+            return SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS[clave];
+        }
+        private void Perfiles_62_RS_Load(object sender, EventArgs e)
+        {
+            CargarListasBase_62_RS();
+        }
+        private void CargarListasBase_62_RS()
+        {
+            try
+            {
+                LbFamilias_62_RS.DataSource = null;
+                LbFamilias_62_RS.DataSource = bllPermisos_62_RS.ObtenerFamilias_62_RS();
+                LbFamilias_62_RS.DisplayMember = "Nombre_62_RS";
+                LbFamilias_62_RS.ValueMember = "Id_62_RS";
+
+                LbRol_62_RS.DataSource = null;
+                LbRol_62_RS.DataSource = bllPermisos_62_RS.ListarRolesBase_62_RS();
+                LbRol_62_RS.DisplayMember = "Nombre_62_RS";
+                LbRol_62_RS.ValueMember = "IdRol_62_RS";
+
+                LlenarTreeAsignador_62_RS();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void LlenarTreeAsignador_62_RS()
+        {
+            TvFamiliaPatente_62_RS.Nodes.Clear();
+            TvConfigFamilia_62_RS.Nodes.Clear();
+
+            TreeNode nodoFamiliasRol = new TreeNode(Traducir("TvNode_FamiliasDisp"));
+            TreeNode nodoPatentesRol = new TreeNode(Traducir("TvNode_PatentesDisp"));
+
+            TreeNode nodoFamiliasFam = new TreeNode(Traducir("TvNode_FamiliasDisp"));
+            TreeNode nodoPatentesFam = new TreeNode(Traducir("TvNode_PatentesDisp"));
+
+            foreach (var fam in bllPermisos_62_RS.ObtenerFamilias_62_RS())
+            {
+                nodoFamiliasRol.Nodes.Add(new TreeNode(fam.Nombre_62_RS) { Tag = fam });
+                nodoFamiliasFam.Nodes.Add(new TreeNode(fam.Nombre_62_RS) { Tag = fam });
+            }
+
+            foreach (var pat in bllPermisos_62_RS.ObtenerPatentes_62_RS())
+            {
+                nodoPatentesRol.Nodes.Add(new TreeNode(pat.Nombre_62_RS) { Tag = pat });
+                nodoPatentesFam.Nodes.Add(new TreeNode(pat.Nombre_62_RS) { Tag = pat });
+            }
+
+            TvFamiliaPatente_62_RS.Nodes.Add(nodoFamiliasRol);
+            TvFamiliaPatente_62_RS.Nodes.Add(nodoPatentesRol);
+            TvFamiliaPatente_62_RS.ExpandAll();
+
+            TvConfigFamilia_62_RS.Nodes.Add(nodoFamiliasFam);
+            TvConfigFamilia_62_RS.Nodes.Add(nodoPatentesFam);
+            TvConfigFamilia_62_RS.ExpandAll();
+        }
+        private void DibujarArbol_62_RS(TreeNode nodoPadre, IList<Permiso_62_RS> permisosHijos)
+        {
+            foreach (var permiso in permisosHijos)
+            {
+                TreeNode nuevoNodo = new TreeNode(permiso.Nombre_62_RS);
+                nuevoNodo.Tag = permiso.Id_62_RS;
+                if (permiso.ObtenerHijos_62_RS().Count > 0)
+                {
+                    DibujarArbol_62_RS(nuevoNodo, permiso.ObtenerHijos_62_RS());
+                }
+                nodoPadre.Nodes.Add(nuevoNodo);
+            }
+        }
+        private List<Permiso_62_RS> ObtenerPermisosTildados_62_RS(TreeView tvAsignador)
+        {
+            List<Permiso_62_RS> elegidos = new List<Permiso_62_RS>();
+            foreach (TreeNode nodoRaiz in tvAsignador.Nodes)
+            {
+                foreach (TreeNode nodoHijo in nodoRaiz.Nodes)
+                {
+                    if (nodoHijo.Checked && nodoHijo.Tag != null)
+                    {
+                        elegidos.Add((Permiso_62_RS)nodoHijo.Tag);
+                    }
+                }
+            }
+            return elegidos;
+        }
+        private void MarcarNodosAsignados_62_RS(TreeView tvAsignador, IList<Permiso_62_RS> asignadosDirectos)
+        {
+            foreach (TreeNode raiz in tvAsignador.Nodes)
+            {
+                foreach (TreeNode hijo in raiz.Nodes)
+                {
+                    hijo.Checked = false;
+                    if (hijo.Tag != null)
+                    {
+                        var permisoNodo = (Permiso_62_RS)hijo.Tag;
+                        if (asignadosDirectos.Any(a => a.Id_62_RS == permisoNodo.Id_62_RS && a.GetType() == permisoNodo.GetType()))
+                        {
+                            hijo.Checked = true;
+                        }
+                    }
+                }
+            }
+        }
+        private void AplicarSeguridad_62_RS()
+        {
+            var usuarioActivo = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+
+            if (usuarioActivo != null && usuarioActivo.Rol_62_RS != null)
+            {
+                bool puedeNuevaFam = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(30);
+                bool puedeGuardarFam = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(31);
+                bool puedeCancelarFam = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(32);
+                bool puedeConfigurarFam = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(33);
+                bool puedeAltaRol = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(34);
+                bool puedeBajaRol = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(35);
+                bool puedeModificarRol = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(36);
+                BtnNuevo_62_RS.Enabled = puedeNuevaFam;
+                BtnGuardar_62_RS.Enabled = puedeGuardarFam;
+                BtnCancelar_62_RS.Enabled = puedeCancelarFam;
+                BtnConfigurarFami_62_RS.Enabled = puedeConfigurarFam;
+                BtnAltaRol_62_RS.Enabled = puedeAltaRol;
+                BtnBajaRol_62_RS.Enabled = puedeBajaRol;
+                BtnModificarRol_62_RS.Enabled = puedeModificarRol;
+            }
+            else
+            {
+                BtnNuevo_62_RS.Enabled = false;
+                BtnGuardar_62_RS.Enabled = false;
+                BtnCancelar_62_RS.Enabled = false;
+                BtnConfigurarFami_62_RS.Enabled = false;
+
+                BtnAltaRol_62_RS.Enabled = false;
+                BtnBajaRol_62_RS.Enabled = false;
+                BtnModificarRol_62_RS.Enabled = false;
+            }
+        }
+
+
+
+        private void LbFamilias_62_RS_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (LbFamilias_62_RS.SelectedItem == null) return;
+            if (LbFamilias_62_RS.SelectedItem is Familia_62_RS familia)
+            {
+                idFamiliaSeleccionada_62_RS = familia.Id_62_RS;
+                TxtNombreFamilia_62_RS.Text = familia.Nombre_62_RS;
+                TxtDescFamilia_62_RS.Text = Traducir("Txt_FamDescDefecto");
+
+                MarcarNodosAsignados_62_RS(TvConfigFamilia_62_RS, familia.ObtenerHijos_62_RS());
+                TvPermisosFamilia_62_RS.Nodes.Clear();
+                TreeNode nodoRaiz = new TreeNode(familia.Nombre_62_RS);
+                DibujarArbol_62_RS(nodoRaiz, familia.ObtenerHijos_62_RS());
+                TvPermisosFamilia_62_RS.Nodes.Add(nodoRaiz);
+                TvPermisosFamilia_62_RS.ExpandAll();
+            }
+        }
+        private void BtnNuevo_62_RS_Click(object sender, EventArgs e)
+        {
+            idFamiliaSeleccionada_62_RS = 0;
+            TxtNombreFamilia_62_RS.Clear();
+            TxtDescFamilia_62_RS.Clear();
+            TxtNombreFamilia_62_RS.Focus();
+            MarcarNodosAsignados_62_RS(TvConfigFamilia_62_RS, new List<Permiso_62_RS>());
+            TvPermisosFamilia_62_RS.Nodes.Clear();
+        }
+        private void BtnGuardar_62_RS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bllPermisos_62_RS.GuardarFamilia_62_RS(idFamiliaSeleccionada_62_RS, TxtNombreFamilia_62_RS.Text, TxtDescFamilia_62_RS.Text);
+
+                MessageBox.Show(Traducir("Msg_Perf_FamGuardada"), "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarListasBase_62_RS();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Traducir("Msg_Perf_ErrorCargar"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void BtnConfigurarFami_62_RS_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (idFamiliaSeleccionada_62_RS == 0 || !(LbFamilias_62_RS.SelectedItem is Familia_62_RS familiaSel))
+                {
+                    MessageBox.Show(Traducir("Msg_Perf_SeleccioneFam"), "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                List<Permiso_62_RS> permisosDeseados = ObtenerPermisosTildados_62_RS(TvConfigFamilia_62_RS);
+                bllPermisos_62_RS.SincronizarPermisosFamilia_62_RS(familiaSel, permisosDeseados);
+
+                MessageBox.Show(Traducir("Msg_Perf_FamConfigurada"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarListasBase_62_RS();
+                LbFamilias_62_RS.SelectedValue = familiaSel.Id_62_RS;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Traducir("Msg_Perf_ConflictoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LbFamilias_62_RS_SelectedIndexChanged(sender, e);
+            }
+        }
+        private void BtnCancelar_62_RS_Click(object sender, EventArgs e)
+        {
+            if (idFamiliaSeleccionada_62_RS == 0) return;
+
+            var confirm = MessageBox.Show(Traducir("Msg_Perf_ConfirmarBaja"), "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm == DialogResult.Yes)
+            {
+                try
+                {
+                    bllPermisos_62_RS.BajaFamilia_62_RS(idFamiliaSeleccionada_62_RS);
+                    MessageBox.Show(Traducir("Msg_Perf_FamEliminada"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarListasBase_62_RS();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
+
+
+
 
 
         private void LbRol_62_RS_SelectedIndexChanged(object sender, EventArgs e)
@@ -129,11 +287,16 @@ namespace GUI_62_RS
             if (LbRol_62_RS.SelectedValue == null || !(LbRol_62_RS.SelectedValue is int)) return;
             try
             {
-                int idRolSeleccionado = (int)LbRol_62_RS.SelectedValue;
-                Rol_62_RS rolCompleto = bllPermisos_62_RS.ObtenerRolUsuario_62_RS(idRolSeleccionado);
+                int idRol = (int)LbRol_62_RS.SelectedValue;
+                Rol_62_RS rolCompleto = bllPermisos_62_RS.ObtenerRolUsuario_62_RS(idRol);
+
                 TvPermisosRol_62_RS.Nodes.Clear();
+
                 if (rolCompleto != null)
                 {
+                    TxtNombreRol_62_RS.Text = rolCompleto.Nombre_62_RS;
+                    idRolSeleccionado_62_RS = rolCompleto.Id_62_RS;
+                    MarcarNodosAsignados_62_RS(TvFamiliaPatente_62_RS, rolCompleto.ObtenerHijos_62_RS());
                     TreeNode nodoRaiz = new TreeNode(rolCompleto.Nombre_62_RS);
                     DibujarArbol_62_RS(nodoRaiz, rolCompleto.ObtenerHijos_62_RS());
                     TvPermisosRol_62_RS.Nodes.Add(nodoRaiz);
@@ -145,75 +308,6 @@ namespace GUI_62_RS
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void Perfiles_62_RS_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            SingletonSession_62_RS.Instancia_62_RS.DesuscribirObservador_62_RS(this);
-        }
-
-        private void LbFamilias_62_RS_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (LbFamilias_62_RS.SelectedItem is Familia_62_RS familia)
-            {
-                idFamiliaSeleccionada_62_RS = familia.Id_62_RS;
-                TxtNombreFamilia_62_RS.Text = familia.Nombre_62_RS;
-                TxtDescFamilia_62_RS.Text = Traducir("Txt_FamDescDefecto");
-                for (int i = 0; i < ChklPatentes_62_RS.Items.Count; i++)
-                {
-                    ChklPatentes_62_RS.SetItemChecked(i, false);
-                }
-                foreach (var patenteAsignada in familia.ObtenerHijos_62_RS())
-                {
-                    for (int i = 0; i < ChklPatentes_62_RS.Items.Count; i++)
-                    {
-                        Patente_62_RS patLista = (Patente_62_RS)ChklPatentes_62_RS.Items[i];
-                        if (patLista.Id_62_RS == patenteAsignada.Id_62_RS)
-                        {
-                            ChklPatentes_62_RS.SetItemChecked(i, true);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void BtnGuardar_62_RS_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                bllPermisos_62_RS.GuardarFamilia_62_RS(idFamiliaSeleccionada_62_RS, TxtNombreFamilia_62_RS.Text, TxtDescFamilia_62_RS.Text);
-                MessageBox.Show(Traducir("Msg_Perf_FamGuardada"), "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarListasBase_62_RS();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, Traducir("Msg_Perf_ErrorCargar"), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void BtnConfigurarFami_62_RS_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (LbFamilias_62_RS.SelectedItem is Familia_62_RS familiaSel)
-                {
-                    List<Patente_62_RS> patentesElegidas = new List<Patente_62_RS>();
-                    foreach (Patente_62_RS patente in ChklPatentes_62_RS.CheckedItems)
-                    {
-                        patentesElegidas.Add(patente);
-                    }
-                    bllPermisos_62_RS.ConfigurarFamilia_62_RS(familiaSel, patentesElegidas);
-                    MessageBox.Show(Traducir("Msg_Perf_FamConfigurada"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarListasBase_62_RS();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, Traducir("Msg_Perf_ErrorCargar"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-        }
-
         private void BtnAltaRol_62_RS_Click(object sender, EventArgs e)
         {
             try
@@ -226,48 +320,62 @@ namespace GUI_62_RS
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Traducir("Msg_Perf_RolConfigurado"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
-
         private void BtnBajaRol_62_RS_Click(object sender, EventArgs e)
         {
-            TxtNombreRol_62_RS.Clear();
-            TxtDescRol_62_RS.Clear();
-            idRolSeleccionado_62_RS = 0;
+            if (idRolSeleccionado_62_RS == 0) return;
+            try
+            {
+                bllPermisos_62_RS.BajaRol_62_RS(idRolSeleccionado_62_RS);
+                MessageBox.Show(Traducir("Msg_Perf_RolEliminado"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                TxtNombreRol_62_RS.Clear();
+                TxtDescRol_62_RS.Clear();
+                idRolSeleccionado_62_RS = 0;
+                CargarListasBase_62_RS();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
-
         private void BtnModificarRol_62_RS_Click(object sender, EventArgs e)
         {
             try
             {
-                if (LbRol_62_RS.SelectedValue == null) return;
-                int idRol = (int)LbRol_62_RS.SelectedValue;
-                Rol_62_RS rolSeleccionado = new Rol_62_RS(((DataRowView)LbRol_62_RS.SelectedItem)["Nombre_62_RS"].ToString()) { Id_62_RS = idRol };
-                List<Permiso_62_RS> permisosElegidos = new List<Permiso_62_RS>();
-                foreach (TreeNode nodoRaiz in TvFamiliaPatente_62_RS.Nodes)
+                if (idRolSeleccionado_62_RS == 0 || LbRol_62_RS.SelectedValue == null)
                 {
-                    foreach (TreeNode nodoHijo in nodoRaiz.Nodes)
-                    {
-                        if (nodoHijo.Checked)
-                        {
-                            Permiso_62_RS permisoTildado = (Permiso_62_RS)nodoHijo.Tag;
-                            permisosElegidos.Add(permisoTildado);
-                        }
-                    }
+                    MessageBox.Show("Debe seleccionar y guardar un Rol antes de aplicar permisos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                bllPermisos_62_RS.ConfigurarRol_62_RS(rolSeleccionado, permisosElegidos);
+                int idRol = (int)LbRol_62_RS.SelectedValue;
+                Rol_62_RS rolSeleccionado = new Rol_62_RS(((DataRowView)LbRol_62_RS.SelectedItem)["Nombre_62_RS"].ToString()) { Id_62_RS = idRol };
+
+                List<Permiso_62_RS> permisosDeseados = ObtenerPermisosTildados_62_RS(TvFamiliaPatente_62_RS);
+
+                bllPermisos_62_RS.SincronizarPermisosRol_62_RS(rolSeleccionado, permisosDeseados);
+
                 MessageBox.Show(Traducir("Msg_Perf_RolConfigurado"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LbRol_62_RS_SelectedIndexChanged(sender, e);
+                CargarListasBase_62_RS();
+
+                LbRol_62_RS.SelectedValue = idRol;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, Traducir("Msg_Perf_ConflictoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LbRol_62_RS_SelectedIndexChanged(sender, e);
             }
-
         }
+        private void Perfiles_62_RS_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SingletonSession_62_RS.Instancia_62_RS.DesuscribirObservador_62_RS(this);
+        }
+
+
     }
 }

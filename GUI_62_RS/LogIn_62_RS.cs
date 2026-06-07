@@ -31,6 +31,7 @@ namespace GUI_62_RS
         }
         BLL_62_RS.Usuario_62_RS SEGUsuario_62_RS = new BLL_62_RS.Usuario_62_RS();
         BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS = new BLL_62_RS.Bitcaora_62_RS();
+        BLL_62_RS.Permisos_62_RS bllPermisos_62_RS = new BLL_62_RS.Permisos_62_RS();
 
         private void BtnIniciarSesion_62_RS_Click(object sender, EventArgs e)
         {
@@ -50,6 +51,7 @@ namespace GUI_62_RS
                 string contraHash = Encriptacion_62_RS.EncriptarSHA256_62_RS(contra);
                 if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.Password_62_RS == contraHash)
                 {
+                    traducciones = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS;
                     MessageBox.Show(mensaje_62_RS, traducciones["Msg_Login_CambiarClave"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CambiarClave_62_RS cambiar = new CambiarClave_62_RS();
                     cambiar.Show();
@@ -73,6 +75,12 @@ namespace GUI_62_RS
                     traducciones = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS;
                     MessageBox.Show(mensaje_62_RS, traducciones["Msg_Login_Bienvenido_Titulo"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Inicio de sesión exitoso", "Usuario", "1");
+
+                    var usuarioActivo = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+                    if (usuarioActivo != null && usuarioActivo.IdRol_62_RS > 0)
+                    {
+                        usuarioActivo.Rol_62_RS = bllPermisos_62_RS.ObtenerRolUsuario_62_RS(usuarioActivo.IdRol_62_RS);
+                    }
                     Administracion_62_RS admin = new Administracion_62_RS();
                     admin.FormClosed += (sender, args) =>
                     {
@@ -91,8 +99,17 @@ namespace GUI_62_RS
             }
             catch (Exception ex_62_RS)
             {
-                traducciones = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS;
-                MessageBox.Show(ex_62_RS.Message, traducciones["Msg_Login_ErrorTitulo"], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string tituloError = "Error";
+
+                var idiomaActual = SingletonSession_62_RS.Instancia_62_RS?.IdiomaActual_62_RS;
+                if (idiomaActual != null && idiomaActual.Traducciones_62_RS != null)
+                {
+                    if (idiomaActual.Traducciones_62_RS.ContainsKey("Msg_Login_ErrorTitulo"))
+                    {
+                        tituloError = idiomaActual.Traducciones_62_RS["Msg_Login_ErrorTitulo"];
+                    }
+                }
+                MessageBox.Show(ex_62_RS.Message, tituloError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 TxtContra_62_RS.Clear();
                 TxtContra_62_RS.Focus();
             }

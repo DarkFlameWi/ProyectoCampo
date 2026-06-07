@@ -28,6 +28,7 @@ namespace GUI_62_RS
             CargarCmb();
             SingletonSession_62_RS.Instancia_62_RS.SuscribirObservador_62_RS(this);
             ActualizarIdioma_62_RS(SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS);
+            AplicarSeguridad_62_RS();
         }
         void LimpiarCampos_62_RS()
         {
@@ -48,7 +49,6 @@ namespace GUI_62_RS
             DtpFecIni_62_RS.Value = DateTime.Now.AddDays(-3);
             DtpFecFin_62_RS.Value = DateTime.Now;
         }
-
         private void CargarDatosBitacora_62_RS()
         {
             try
@@ -96,6 +96,129 @@ namespace GUI_62_RS
                 MessageBox.Show(traducciones["Msg_Bitacora_ErrorSistema"] + ex_62_RS.Message, traducciones["Msg_Bitacora_ErrorTitulo"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void AplicarSeguridad_62_RS()
+        {
+            var usuarioActivo = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+
+            if (usuarioActivo != null && usuarioActivo.Rol_62_RS != null)
+            {
+                bool puedeFiltrar = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(27);
+                bool puedeImprimir = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(28);
+                BtnAplicar_62_RS.Enabled = puedeFiltrar;
+                BtnImprimir_62_RS.Enabled = puedeImprimir;
+            }
+            else
+            {
+                BtnAplicar_62_RS.Enabled = false;
+                BtnImprimir_62_RS.Enabled = false;
+            }
+        }
+        public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
+        {
+            if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
+                return;
+
+            if (idioma.Traducciones_62_RS.ContainsKey(this.Name))
+                this.Text = idioma.Traducciones_62_RS[this.Name];
+            TraducirControles_62_RS(this.Controls, idioma);
+        }
+        private void TraducirControles_62_RS(Control.ControlCollection controles, Idioma_62_RS idioma)
+        {
+            foreach (Control ctrl in controles)
+            {
+                if (idioma.Traducciones_62_RS.ContainsKey(ctrl.Name))
+                {
+                    ctrl.Text = idioma.Traducciones_62_RS[ctrl.Name];
+                }
+                if (ctrl.HasChildren)
+                {
+                    TraducirControles_62_RS(ctrl.Controls, idioma);
+                }
+            }
+        }
+        private void Imprimir_62_RS()
+        {
+            PrintDocument doc = new PrintDocument();
+            PrintDialog dialog = new PrintDialog();
+
+            doc.DefaultPageSettings.Landscape = true;
+            dialog.Document = doc;
+            dialog.UseEXDialog = true;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                DgvBit_62_RS.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                filaActualImpresion = 0;
+                doc.PrintPage += new PrintPageEventHandler(ContenidoImprimir_62_RS);
+                doc.Print();
+            }
+        }
+        private void ContenidoImprimir_62_RS(object sender, PrintPageEventArgs e)
+        {
+            Font fuenteTitulo = new Font("Arial", 24, FontStyle.Bold);
+            Font fuenteCabecera = new Font("Arial", 10, FontStyle.Bold);
+            Font fuenteCeldas = new Font("Arial", 10, FontStyle.Regular);
+
+            int x = e.MarginBounds.Left;
+            int y = e.MarginBounds.Top;
+            int altoFila = 25;
+
+            if (filaActualImpresion == 0)
+            {
+                string titulo = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Print_Bitacora_Titulo"];
+                e.Graphics.DrawString(titulo, fuenteTitulo, Brushes.Black, x, y);
+                y += 40;
+            }
+            foreach (DataGridViewColumn col in DgvBit_62_RS.Columns)
+            {
+                if (col.Visible)
+                {
+                    e.Graphics.FillRectangle(Brushes.LightGray, x, y, col.Width, altoFila);
+                    e.Graphics.DrawRectangle(Pens.Black, x, y, col.Width, altoFila);
+                    e.Graphics.DrawString(col.HeaderText, fuenteCabecera, Brushes.Black, x + 2, y + 4);
+                    x += col.Width;
+                }
+            }
+
+            y += altoFila;
+
+
+            while (filaActualImpresion < DgvBit_62_RS.Rows.Count)
+            {
+                DataGridViewRow row = DgvBit_62_RS.Rows[filaActualImpresion];
+
+                if (row.IsNewRow)
+                {
+                    filaActualImpresion++;
+                    continue;
+                }
+
+                if (y + altoFila > e.MarginBounds.Bottom)
+                {
+                    e.HasMorePages = true;
+                    return;
+                }
+
+                x = e.MarginBounds.Left;
+
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.Visible)
+                    {
+                        e.Graphics.DrawRectangle(Pens.Black, x, y, cell.OwningColumn.Width, altoFila);
+                        string valor = cell.Value?.ToString() ?? "";
+                        e.Graphics.DrawString(valor, fuenteCeldas, Brushes.Black, x + 2, y + 4);
+                        x += cell.OwningColumn.Width;
+                    }
+                }
+
+                y += altoFila;
+                filaActualImpresion++;
+            }
+            e.HasMorePages = false;
+        }
+
+
 
         private void BtnSalir_62_RS_Click(object sender, EventArgs e)
         {
@@ -147,115 +270,10 @@ namespace GUI_62_RS
         {
             Imprimir_62_RS();
         }
-        private void Imprimir_62_RS()
-        {
-            PrintDocument doc = new PrintDocument();
-            PrintDialog dialog = new PrintDialog();
-
-            doc.DefaultPageSettings.Landscape = true;
-            dialog.Document = doc;
-            dialog.UseEXDialog = true;
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                DgvBit_62_RS.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                filaActualImpresion = 0;
-                doc.PrintPage += new PrintPageEventHandler(ContenidoImprimir_62_RS);
-                doc.Print();
-            }
-        }
-        private void ContenidoImprimir_62_RS(object sender, PrintPageEventArgs e)
-        {
-            Font fuenteTitulo = new Font("Arial", 24, FontStyle.Bold);
-            Font fuenteCabecera = new Font("Arial", 10, FontStyle.Bold);
-            Font fuenteCeldas = new Font("Arial", 10, FontStyle.Regular);
-
-            int x = e.MarginBounds.Left;
-            int y = e.MarginBounds.Top;
-            int altoFila = 25;
-
-            if (filaActualImpresion == 0)
-            {
-                string titulo = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS["Print_Bitacora_Titulo"];
-                e.Graphics.DrawString(titulo, fuenteTitulo, Brushes.Black, x, y);
-                y += 40;
-            }
-                foreach (DataGridViewColumn col in DgvBit_62_RS.Columns)
-            {
-                if (col.Visible)
-                {
-                    e.Graphics.FillRectangle(Brushes.LightGray, x, y, col.Width, altoFila);
-                    e.Graphics.DrawRectangle(Pens.Black, x, y, col.Width, altoFila);
-                    e.Graphics.DrawString(col.HeaderText, fuenteCabecera, Brushes.Black, x + 2, y + 4);
-                    x += col.Width;
-                }
-            }
-
-            y += altoFila;
-
-
-            while (filaActualImpresion < DgvBit_62_RS.Rows.Count)
-            {
-                DataGridViewRow row = DgvBit_62_RS.Rows[filaActualImpresion];
-
-                if (row.IsNewRow)
-                {
-                    filaActualImpresion++;
-                    continue;
-                }
-
-                if (y + altoFila > e.MarginBounds.Bottom)
-                {
-                    e.HasMorePages = true;
-                    return;
-                }
-
-                x = e.MarginBounds.Left;
-
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    if (cell.Visible)
-                    {
-                        e.Graphics.DrawRectangle(Pens.Black, x, y, cell.OwningColumn.Width, altoFila);
-                        string valor = cell.Value?.ToString() ?? "";
-                        e.Graphics.DrawString(valor, fuenteCeldas, Brushes.Black, x + 2, y + 4);
-                        x += cell.OwningColumn.Width;
-                    }
-                }
-
-                y += altoFila;
-                filaActualImpresion++;
-            }
-            e.HasMorePages = false;
-        }
         private void BtnLimpiar_62_RS_Click(object sender, EventArgs e)
         {
             LimpiarCampos_62_RS();
 
-        }
-        public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
-        {
-            if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
-                return;
-
-            if (idioma.Traducciones_62_RS.ContainsKey(this.Name))
-                this.Text = idioma.Traducciones_62_RS[this.Name];
-            TraducirControles_62_RS(this.Controls, idioma);
-        }
-
-        private void TraducirControles_62_RS(Control.ControlCollection controles, Idioma_62_RS idioma)
-        {
-            foreach (Control ctrl in controles)
-            {
-                if (idioma.Traducciones_62_RS.ContainsKey(ctrl.Name))
-                {
-                    ctrl.Text = idioma.Traducciones_62_RS[ctrl.Name];
-                }
-                if (ctrl.HasChildren)
-                {
-                    TraducirControles_62_RS(ctrl.Controls, idioma);
-                }
-            }
         }
         private void Bitacora_62_RS_FormClosed(object sender, FormClosedEventArgs e)
         {

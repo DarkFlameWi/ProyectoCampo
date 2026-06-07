@@ -20,6 +20,7 @@ namespace GUI_62_RS
         SEG_62_RS.Usuario_62_RS SEGusuario_62_RS;
         BLL_62_RS.Usuario_62_RS BLLusuario_62_RS;
         BLL_62_RS.Bitcaora_62_RS bllBitacora_62_RS;
+        private BLL_62_RS.Permisos_62_RS bllPermisos_62_RS = new BLL_62_RS.Permisos_62_RS();
         private int idSeleccionado_62_RS = 0;
         private int idFuncion_62_RS = 0;
         private int tipousuario = 1;
@@ -33,6 +34,8 @@ namespace GUI_62_RS
             CargarDatosUsuarios_62_RS();
             SingletonSession_62_RS.Instancia_62_RS.SuscribirObservador_62_RS(this);
             ActualizarIdioma_62_RS(SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS);
+            CargarComboRoles_62_RS();
+            AplicarSeguridad_62_RS();
         }
 
         private string Traducir(string clave)
@@ -44,14 +47,13 @@ namespace GUI_62_RS
             }
             return clave;
         }
-
         public void Limpiar()
         {
             txtDni_62_RS.Text = "";
             TxtNombre_62_RS.Text = "";
             TxtApellido_62_RS.Text = "";
             TxtEmail_62_RS.Text = "";
-            TxtRol_62_RS.Text = "";
+            CmbRoles_62_RS.Text = "";
             TxtLogIn_62_RS.Text = "";
             TxtBloqueado_62_RS.Text = "";
             TxtActivo_62_RS.Text = "";
@@ -77,6 +79,7 @@ namespace GUI_62_RS
                     DgvUsu_62_RS.Columns["usu_62_RS"].HeaderText = Traducir("DgvCol_Usu_Usuario");
                     DgvUsu_62_RS.Columns["estado_62_RS"].HeaderText = Traducir("DgvCol_Usu_Bloqueado");
                     DgvUsu_62_RS.Columns["Activo_62_RS"].HeaderText = Traducir("DgvCol_Usu_Activo");
+                    DgvUsu_62_RS.Columns["IdRol_62_RS"].HeaderText = Traducir("DgvCol_Usu_Rol");
                 }
                 else
                 {
@@ -104,6 +107,126 @@ namespace GUI_62_RS
                 MessageBox.Show(Traducir("Msg_Usu_ErrorActualizar") + ex_62_RS.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
+        private void DatosUnabler_62_RS()
+        {
+            txtDni_62_RS.Enabled = false;
+            TxtApellido_62_RS.Enabled = false;
+            TxtNombre_62_RS.Enabled = false;
+            TxtEmail_62_RS.Enabled = false;
+            CmbRoles_62_RS.Enabled = false;
+            TxtLogIn_62_RS.Enabled = false;
+            TxtBloqueado_62_RS.Enabled = false;
+            TxtActivo_62_RS.Enabled = false;
+        }
+        private void DatosEnabler_62_RS(int email, int rol, int demas)
+        {
+            if (email == 1)
+            {
+                TxtEmail_62_RS.Enabled = true;
+            }
+            if (rol == 1)
+            {
+                CmbRoles_62_RS.Enabled = true;
+            }
+            if (demas == 1)
+            {
+                txtDni_62_RS.Enabled = true;
+                TxtApellido_62_RS.Enabled = true;
+                TxtNombre_62_RS.Enabled = true;
+            }
+            return;
+        }
+        void BtnRestore_62_RS(int tipo)
+        {
+            if (tipo == 0)
+            {
+                GroupBox.Enabled = false;
+                BtnCrear_62_RS.Enabled = true;
+                BtnActivar_62_RS.Enabled = false;
+                BtnDesbloquear_62_RS.Enabled = false;
+                BtnModificar_62_RS.Enabled = false;
+                BtnAplicar_62_RS.Enabled = false;
+                BtnCancelar_62_RS.Enabled = false;
+            }
+            if (tipo == 1)
+            {
+                BtnCrear_62_RS.Enabled = false;
+                BtnActivar_62_RS.Enabled = false;
+                BtnDesbloquear_62_RS.Enabled = false;
+                BtnModificar_62_RS.Enabled = false;
+                BtnAplicar_62_RS.Enabled = true;
+                BtnCancelar_62_RS.Enabled = true;
+            }
+        }
+        public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
+        {
+            if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
+                return;
+
+            if (idioma.Traducciones_62_RS.ContainsKey(this.Name))
+                this.Text = idioma.Traducciones_62_RS[this.Name];
+            TraducirControles_62_RS(this.Controls, idioma);
+            if (DgvUsu_62_RS.DataSource != null)
+            {
+                CargarDatosUsuarios_62_RS();
+            }
+        }
+        private void TraducirControles_62_RS(Control.ControlCollection controles, Idioma_62_RS idioma)
+        {
+            foreach (Control ctrl in controles)
+            {
+                if (idioma.Traducciones_62_RS.ContainsKey(ctrl.Name))
+                {
+                    ctrl.Text = idioma.Traducciones_62_RS[ctrl.Name];
+                }
+                if (ctrl.HasChildren)
+                {
+                    TraducirControles_62_RS(ctrl.Controls, idioma);
+                }
+            }
+        }
+        private void CargarComboRoles_62_RS()
+        {
+            try
+            {
+                DataTable dtRoles = bllPermisos_62_RS.ListarRolesBase_62_RS();
+                CmbRoles_62_RS.DataSource = dtRoles;
+                CmbRoles_62_RS.DisplayMember = "Nombre_62_RS";
+                CmbRoles_62_RS.ValueMember = "IdRol_62_RS";
+                CmbRoles_62_RS.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void AplicarSeguridad_62_RS()
+        {
+            var usuarioActivo = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+
+            if (usuarioActivo != null && usuarioActivo.Rol_62_RS != null)
+            {
+                bool puedeCrear = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(6);
+                bool puedeModificar = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(7);
+                bool puedeDesbloquear = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(8);
+                bool puedeActivar = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(9);
+
+                BtnCrear_62_RS.Enabled = puedeCrear;
+                BtnModificar_62_RS.Enabled = puedeModificar;
+                BtnDesbloquear_62_RS.Enabled = puedeDesbloquear;
+                BtnActivar_62_RS.Enabled = puedeActivar;
+            }
+            else
+            {
+                BtnCrear_62_RS.Enabled = false;
+                BtnModificar_62_RS.Enabled = false;
+                BtnDesbloquear_62_RS.Enabled = false;
+                BtnActivar_62_RS.Enabled = false;
+            }
+        }
+
+
+
         private void BtnCrear_62_RS_Click(object sender, EventArgs e)
         {
             TxtMensaje_62_RS.Text = Traducir("Msg_Usu_TxtCrear");
@@ -186,7 +309,8 @@ namespace GUI_62_RS
                         DNI_62_RS = txtDni_62_RS.Text,
                         Nombre_62_RS = TxtNombre_62_RS.Text,
                         Apellido_62_RS = TxtApellido_62_RS.Text,
-                        Email_62_RS = TxtEmail_62_RS.Text
+                        Email_62_RS = TxtEmail_62_RS.Text,
+                        IdRol_62_RS = Convert.ToInt32(CmbRoles_62_RS.SelectedValue)
                     };
                     BLLusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
                     BLLusuario_62_RS.AltaUsuario_62_RS(SEGusuario_62_RS);
@@ -253,7 +377,8 @@ namespace GUI_62_RS
                         IdUsuario_62_RS = idSeleccionado_62_RS,
                         Nombre_62_RS = TxtNombre_62_RS.Text,
                         Apellido_62_RS = TxtApellido_62_RS.Text,
-                        Email_62_RS = TxtEmail_62_RS.Text
+                        Email_62_RS = TxtEmail_62_RS.Text,
+                        IdRol_62_RS = Convert.ToInt32(CmbRoles_62_RS.SelectedValue)
                     };
 
                     BLLusuario_62_RS.ModificarUsuario_62_RS(objUser_62_RS);
@@ -300,35 +425,6 @@ namespace GUI_62_RS
             DatosUnabler_62_RS();
             BtnRestore_62_RS(0);
         }
-        private void DatosEnabler_62_RS(int email, int rol, int demas)
-        {
-            if (email == 1)
-            {
-                TxtEmail_62_RS.Enabled = true;
-            }
-            if (rol == 1)
-            {
-                TxtRol_62_RS.Enabled = true;
-            }
-            if (demas == 1)
-            {
-                txtDni_62_RS.Enabled = true;
-                TxtApellido_62_RS.Enabled = true;
-                TxtNombre_62_RS.Enabled = true;
-            }
-            return;
-        }
-        private void DatosUnabler_62_RS()
-        {
-            txtDni_62_RS.Enabled = false;
-            TxtApellido_62_RS.Enabled = false;
-            TxtNombre_62_RS.Enabled = false;
-            TxtEmail_62_RS.Enabled = false;
-            TxtRol_62_RS.Enabled = false;
-            TxtLogIn_62_RS.Enabled = false;
-            TxtBloqueado_62_RS.Enabled = false;
-            TxtActivo_62_RS.Enabled = false;
-        }
         private void RbActivo_62_RS_CheckedChanged(object sender, EventArgs e)
         {
             tipousuario = 1;
@@ -339,56 +435,6 @@ namespace GUI_62_RS
             tipousuario = 0;
             ActualizarDgv_62_RS();
         }
-        void BtnRestore_62_RS(int tipo)
-        {
-            if (tipo == 0)
-            {
-                GroupBox.Enabled = false;
-                BtnCrear_62_RS.Enabled = true;
-                BtnActivar_62_RS.Enabled = false;
-                BtnDesbloquear_62_RS.Enabled = false;
-                BtnModificar_62_RS.Enabled = false;
-                BtnAplicar_62_RS.Enabled = false;
-                BtnCancelar_62_RS.Enabled = false;
-            }
-            if (tipo == 1)
-            {
-                BtnCrear_62_RS.Enabled = false;
-                BtnActivar_62_RS.Enabled = false;
-                BtnDesbloquear_62_RS.Enabled = false;
-                BtnModificar_62_RS.Enabled = false;
-                BtnAplicar_62_RS.Enabled = true;
-                BtnCancelar_62_RS.Enabled = true;
-            }
-        }
-        public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
-        {
-            if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
-                return;
-
-            if (idioma.Traducciones_62_RS.ContainsKey(this.Name))
-                this.Text = idioma.Traducciones_62_RS[this.Name];
-            TraducirControles_62_RS(this.Controls, idioma);
-            if (DgvUsu_62_RS.DataSource != null)
-            {
-                CargarDatosUsuarios_62_RS();
-            }
-        }
-        private void TraducirControles_62_RS(Control.ControlCollection controles, Idioma_62_RS idioma)
-        {
-            foreach (Control ctrl in controles)
-            {
-                if (idioma.Traducciones_62_RS.ContainsKey(ctrl.Name))
-                {
-                    ctrl.Text = idioma.Traducciones_62_RS[ctrl.Name];
-                }
-                if (ctrl.HasChildren)
-                {
-                    TraducirControles_62_RS(ctrl.Controls, idioma);
-                }
-            }
-        }
-
         private void Usuario_62_RS_FormClosed(object sender, FormClosedEventArgs e)
         {
             SingletonSession_62_RS.Instancia_62_RS.DesuscribirObservador_62_RS(this);

@@ -46,7 +46,6 @@
             TxtActivo_62_RS = new TextBox();
             TxtBloqueado_62_RS = new TextBox();
             TxtLogIn_62_RS = new TextBox();
-            TxtRol_62_RS = new TextBox();
             TxtEmail_62_RS = new TextBox();
             TxtNombre_62_RS = new TextBox();
             TxtApellido_62_RS = new TextBox();
@@ -69,6 +68,7 @@
             panel3 = new Panel();
             panel5 = new Panel();
             panel2 = new Panel();
+            CmbRoles_62_RS = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)DgvUsu_62_RS).BeginInit();
             GroupBox.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -242,7 +242,6 @@
             tableLayoutPanel1.Controls.Add(TxtActivo_62_RS, 1, 7);
             tableLayoutPanel1.Controls.Add(TxtBloqueado_62_RS, 1, 6);
             tableLayoutPanel1.Controls.Add(TxtLogIn_62_RS, 1, 5);
-            tableLayoutPanel1.Controls.Add(TxtRol_62_RS, 1, 4);
             tableLayoutPanel1.Controls.Add(TxtEmail_62_RS, 1, 3);
             tableLayoutPanel1.Controls.Add(TxtNombre_62_RS, 1, 2);
             tableLayoutPanel1.Controls.Add(TxtApellido_62_RS, 1, 1);
@@ -255,6 +254,7 @@
             tableLayoutPanel1.Controls.Add(LblBloqueado_62_RS, 0, 6);
             tableLayoutPanel1.Controls.Add(LblActivo_62_RS, 0, 7);
             tableLayoutPanel1.Controls.Add(txtDni_62_RS, 1, 0);
+            tableLayoutPanel1.Controls.Add(CmbRoles_62_RS, 1, 4);
             tableLayoutPanel1.Location = new Point(6, 22);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 8;
@@ -292,13 +292,6 @@
             TxtLogIn_62_RS.Name = "TxtLogIn_62_RS";
             TxtLogIn_62_RS.Size = new Size(130, 23);
             TxtLogIn_62_RS.TabIndex = 13;
-            // 
-            // TxtRol_62_RS
-            // 
-            TxtRol_62_RS.Location = new Point(138, 119);
-            TxtRol_62_RS.Name = "TxtRol_62_RS";
-            TxtRol_62_RS.Size = new Size(130, 23);
-            TxtRol_62_RS.TabIndex = 12;
             // 
             // TxtEmail_62_RS
             // 
@@ -513,6 +506,14 @@
             panel2.Size = new Size(146, 512);
             panel2.TabIndex = 17;
             // 
+            // CmbRoles_62_RS
+            // 
+            CmbRoles_62_RS.FormattingEnabled = true;
+            CmbRoles_62_RS.Location = new Point(138, 119);
+            CmbRoles_62_RS.Name = "CmbRoles_62_RS";
+            CmbRoles_62_RS.Size = new Size(130, 23);
+            CmbRoles_62_RS.TabIndex = 16;
+            // 
             // Usuario_62_RS
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -568,7 +569,6 @@
         private TextBox TxtActivo_62_RS;
         private TextBox TxtBloqueado_62_RS;
         private TextBox TxtLogIn_62_RS;
-        private TextBox TxtRol_62_RS;
         private TextBox TxtEmail_62_RS;
         private TextBox TxtNombre_62_RS;
         private TextBox TxtApellido_62_RS;
@@ -583,5 +583,6 @@
         private Panel panel8;
         private Panel panel7;
         private Panel panel10;
+        private ComboBox CmbRoles_62_RS;
     }
 }

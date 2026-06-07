@@ -192,5 +192,31 @@ namespace DAL_62_RS
                 cerrar_62_RS();
             }
         }
+
+        public int EscribirYDevolverId_62_RS(string query, SqlParameter[] parametros)
+        {
+            abrir_62_RS();
+            SqlCommand cmd = new SqlCommand(query, Conexion);
+            cmd.CommandType = CommandType.Text;
+            if (parametros != null) cmd.Parameters.AddRange(parametros);
+
+            transaccion_62_RS = Conexion.BeginTransaction();
+            cmd.Transaction = transaccion_62_RS;
+            try
+            {
+                int idGenerado = Convert.ToInt32(cmd.ExecuteScalar());
+                transaccion_62_RS.Commit();
+                return idGenerado;
+            }
+            catch (Exception ex)
+            {
+                transaccion_62_RS.Rollback();
+                throw new Exception("Error al ejecutar y recuperar ID: " + ex.Message);
+            }
+            finally
+            {
+                cerrar_62_RS();
+            }
+        }
     }
 }

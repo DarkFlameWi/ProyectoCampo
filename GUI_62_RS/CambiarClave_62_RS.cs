@@ -20,9 +20,51 @@ namespace GUI_62_RS
             InitializeComponent();
             SingletonSession_62_RS.Instancia_62_RS.SuscribirObservador_62_RS(this);
             ActualizarIdioma_62_RS(SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS);
+            AplicarSeguridad_62_RS();
         }
 
+
         BLL_62_RS.Usuario_62_RS SEGusuario_62_RS = new BLL_62_RS.Usuario_62_RS();
+
+
+        public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
+        {
+            if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
+                return;
+
+            if (idioma.Traducciones_62_RS.ContainsKey(this.Name))
+                this.Text = idioma.Traducciones_62_RS[this.Name];
+            TraducirControles_62_RS(this.Controls, idioma);
+        }
+        private void TraducirControles_62_RS(Control.ControlCollection controles, Idioma_62_RS idioma)
+        {
+            foreach (Control ctrl in controles)
+            {
+                if (idioma.Traducciones_62_RS.ContainsKey(ctrl.Name))
+                {
+                    ctrl.Text = idioma.Traducciones_62_RS[ctrl.Name];
+                }
+                if (ctrl.HasChildren)
+                {
+                    TraducirControles_62_RS(ctrl.Controls, idioma);
+                }
+            }
+        }
+        private void AplicarSeguridad_62_RS()
+        {
+            var usuarioActivo = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+
+            if (usuarioActivo != null && usuarioActivo.Rol_62_RS != null)
+            {
+                bool puedeCambiarClave = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(29);
+                BtnCambiarContra_62_RS.Enabled = puedeCambiarClave;
+            }
+            else
+            {
+                BtnCambiarContra_62_RS.Enabled = false;
+            }
+        }
+
 
         private void BtnCambiarContra_62_RS_Click(object sender, EventArgs e)
         {
@@ -52,30 +94,6 @@ namespace GUI_62_RS
 
 
         }
-        public void ActualizarIdioma_62_RS(Idioma_62_RS idioma)
-        {
-            if (idioma == null || idioma.Traducciones_62_RS == null || idioma.Traducciones_62_RS.Count == 0)
-                return;
-
-            if (idioma.Traducciones_62_RS.ContainsKey(this.Name))
-                this.Text = idioma.Traducciones_62_RS[this.Name];
-            TraducirControles_62_RS(this.Controls, idioma);
-        }
-        private void TraducirControles_62_RS(Control.ControlCollection controles, Idioma_62_RS idioma)
-        {
-            foreach (Control ctrl in controles)
-            {
-                if (idioma.Traducciones_62_RS.ContainsKey(ctrl.Name))
-                {
-                    ctrl.Text = idioma.Traducciones_62_RS[ctrl.Name];
-                }
-                if (ctrl.HasChildren)
-                {
-                    TraducirControles_62_RS(ctrl.Controls, idioma);
-                }
-            }
-        }
-
         private void CambiarClave_62_RS_FormClosed(object sender, FormClosedEventArgs e)
         {
             SingletonSession_62_RS.Instancia_62_RS.DesuscribirObservador_62_RS(this);

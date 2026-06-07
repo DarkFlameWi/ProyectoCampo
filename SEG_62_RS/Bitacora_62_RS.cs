@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SEG_62_RS
 {
-    public class Bitacora_62_RS
+    public class Bitacora_62_RS : IVerificable_62_RS
     {
 
 		private int idbitacora_62_RS;
@@ -51,7 +51,17 @@ namespace SEG_62_RS
 			set { criticidad_62_RS = value; }
 		}
 
+		private int dvh_62_RS;
 
+		public int Dvh_62_RS
+		{
+			get { return dvh_62_RS; }
+			set { dvh_62_RS = value; }
+		}
 
-	}
+        public string GenerarCadenaDVH_62_RS()
+        {
+            return $"{IdBitacora_62_RS}{Usu_62_RS}{FechaCambio_62_RS.ToString("yyyyMMddHHmmss")}{Descripcion_62_RS}{Modulo_62_RS}{Criticidad_62_RS}";
+        }
+    }
 }
