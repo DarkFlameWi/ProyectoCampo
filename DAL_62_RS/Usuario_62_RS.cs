@@ -85,8 +85,7 @@ namespace DAL_62_RS
             new SqlParameter("@ape", user_62_RS.Apellido_62_RS),
             new SqlParameter("@mail", user_62_RS.Email_62_RS),
             new SqlParameter("@usu", user_62_RS.UsU_62_RS),
-            new SqlParameter("@idRol", user_62_RS.IdRol_62_RS),
-            new SqlParameter("@dvh", user_62_RS.Dvh_62_RS),
+            new SqlParameter("@IdRol", user_62_RS.IdRol_62_RS == 0 ? (object)DBNull.Value : user_62_RS.IdRol_62_RS),            new SqlParameter("@dvh", user_62_RS.Dvh_62_RS),
             new SqlParameter("@id", user_62_RS.IdUsuario_62_RS)
         };
                 return accesos_62_RS.EscribirText_62_RS(sql_62_RS, parametros_62_RS);
@@ -164,7 +163,7 @@ namespace DAL_62_RS
                         Estado_62_RS = Convert.ToBoolean(dr_62_RS["estado_62_RS"]),
                         Activo_62_RS = Convert.ToBoolean(dr_62_RS["Activo_62_RS"]),
                         IdIdioma = Convert.ToInt32(dr_62_RS["IdIdioma_62_RS"]),
-                        IdRol_62_RS = Convert.ToInt32(dr_62_RS["IdRol_62_RS"])
+                        IdRol_62_RS = dr_62_RS["IdRol_62_RS"] != DBNull.Value ? Convert.ToInt32(dr_62_RS["IdRol_62_RS"]) : 0,
                     };
                 }
                 return null;
@@ -249,7 +248,7 @@ namespace DAL_62_RS
                         Estado_62_RS = Convert.ToBoolean(dr_62_RS["estado_62_RS"]),
                         Activo_62_RS = Convert.ToBoolean(dr_62_RS["Activo_62_RS"]),
                         IdIdioma = Convert.ToInt32(dr_62_RS["IdIdioma_62_RS"]),
-                        IdRol_62_RS = Convert.ToInt32(dr_62_RS["IdRol_62_RS"])
+                        IdRol_62_RS = dr_62_RS["IdRol_62_RS"] != DBNull.Value ? Convert.ToInt32(dr_62_RS["IdRol_62_RS"]) : 0,
                     };
                 }
                 return null;

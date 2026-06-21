@@ -19,31 +19,39 @@ namespace DAL_62_RS
         {
             try
             {
-                string sql = "INSERT INTO Roles_62_RS (Nombre_62_RS, Descripcion_62_RS, Activo_62_RS) VALUES (@nom, @desc, 1); SELECT SCOPE_IDENTITY();";
+                string sql = "INSERT INTO Roles_62_RS (Nombre_62_RS, Descripcion_62_RS) VALUES (@nom, @desc); SELECT SCOPE_IDENTITY();";
                 SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS) };
                 return accesos_62_RS.EscribirYDevolverId_62_RS(sql, p);
             }
             catch (Exception ex) { throw new Exception("Error al crear Rol: " + ex.Message); }
         }
-        public int ModificarRol_62_RS(int idRol_62_RS, string nombre_62_RS, string descripcion_62_RS, int dvh)
+
+        public int ContarUsuariosConRol_62_RS(int idRol_62_RS)
         {
-            try
+            string sql = "SELECT COUNT(*) FROM Usuarios_62_RS WHERE IdRol_62_RS = @id";
+            SqlParameter[] p = { new SqlParameter("@id", idRol_62_RS) };
+
+            DataTable dt = accesos_62_RS.LeerText_62_RS(sql, p);
+            if (dt != null && dt.Rows.Count > 0)
             {
-                string sql = "UPDATE Roles_62_RS SET Nombre_62_RS = @nom, Descripcion_62_RS = @desc, Dvh_62_RS = @dvh WHERE IdRol_62_RS = @id";
-                SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS), new SqlParameter("@dvh", dvh), new SqlParameter("@id", idRol_62_RS) };
-                return accesos_62_RS.EscribirText_62_RS(sql, p);
+                return Convert.ToInt32(dt.Rows[0][0]);
             }
-            catch (Exception ex) { throw new Exception("Error al modificar Rol: " + ex.Message); }
+            return 0;
         }
-        public int BajaRol_62_RS(int idRol_62_RS, int dvh)
+
+        public void BajaRol_62_RS(int idRol_62_RS)
         {
             try
             {
-                string sql = "UPDATE Roles_62_RS SET Activo_62_RS = 0, Dvh_62_RS = @dvh WHERE IdRol_62_RS = @id";
-                SqlParameter[] p = { new SqlParameter("@dvh", dvh), new SqlParameter("@id", idRol_62_RS) };
-                return accesos_62_RS.EscribirText_62_RS(sql, p);
+                string sql = @"
+                    DELETE FROM Rol_Patente_62_RS WHERE IdRol_62_RS = @id;
+                    DELETE FROM Rol_Familia_62_RS WHERE IdRol_62_RS = @id;
+                    DELETE FROM Roles_62_RS WHERE IdRol_62_RS = @id;";
+
+                SqlParameter[] p = { new SqlParameter("@id", idRol_62_RS) };
+                accesos_62_RS.EscribirText_62_RS(sql, p);
             }
-            catch (Exception ex) { throw new Exception("Error al dar de baja el Rol: " + ex.Message); }
+            catch (Exception ex) { throw new Exception("Error al eliminar físicamente el Rol: " + ex.Message); }
         }
         public void ActualizarDVH_Rol_62_RS(int idRol, int dvh)
         {
@@ -57,33 +65,27 @@ namespace DAL_62_RS
         {
             try
             {
-                string sql = "INSERT INTO Familias_62_RS (Nombre_62_RS, Descripcion_62_RS, Activo_62_RS) VALUES (@nom, @desc, 1); SELECT SCOPE_IDENTITY();";
+                string sql = "INSERT INTO Familias_62_RS (Nombre_62_RS, Descripcion_62_RS) VALUES (@nom, @desc); SELECT SCOPE_IDENTITY();";
                 SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS) };
                 return accesos_62_RS.EscribirYDevolverId_62_RS(sql, p);
             }
             catch (Exception ex) { throw new Exception("Error al crear Familia: " + ex.Message); }
         }
 
-        public int ModificarFamilia_62_RS(int idFamilia_62_RS, string nombre_62_RS, string descripcion_62_RS, int dvh)
+        public void BajaFamilia_62_RS(int idFamilia_62_RS)
         {
             try
             {
-                string sql = "UPDATE Familias_62_RS SET Nombre_62_RS = @nom, Descripcion_62_RS = @desc, Dvh_62_RS = @dvh WHERE IdFamilia_62_RS = @id";
-                SqlParameter[] p = { new SqlParameter("@nom", nombre_62_RS), new SqlParameter("@desc", descripcion_62_RS), new SqlParameter("@dvh", dvh), new SqlParameter("@id", idFamilia_62_RS) };
-                return accesos_62_RS.EscribirText_62_RS(sql, p);
-            }
-            catch (Exception ex) { throw new Exception("Error al modificar Familia: " + ex.Message); }
-        }
+                string sql = @"
+                    DELETE FROM Familia_Patente_62_RS WHERE IdFamilia_62_RS = @id;
+                    DELETE FROM Familia_Familia_62_RS WHERE IdFamiliaPadre = @id OR IdFamiliaHija = @id;
+                    DELETE FROM Rol_Familia_62_RS WHERE IdFamilia_62_RS = @id;
+                    DELETE FROM Familias_62_RS WHERE IdFamilia_62_RS = @id;";
 
-        public int BajaFamilia_62_RS(int idFamilia_62_RS, int dvh)
-        {
-            try
-            {
-                string sql = "UPDATE Familias_62_RS SET Activo_62_RS = 0, Dvh_62_RS = @dvh WHERE IdFamilia_62_RS = @id";
-                SqlParameter[] p = { new SqlParameter("@dvh", dvh), new SqlParameter("@id", idFamilia_62_RS) };
-                return accesos_62_RS.EscribirText_62_RS(sql, p);
+                SqlParameter[] p = { new SqlParameter("@id", idFamilia_62_RS) };
+                accesos_62_RS.EscribirText_62_RS(sql, p);
             }
-            catch (Exception ex) { throw new Exception("Error al dar de baja la Familia: " + ex.Message); }
+            catch (Exception ex) { throw new Exception("Error al eliminar físicamente la Familia: " + ex.Message); }
         }
         public void ActualizarDVH_Familia_62_RS(int idFamilia, int dvh)
         {
@@ -120,7 +122,7 @@ namespace DAL_62_RS
         // // LISTAS
         public DataTable ListarRolesBase_62_RS()
         {
-            return accesos_62_RS.LeerText_62_RS("SELECT IdRol_62_RS, Nombre_62_RS, Descripcion_62_RS FROM Roles_62_RS WHERE Activo_62_RS = 1");
+            return accesos_62_RS.LeerText_62_RS("SELECT IdRol_62_RS, Nombre_62_RS, Descripcion_62_RS FROM Roles_62_RS");
         }
         public List<Patente_62_RS> ObtenerPatentes_62_RS()
         {
@@ -137,7 +139,7 @@ namespace DAL_62_RS
         public List<Familia_62_RS> ObtenerFamilias_62_RS()
         {
             var lista = new List<Familia_62_RS>();
-            DataTable dtFam = accesos_62_RS.LeerText_62_RS("SELECT IdFamilia_62_RS FROM Familias_62_RS WHERE Activo_62_RS = 1");
+            DataTable dtFam = accesos_62_RS.LeerText_62_RS("SELECT IdFamilia_62_RS FROM Familias_62_RS");
 
             foreach (DataRow drFam in dtFam.Rows)
             {
@@ -150,7 +152,7 @@ namespace DAL_62_RS
         public Familia_62_RS ObtenerFamiliaPorId_62_RS(int idFamilia_62_RS)
         {
             DataTable dtFam = accesos_62_RS.LeerText_62_RS(
-                            "SELECT Nombre_62_RS FROM Familias_62_RS WHERE IdFamilia_62_RS = @id AND Activo_62_RS = 1",
+                            "SELECT Nombre_62_RS FROM Familias_62_RS WHERE IdFamilia_62_RS = @id",
                             new[] { new SqlParameter("@id", idFamilia_62_RS) });
 
             if (dtFam == null || dtFam.Rows.Count == 0) return null;
@@ -176,7 +178,7 @@ namespace DAL_62_RS
         public Rol_62_RS ObtenerRolUsuario_62_RS(int idRol_62_RS)
         {
             DataTable dtRol = accesos_62_RS.LeerText_62_RS(
-                "SELECT Nombre_62_RS FROM Roles_62_RS WHERE IdRol_62_RS = @id AND Activo_62_RS = 1",
+                "SELECT Nombre_62_RS FROM Roles_62_RS WHERE IdRol_62_RS = @id",
                 new[] { new SqlParameter("@id", idRol_62_RS) });
 
             if (dtRol == null || dtRol.Rows.Count == 0) return null;

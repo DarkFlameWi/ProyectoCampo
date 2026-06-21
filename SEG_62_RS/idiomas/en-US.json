@@ -202,13 +202,12 @@
 
   "Bit_ConfigRol": "Permissions configured for Role ID: ",
   "Bit_ConfigFam": "Permissions configured for Family ID: ",
-  "Bit_BajaRol": "Logical deletion of Role ID: ",
-  "Bit_BajaFam": "Logical deletion of Family ID: ",
+  "Bit_BajaRol": "Physical deletion of Role ID: ",
+  "Bit_BajaFam": "Physical deletion of Family ID: ",
 
   "Perfiles_62_RS": "Profiles and Permissions Management",
 
   "BtnNuevo_62_RS": "New Family",
-  "BtnGuardar_62_RS": "Save Changes",
   "BtnCancelar_62_RS": "Delete Family",
   "BtnConfigurarFami_62_RS": "Apply Permissions to Family",
 
@@ -218,8 +217,8 @@
 
   "LblNombreFami_62_RS": "NAME",
   "LblDescrFami_62_RS": "DESCRIPTION",
-  "LblNombreRol_62_RS": "Name",
-  "LblDescrRol_62_RS": "Description",
+  "LblNombreRol_62_RS": "NAME",
+  "LblDescrRol_62_RS": "DESCRIPTION",
 
   "TvNode_FamiliasDisp": "Available Families",
   "TvNode_PatentesDisp": "Available Patents",
@@ -230,12 +229,17 @@
   "Msg_Perf_FamConfigurada": "Permissions successfully assigned to the family.",
   "Msg_Perf_FamEliminada": "Family successfully deactivated.",
   "Msg_Perf_ConfirmarBaja": "Are you sure you want to delete this element?",
+  "Msg_Perf_ConfirmarBajaTit": "Confirm Permanent Deletion",
   "Msg_Perf_RolGuardado": "Role saved successfully.",
   "Msg_Perf_RolConfigurado": "Permissions successfully configured for the Role.",
   "Msg_Perf_RolEliminado": "Role successfully deactivated.",
   "Msg_Perf_ConflictoTitulo": "Permission Conflicts",
   "Msg_Perf_SeleccioneFam": "You must select a family from the list.",
+  "Msg_Perf_SeleccioneRol": "You must select a Role before applying permissions.",
   "Msg_Perf_SeleccionePermisos": "You must select at least one permission to assign.",
+  "Msg_Perf_AvisoRolUsuarios": "This Role is assigned to one or more users. If you continue, their role will be removed and they will be left without permissions.\n\nDo you want to permanently delete it?",
+  "Msg_Perf_AvisoRolSimple": "Do you want to permanently delete this Role?",
+  "Msg_Perf_ErrorEliminar": "Could not delete",
 
   "Exc_BLL_DirInvalido": "The selected destination folder is invalid.",
   "Exc_BLL_ErrorBackup": "Error generating backup: ",

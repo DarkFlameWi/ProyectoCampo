@@ -43,9 +43,8 @@ namespace BLL_62_RS
             return dalPermisos_62_RS.ListarRolesBase_62_RS();
         }
 
-
-
-        public void GuardarFamilia_62_RS(int id_62_RS, string nombre_62_RS, string descripcion_62_RS)
+        // Métodos para gestión de Familias
+        public void AltaFamilia_62_RS(string nombre_62_RS, string descripcion_62_RS)
         {
             try
             {
@@ -54,55 +53,32 @@ namespace BLL_62_RS
 
                 string usuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
                 SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
-
                 Familia_62_RS familiaObj = new Familia_62_RS(nombre_62_RS)
                 {
-                    Id_62_RS = id_62_RS,
-                    Descripcion_62_RS = descripcion_62_RS,
-                    Activo_62_RS = true
+                    Descripcion_62_RS = descripcion_62_RS
                 };
 
-                if (id_62_RS == 0)
-                {
-                    int nuevoId = dalPermisos_62_RS.AltaFamilia_62_RS(nombre_62_RS, descripcion_62_RS);
-                    familiaObj.Id_62_RS = nuevoId;
-
-                    int dvhCalculado = motorDV.CalcularDVH_62_RS(familiaObj);
-                    dalPermisos_62_RS.ActualizarDVH_Familia_62_RS(nuevoId, dvhCalculado);
-                    BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
-                    gestorDvv.RecalcularDVVTabla_62_RS("Familias_62_RS");
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Alta de Familia: " + nombre_62_RS, "Administracion", "2");
-                }
-                else
-                {
-                    int dvhCalculado = motorDV.CalcularDVH_62_RS(familiaObj);
-                    dalPermisos_62_RS.ModificarFamilia_62_RS(id_62_RS, nombre_62_RS, descripcion_62_RS, dvhCalculado);
-                    BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
-                    gestorDvv.RecalcularDVVTabla_62_RS("Familias_62_RS");
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Modificación de Familia: " + nombre_62_RS, "Administracion", "2");
-                }
+                int nuevoId = dalPermisos_62_RS.AltaFamilia_62_RS(nombre_62_RS, descripcion_62_RS);
+                familiaObj.Id_62_RS = nuevoId;
+                int dvhCalculado = motorDV.CalcularDVH_62_RS(familiaObj);
+                dalPermisos_62_RS.ActualizarDVH_Familia_62_RS(nuevoId, dvhCalculado);
+                BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+                gestorDvv.RecalcularDVVTabla_62_RS("Familias_62_RS");
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Alta de Familia: " + nombre_62_RS, "Administracion", "2");
             }
             catch (Exception ex) { throw new Exception(Traducir("Exc_BLL_ErrorFam") + ex.Message); }
         }
-        public void BajaFamilia_62_RS(int idFamilia_62_RS, string nombre_62_RS, string desc_62_RS)
+
+        public void BajaFamilia_62_RS(int idFamilia_62_RS)
         {
             try
             {
-                Familia_62_RS familiaObj = new Familia_62_RS(nombre_62_RS)
-                {
-                    Id_62_RS = idFamilia_62_RS,
-                    Descripcion_62_RS = desc_62_RS,
-                    Activo_62_RS = false
-                };
-
-                SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
-                int nuevoDvh = motorDV.CalcularDVH_62_RS(familiaObj);
-
-                dalPermisos_62_RS.BajaFamilia_62_RS(idFamilia_62_RS, nuevoDvh);
+                dalPermisos_62_RS.BajaFamilia_62_RS(idFamilia_62_RS);
                 BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
                 gestorDvv.RecalcularDVVTabla_62_RS("Familias_62_RS");
+
                 string usuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
-                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, Traducir("Bit_BajaFam") + idFamilia_62_RS, "Administracion", "2");
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, Traducir("Bit_BajaFam") + " Física ID: " + idFamilia_62_RS, "Administracion", "2");
             }
             catch (Exception ex) { throw new Exception(Traducir("Exc_BLL_ErrorFam") + ex.Message); }
         }
@@ -154,8 +130,7 @@ namespace BLL_62_RS
 
 
 
-
-        public void GuardarRol_62_RS(int id_62_RS, string nombre_62_RS, string descripcion_62_RS)
+        public void AltaRol_62_RS(string nombre_62_RS, string descripcion_62_RS)
         {
             try
             {
@@ -164,57 +139,72 @@ namespace BLL_62_RS
 
                 string usuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
                 SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
-
-                
                 Rol_62_RS rolObj = new Rol_62_RS(nombre_62_RS)
                 {
-                    Id_62_RS = id_62_RS,
-                    Descripcion_62_RS = descripcion_62_RS,
-                    Activo_62_RS = true
+                    Descripcion_62_RS = descripcion_62_RS
                 };
+                int nuevoId = dalPermisos_62_RS.AltaRol_62_RS(nombre_62_RS, descripcion_62_RS);
+                rolObj.Id_62_RS = nuevoId;
+                int dvhCalculado = motorDV.CalcularDVH_62_RS(rolObj);
+                dalPermisos_62_RS.ActualizarDVH_Rol_62_RS(nuevoId, dvhCalculado);
 
-                if (id_62_RS == 0)
-                {
-                    int nuevoId = dalPermisos_62_RS.AltaRol_62_RS(nombre_62_RS, descripcion_62_RS);
-                    rolObj.Id_62_RS = nuevoId;
-
-                    int dvhCalculado = motorDV.CalcularDVH_62_RS(rolObj);
-                    dalPermisos_62_RS.ActualizarDVH_Rol_62_RS(nuevoId, dvhCalculado);
-                    BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
-                    gestorDvv.RecalcularDVVTabla_62_RS("Roles_62_RS");
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Alta de Rol: " + nombre_62_RS, "Administracion", "2");
-                }
-                else
-                {
-                    int dvhCalculado = motorDV.CalcularDVH_62_RS(rolObj);
-                    dalPermisos_62_RS.ModificarRol_62_RS(id_62_RS, nombre_62_RS, descripcion_62_RS, dvhCalculado);
-                    bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Modificación de Rol: " + nombre_62_RS, "Administracion", "2");
-                }
+                BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
+                gestorDvv.RecalcularDVVTabla_62_RS("Roles_62_RS");
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, "Alta de Rol: " + nombre_62_RS, "Administracion", "2");
             }
             catch (Exception ex) { throw new Exception(Traducir("Exc_BLL_ErrorRol") + ex.Message); }
         }
-        public void BajaRol_62_RS(int idRol_62_RS, string nombre_62_RS, string desc_62_RS)
+        public bool RolTieneUsuariosAsignados_62_RS(int idRol_62_RS)
+        {
+            return dalPermisos_62_RS.ContarUsuariosConRol_62_RS(idRol_62_RS) > 0;
+        }
+        public void BajaRol_62_RS(int idRol_62_RS)
         {
             try
             {
-                Rol_62_RS rolObj = new Rol_62_RS(nombre_62_RS)
+                var usuActual = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+                if (usuActual != null && usuActual.IdRol_62_RS == idRol_62_RS)
                 {
-                    Id_62_RS = idRol_62_RS,
-                    Descripcion_62_RS = desc_62_RS,
-                    Activo_62_RS = false
-                };
+                    throw new Exception("Seguridad: No puede eliminar el rol que tiene asignado actualmente en su sesión.");
+                }
+                if (RolTieneUsuariosAsignados_62_RS(idRol_62_RS))
+                {
+                    BLL_62_RS.Usuario_62_RS bllUsu = new BLL_62_RS.Usuario_62_RS();
+                    DataTable dtUsuarios = bllUsu.ListarUsuario_62_RS(0);
 
-                SEG_62_RS.DigitoVerificador_62_RS motorDV = new SEG_62_RS.DigitoVerificador_62_RS();
-                int nuevoDvh = motorDV.CalcularDVH_62_RS(rolObj);
-
-                dalPermisos_62_RS.BajaRol_62_RS(idRol_62_RS, nuevoDvh);
+                    foreach (DataRow row in dtUsuarios.Rows)
+                    {
+                        if (row["IdRol_62_RS"] != DBNull.Value && Convert.ToInt32(row["IdRol_62_RS"]) == idRol_62_RS)
+                        {
+                            SEG_62_RS.Usuario_62_RS usuModificado = new SEG_62_RS.Usuario_62_RS
+                            {
+                                IdUsuario_62_RS = Convert.ToInt32(row["idusuario_62_RS"]),
+                                IdIdioma = Convert.ToInt32(row["IdIdioma_62_RS"]),
+                                Nombre_62_RS = row["nombre_62_RS"].ToString(),
+                                Apellido_62_RS = row["apellido_62_RS"].ToString(),
+                                Email_62_RS = row["email_62_RS"].ToString(),
+                                DNI_62_RS = row["dni_62_RS"].ToString(),
+                                UsU_62_RS = row["usu_62_RS"].ToString(),
+                                Password_62_RS = row["password_62_RS"].ToString(),
+                                Estado_62_RS = Convert.ToBoolean(row["estado_62_RS"]),
+                                Activo_62_RS = Convert.ToBoolean(row["Activo_62_RS"]),
+                                IdRol_62_RS = 0
+                            };
+                            bllUsu.ModificarUsuario_62_RS(usuModificado);
+                        }
+                    }
+                    BLL_62_RS.DVV_62_RS gestorDvvUsu = new BLL_62_RS.DVV_62_RS();
+                    gestorDvvUsu.RecalcularDVVTabla_62_RS("Usuarios_62_RS");
+                }
+                dalPermisos_62_RS.BajaRol_62_RS(idRol_62_RS);
                 BLL_62_RS.DVV_62_RS gestorDvv = new BLL_62_RS.DVV_62_RS();
                 gestorDvv.RecalcularDVVTabla_62_RS("Roles_62_RS");
-                string usuario_62_RS = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
-                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario_62_RS, Traducir("Bit_BajaRol") + idRol_62_RS, "Administracion", "2");
+
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuActual?.UsU_62_RS ?? "Sistema", "Baja Física de Rol ID: " + idRol_62_RS, "Administracion", "2");
             }
             catch (Exception ex) { throw new Exception(Traducir("Exc_BLL_ErrorRol") + ex.Message); }
         }
+
         public void SincronizarPermisosRol_62_RS(Rol_62_RS rolBase, List<Permiso_62_RS> permisosDeseados)
         {
             try
@@ -265,7 +255,5 @@ namespace BLL_62_RS
                 throw new Exception(Traducir("Exc_Comp_OperacionInvalida"));
             }
         }
-
-
     }
 }

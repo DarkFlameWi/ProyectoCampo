@@ -202,13 +202,12 @@
 
   "Bit_ConfigRol": "Se configuraron los permisos del Rol ID: ",
   "Bit_ConfigFam": "Se configuraron los permisos de la Familia ID: ",
-  "Bit_BajaRol": "Baja lógica de Rol ID: ",
-  "Bit_BajaFam": "Baja lógica de Familia ID: ",
+  "Bit_BajaRol": "Baja física de Rol ID: ",
+  "Bit_BajaFam": "Baja física de Familia ID: ",
 
   "Perfiles_62_RS": "Gestión de Perfiles y Permisos",
 
   "BtnNuevo_62_RS": "Nueva Familia",
-  "BtnGuardar_62_RS": "Guardar Cambios",
   "BtnCancelar_62_RS": "Eliminar Familia",
   "BtnConfigurarFami_62_RS": "Aplicar Permisos a Familia",
 
@@ -217,9 +216,9 @@
   "BtnModificarRol_62_RS": "Aplicar Permisos al Rol",
 
   "LblNombreFami_62_RS": "NOMBRE",
-  "LblDescrFami_62_RS": "DESCRIPCION",
-  "LblNombreRol_62_RS": "Nombre",
-  "LblDescrRol_62_RS": "Descripcion",
+  "LblDescrFami_62_RS": "DESCRIPCIÓN",
+  "LblNombreRol_62_RS": "NOMBRE",
+  "LblDescrRol_62_RS": "DESCRIPCIÓN",
 
   "TvNode_FamiliasDisp": "Familias Disponibles",
   "TvNode_PatentesDisp": "Patentes Disponibles",
@@ -230,12 +229,17 @@
   "Msg_Perf_FamConfigurada": "Permisos asignados correctamente a la familia.",
   "Msg_Perf_FamEliminada": "Familia dada de baja con éxito.",
   "Msg_Perf_ConfirmarBaja": "¿Está seguro que desea dar de baja este elemento?",
+  "Msg_Perf_ConfirmarBajaTit": "Confirmar Eliminación Definitiva",
   "Msg_Perf_RolGuardado": "Rol guardado con éxito.",
   "Msg_Perf_RolConfigurado": "Permisos configurados correctamente para el Rol.",
   "Msg_Perf_RolEliminado": "Rol dado de baja con éxito.",
   "Msg_Perf_ConflictoTitulo": "Conflictos de Permisos",
   "Msg_Perf_SeleccioneFam": "Debe seleccionar una familia de la lista.",
+  "Msg_Perf_SeleccioneRol": "Debe seleccionar un Rol antes de aplicar permisos.",
   "Msg_Perf_SeleccionePermisos": "Debe seleccionar al menos un permiso para asignar.",
+  "Msg_Perf_AvisoRolUsuarios": "Este Rol está asignado a uno o más usuarios. Si continúa, se les quitará el rol y quedarán sin permisos.\n\n¿Desea eliminarlo definitivamente?",
+  "Msg_Perf_AvisoRolSimple": "¿Desea eliminar definitivamente este Rol?",
+  "Msg_Perf_ErrorEliminar": "No se pudo eliminar",
 
   "Exc_BLL_DirInvalido": "La carpeta de destino seleccionada no es válida.",
   "Exc_BLL_ErrorBackup": "Error al generar la copia de seguridad: ",

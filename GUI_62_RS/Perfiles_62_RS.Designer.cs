@@ -35,8 +35,6 @@
             panel5 = new Panel();
             panel4 = new Panel();
             panel16 = new Panel();
-            BtnGuardar_62_RS = new Button();
-            panel23 = new Panel();
             panel22 = new Panel();
             BtnCancelar_62_RS = new Button();
             panel21 = new Panel();
@@ -108,7 +106,7 @@
             tabcontrol.Location = new Point(4, 24);
             tabcontrol.Name = "tabcontrol";
             tabcontrol.Padding = new Padding(3);
-            tabcontrol.Size = new Size(972, 393);
+            tabcontrol.Size = new Size(972, 431);
             tabcontrol.TabIndex = 0;
             tabcontrol.Text = "Gestión de Familias";
             tabcontrol.UseVisualStyleBackColor = true;
@@ -123,7 +121,7 @@
             panel1.Location = new Point(3, 3);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(475, 387);
+            panel1.Size = new Size(475, 425);
             panel1.TabIndex = 10;
             // 
             // LbFamilias_62_RS
@@ -133,7 +131,7 @@
             LbFamilias_62_RS.ItemHeight = 15;
             LbFamilias_62_RS.Location = new Point(19, 14);
             LbFamilias_62_RS.Name = "LbFamilias_62_RS";
-            LbFamilias_62_RS.Size = new Size(456, 234);
+            LbFamilias_62_RS.Size = new Size(456, 272);
             LbFamilias_62_RS.TabIndex = 0;
             LbFamilias_62_RS.SelectedIndexChanged += LbFamilias_62_RS_SelectedIndexChanged;
             // 
@@ -151,7 +149,7 @@
             panel4.Controls.Add(panel16);
             panel4.Controls.Add(panel17);
             panel4.Dock = DockStyle.Bottom;
-            panel4.Location = new Point(19, 248);
+            panel4.Location = new Point(19, 286);
             panel4.Margin = new Padding(3, 2, 3, 2);
             panel4.Name = "panel4";
             panel4.Size = new Size(456, 139);
@@ -159,8 +157,6 @@
             // 
             // panel16
             // 
-            panel16.Controls.Add(BtnGuardar_62_RS);
-            panel16.Controls.Add(panel23);
             panel16.Controls.Add(panel22);
             panel16.Controls.Add(BtnCancelar_62_RS);
             panel16.Controls.Add(panel21);
@@ -174,26 +170,6 @@
             panel16.Name = "panel16";
             panel16.Size = new Size(456, 87);
             panel16.TabIndex = 10;
-            // 
-            // BtnGuardar_62_RS
-            // 
-            BtnGuardar_62_RS.Dock = DockStyle.Fill;
-            BtnGuardar_62_RS.Location = new Point(144, 8);
-            BtnGuardar_62_RS.Name = "BtnGuardar_62_RS";
-            BtnGuardar_62_RS.Size = new Size(181, 71);
-            BtnGuardar_62_RS.TabIndex = 4;
-            BtnGuardar_62_RS.Text = "GUARDAR";
-            BtnGuardar_62_RS.UseVisualStyleBackColor = true;
-            BtnGuardar_62_RS.Click += BtnGuardar_62_RS_Click;
-            // 
-            // panel23
-            // 
-            panel23.Dock = DockStyle.Right;
-            panel23.Location = new Point(325, 8);
-            panel23.Margin = new Padding(3, 2, 3, 2);
-            panel23.Name = "panel23";
-            panel23.Size = new Size(14, 71);
-            panel23.TabIndex = 11;
             // 
             // panel22
             // 
@@ -313,7 +289,7 @@
             panel3.Location = new Point(0, 0);
             panel3.Margin = new Padding(3, 2, 3, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(19, 387);
+            panel3.Size = new Size(19, 425);
             panel3.TabIndex = 10;
             // 
             // panel2
@@ -328,7 +304,7 @@
             panel2.Location = new Point(478, 3);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(491, 387);
+            panel2.Size = new Size(491, 425);
             panel2.TabIndex = 11;
             // 
             // TvPermisosFamilia_62_RS
@@ -360,7 +336,7 @@
             // 
             panel8.Controls.Add(BtnConfigurarFami_62_RS);
             panel8.Dock = DockStyle.Bottom;
-            panel8.Location = new Point(15, 250);
+            panel8.Location = new Point(15, 288);
             panel8.Margin = new Padding(3, 2, 3, 2);
             panel8.Name = "panel8";
             panel8.Size = new Size(461, 137);
@@ -382,7 +358,7 @@
             panel7.Location = new Point(476, 0);
             panel7.Margin = new Padding(3, 2, 3, 2);
             panel7.Name = "panel7";
-            panel7.Size = new Size(15, 387);
+            panel7.Size = new Size(15, 425);
             panel7.TabIndex = 9;
             // 
             // panel6
@@ -391,7 +367,7 @@
             panel6.Location = new Point(0, 0);
             panel6.Margin = new Padding(3, 2, 3, 2);
             panel6.Name = "panel6";
-            panel6.Size = new Size(15, 387);
+            panel6.Size = new Size(15, 425);
             panel6.TabIndex = 8;
             // 
             // tabPage2
@@ -595,7 +571,6 @@
         private TabControl tabControl1;
         private TabPage tabcontrol;
         private Button BtnCancelar_62_RS;
-        private Button BtnGuardar_62_RS;
         private TextBox TxtDescFamilia_62_RS;
         private TextBox TxtNombreFamilia_62_RS;
         private ListBox LbFamilias_62_RS;
@@ -630,7 +605,6 @@
         private Panel panel14;
         private Panel panel13;
         private Panel panel16;
-        private Panel panel23;
         private Panel panel22;
         private Panel panel21;
         private Panel panel20;

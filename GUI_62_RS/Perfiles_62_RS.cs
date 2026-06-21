@@ -164,14 +164,13 @@ namespace GUI_62_RS
             if (usuarioActivo != null && usuarioActivo.Rol_62_RS != null)
             {
                 bool puedeNuevaFam = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(30);
-                bool puedeGuardarFam = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(31);
                 bool puedeCancelarFam = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(32);
                 bool puedeConfigurarFam = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(33);
                 bool puedeAltaRol = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(34);
                 bool puedeBajaRol = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(35);
                 bool puedeModificarRol = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(36);
+
                 BtnNuevo_62_RS.Enabled = puedeNuevaFam;
-                BtnGuardar_62_RS.Enabled = puedeGuardarFam;
                 BtnCancelar_62_RS.Enabled = puedeCancelarFam;
                 BtnConfigurarFami_62_RS.Enabled = puedeConfigurarFam;
                 BtnAltaRol_62_RS.Enabled = puedeAltaRol;
@@ -181,10 +180,8 @@ namespace GUI_62_RS
             else
             {
                 BtnNuevo_62_RS.Enabled = false;
-                BtnGuardar_62_RS.Enabled = false;
                 BtnCancelar_62_RS.Enabled = false;
                 BtnConfigurarFami_62_RS.Enabled = false;
-
                 BtnAltaRol_62_RS.Enabled = false;
                 BtnBajaRol_62_RS.Enabled = false;
                 BtnModificarRol_62_RS.Enabled = false;
@@ -212,41 +209,35 @@ namespace GUI_62_RS
         }
         private void BtnNuevo_62_RS_Click(object sender, EventArgs e)
         {
-            idFamiliaSeleccionada_62_RS = 0;
-            TxtNombreFamilia_62_RS.Clear();
-            TxtDescFamilia_62_RS.Clear();
-            TxtNombreFamilia_62_RS.Focus();
-            MarcarNodosAsignados_62_RS(TvConfigFamilia_62_RS, new List<Permiso_62_RS>());
-            TvPermisosFamilia_62_RS.Nodes.Clear();
-        }
-        private void BtnGuardar_62_RS_Click(object sender, EventArgs e)
-        {
             try
             {
-                bllPermisos_62_RS.GuardarFamilia_62_RS(idFamiliaSeleccionada_62_RS, TxtNombreFamilia_62_RS.Text, TxtDescFamilia_62_RS.Text);
-
-                MessageBox.Show(Traducir("Msg_Perf_FamGuardada"), "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bllPermisos_62_RS.AltaFamilia_62_RS(TxtNombreFamilia_62_RS.Text, TxtDescFamilia_62_RS.Text);
+                MessageBox.Show(Traducir("Msg_Perf_FamGuardada"), Traducir("Msg_Usu_SistemaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                TxtNombreFamilia_62_RS.Clear();
+                TxtDescFamilia_62_RS.Clear();
+                idFamiliaSeleccionada_62_RS = 0;
                 CargarListasBase_62_RS();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Traducir("Msg_Perf_ErrorCargar"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void BtnConfigurarFami_62_RS_Click(object sender, EventArgs e)
         {
             try
             {
                 if (idFamiliaSeleccionada_62_RS == 0 || !(LbFamilias_62_RS.SelectedItem is Familia_62_RS familiaSel))
                 {
-                    MessageBox.Show(Traducir("Msg_Perf_SeleccioneFam"), "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Traducir("Msg_Perf_SeleccioneFam"), Traducir("Msg_Usu_Atencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 List<Permiso_62_RS> permisosDeseados = ObtenerPermisosTildados_62_RS(TvConfigFamilia_62_RS);
                 bllPermisos_62_RS.SincronizarPermisosFamilia_62_RS(familiaSel, permisosDeseados);
 
-                MessageBox.Show(Traducir("Msg_Perf_FamConfigurada"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Traducir("Msg_Perf_FamConfigurada"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarListasBase_62_RS();
                 LbFamilias_62_RS.SelectedValue = familiaSel.Id_62_RS;
             }
@@ -260,25 +251,24 @@ namespace GUI_62_RS
         {
             if (idFamiliaSeleccionada_62_RS == 0) return;
 
-            var confirm = MessageBox.Show(Traducir("Msg_Perf_ConfirmarBaja"), "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirm == DialogResult.Yes)
+            var confirm = MessageBox.Show(Traducir("Msg_Perf_ConfirmarBaja"), Traducir("Msg_Perf_ConfirmarBajaTit"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning); if (confirm == DialogResult.Yes)
             {
                 try
                 {
-                    string nombreFam = TxtNombreFamilia_62_RS.Text;
-                    string descFam = TxtDescFamilia_62_RS.Text;
-                    bllPermisos_62_RS.BajaFamilia_62_RS(idFamiliaSeleccionada_62_RS, nombreFam, descFam);
-                    MessageBox.Show(Traducir("Msg_Perf_FamEliminada"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    bllPermisos_62_RS.BajaFamilia_62_RS(idFamiliaSeleccionada_62_RS);
+                    MessageBox.Show(Traducir("Msg_Perf_FamEliminada"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TxtNombreFamilia_62_RS.Clear();
+                    TxtDescFamilia_62_RS.Clear();
+                    idFamiliaSeleccionada_62_RS = 0;
                     CargarListasBase_62_RS();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+
         }
-
-
 
 
 
@@ -306,47 +296,46 @@ namespace GUI_62_RS
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void BtnAltaRol_62_RS_Click(object sender, EventArgs e)
         {
             try
             {
-                bllPermisos_62_RS.GuardarRol_62_RS(0, TxtNombreRol_62_RS.Text, TxtDescRol_62_RS.Text);
-                MessageBox.Show(Traducir("Msg_Perf_RolGuardado"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                TxtNombreRol_62_RS.Clear();
+                bllPermisos_62_RS.AltaRol_62_RS(TxtNombreRol_62_RS.Text, TxtDescRol_62_RS.Text);
+                MessageBox.Show(Traducir("Msg_Perf_RolGuardado"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information); TxtNombreRol_62_RS.Clear();
                 TxtDescRol_62_RS.Clear();
                 CargarListasBase_62_RS();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, Traducir("Msg_Usu_ErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
         private void BtnBajaRol_62_RS_Click(object sender, EventArgs e)
         {
             if (idRolSeleccionado_62_RS == 0) return;
+
             try
             {
-                // 1. Capturamos el nombre y la descripción desde los TextBox de la pantalla
-                string nombreRol = TxtNombreRol_62_RS.Text;
-                string descRol = TxtDescRol_62_RS.Text;
-
-                // 2. Le pasamos los 3 parámetros a la BLL
-                bllPermisos_62_RS.BajaRol_62_RS(idRolSeleccionado_62_RS, nombreRol, descRol);
-
-                MessageBox.Show(Traducir("Msg_Perf_RolEliminado"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                TxtNombreRol_62_RS.Clear();
-                TxtDescRol_62_RS.Clear();
-                idRolSeleccionado_62_RS = 0;
-                CargarListasBase_62_RS();
+                bool afectaUsuarios = bllPermisos_62_RS.RolTieneUsuariosAsignados_62_RS(idRolSeleccionado_62_RS);
+                string mensajeAviso = afectaUsuarios ? Traducir("Msg_Perf_AvisoRolUsuarios") : Traducir("Msg_Perf_AvisoRolSimple");
+                var confirm = MessageBox.Show(mensajeAviso, Traducir("Msg_Perf_ConfirmarBajaTit"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirm == DialogResult.Yes)
+                {
+                    bllPermisos_62_RS.BajaRol_62_RS(idRolSeleccionado_62_RS);
+                    MessageBox.Show(Traducir("Msg_Perf_RolEliminado"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TxtNombreRol_62_RS.Clear();
+                    TxtDescRol_62_RS.Clear();
+                    idRolSeleccionado_62_RS = 0;
+                    CargarListasBase_62_RS();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, Traducir("Msg_Perf_ErrorEliminar"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void BtnModificarRol_62_RS_Click(object sender, EventArgs e)
@@ -355,7 +344,7 @@ namespace GUI_62_RS
             {
                 if (idRolSeleccionado_62_RS == 0 || LbRol_62_RS.SelectedValue == null)
                 {
-                    MessageBox.Show("Debe seleccionar y guardar un Rol antes de aplicar permisos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Traducir("Msg_Perf_SeleccioneRol"), Traducir("Msg_Usu_Atencion"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -366,7 +355,7 @@ namespace GUI_62_RS
 
                 bllPermisos_62_RS.SincronizarPermisosRol_62_RS(rolSeleccionado, permisosDeseados);
 
-                MessageBox.Show(Traducir("Msg_Perf_RolConfigurado"), "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Traducir("Msg_Perf_RolConfigurado"), Traducir("Msg_Usu_ExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarListasBase_62_RS();
 
                 LbRol_62_RS.SelectedValue = idRol;

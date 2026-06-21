@@ -11,7 +11,6 @@ namespace SEG_62_RS.Composite
     {
         private List<Permiso_62_RS> _hijos_62_RS;
         public string Descripcion_62_RS { get; set; }
-        public bool Activo_62_RS { get; set; }
         public int? Dvh_62_RS { get; set; }
 
         public Rol_62_RS(string nombre) : base(nombre)
@@ -67,8 +66,7 @@ namespace SEG_62_RS.Composite
 
         public string GenerarCadenaDVH_62_RS()
         {
-            string activoDb = Activo_62_RS ? "1" : "0";
-            return $"{this.Id_62_RS}{this.Nombre_62_RS}{this.Descripcion_62_RS}{activoDb}";
+            return $"{this.Id_62_RS}{this.Nombre_62_RS}{this.Descripcion_62_RS}";
         }
     }
 }

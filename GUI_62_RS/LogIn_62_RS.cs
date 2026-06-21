@@ -49,6 +49,11 @@ namespace GUI_62_RS
                 string mensaje_62_RS = SEGUsuario_62_RS.Login_62_RS(TxtUsuario_62_RS.Text, TxtContra_62_RS.Text);
                 string contra = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.DNI_62_RS + SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.Apellido_62_RS;
                 string contraHash = Encriptacion_62_RS.EncriptarSHA256_62_RS(contra);
+                var usuarioActivo = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
+                if (usuarioActivo != null && usuarioActivo.IdRol_62_RS > 0)
+                {
+                    usuarioActivo.Rol_62_RS = bllPermisos_62_RS.ObtenerRolUsuario_62_RS(usuarioActivo.IdRol_62_RS);
+                }
                 if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.Password_62_RS == contraHash)
                 {
                     traducciones = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS;
@@ -75,12 +80,6 @@ namespace GUI_62_RS
                     traducciones = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS;
                     MessageBox.Show(mensaje_62_RS, traducciones["Msg_Login_Bienvenido_Titulo"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     bllBitacora_62_RS.InsertarBitacora_62_RS(usuarioIngresado, "Inicio de sesión exitoso", "Usuario", "1");
-
-                    var usuarioActivo = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS;
-                    if (usuarioActivo != null && usuarioActivo.IdRol_62_RS > 0)
-                    {
-                        usuarioActivo.Rol_62_RS = bllPermisos_62_RS.ObtenerRolUsuario_62_RS(usuarioActivo.IdRol_62_RS);
-                    }
                     Administracion_62_RS admin = new Administracion_62_RS();
                     admin.FormClosed += (sender, args) =>
                     {

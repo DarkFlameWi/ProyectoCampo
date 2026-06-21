@@ -15,7 +15,6 @@ namespace SEG_62_RS.Composite
             _hijos_62_RS = new List<Permiso_62_RS>();
         }
         public string Descripcion_62_RS { get; set; }
-        public bool Activo_62_RS { get; set; }
         public int? Dvh_62_RS { get; set; }
 
         public override void AgregarHijo_62_RS(Permiso_62_RS permiso)
@@ -62,8 +61,7 @@ namespace SEG_62_RS.Composite
 
         public string GenerarCadenaDVH_62_RS()
         {
-            string activoDb = Activo_62_RS ? "1" : "0";
-            return $"{this.Id_62_RS}{this.Nombre_62_RS}{this.Descripcion_62_RS}{activoDb}";
+            return $"{this.Id_62_RS}{this.Nombre_62_RS}{this.Descripcion_62_RS}";
         }
 
     }
