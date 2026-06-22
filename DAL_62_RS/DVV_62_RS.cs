@@ -55,5 +55,27 @@ namespace DAL_62_RS
                 throw new Exception("Error al actualizar la tabla DVV: " + ex.Message);
             }
         }
+
+        public int ObtenerDvvGuardado_62_RS(string nombreTabla_62_RS)
+        {
+            try
+            {
+                string sql = "SELECT ValorDvv_62_RS FROM DVV_62_RS WHERE NombreTabla_62_RS = @tabla";
+                SqlParameter[] p = { new SqlParameter("@tabla", nombreTabla_62_RS) };
+
+                DataTable dt = accesos_62_RS.LeerText_62_RS(sql, p);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    return Convert.ToInt32(dt.Rows[0]["ValorDvv_62_RS"]);
+                }
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener DVV guardado de la tabla {nombreTabla_62_RS}: {ex.Message}");
+            }
+        }
     }
 }

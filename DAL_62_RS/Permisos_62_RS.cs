@@ -152,12 +152,17 @@ namespace DAL_62_RS
         public Familia_62_RS ObtenerFamiliaPorId_62_RS(int idFamilia_62_RS)
         {
             DataTable dtFam = accesos_62_RS.LeerText_62_RS(
-                            "SELECT Nombre_62_RS FROM Familias_62_RS WHERE IdFamilia_62_RS = @id",
-                            new[] { new SqlParameter("@id", idFamilia_62_RS) });
+                     "SELECT Nombre_62_RS, Descripcion_62_RS, Dvh_62_RS FROM Familias_62_RS WHERE IdFamilia_62_RS = @id",
+                     new[] { new SqlParameter("@id", idFamilia_62_RS) });
 
             if (dtFam == null || dtFam.Rows.Count == 0) return null;
 
-            var familia = new Familia_62_RS(dtFam.Rows[0]["Nombre_62_RS"].ToString()) { Id_62_RS = idFamilia_62_RS };
+            var familia = new Familia_62_RS(dtFam.Rows[0]["Nombre_62_RS"].ToString())
+            {
+                Id_62_RS = idFamilia_62_RS,
+                Descripcion_62_RS = dtFam.Rows[0]["Descripcion_62_RS"].ToString(),
+                Dvh_62_RS = Convert.ToInt32(dtFam.Rows[0]["Dvh_62_RS"])
+            };
 
             string qPatentes = @"SELECT p.IdPatente_62_RS, p.Nombre_62_RS FROM Familia_Patente_62_RS fp
                                  INNER JOIN Patentes_62_RS p ON fp.IdPatente_62_RS = p.IdPatente_62_RS WHERE fp.IdFamilia_62_RS = @id";

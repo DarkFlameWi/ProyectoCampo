@@ -63,7 +63,9 @@ namespace GUI_62_RS
         }
         private void digVerificacorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            DVV_62_RS digitoVerificador_62_RS = new DVV_62_RS();
+            digitoVerificador_62_RS.MdiParent = this;
+            digitoVerificador_62_RS.Show();
         }
         private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -168,9 +170,8 @@ namespace GUI_62_RS
 
             if (usuarioActivo != null && usuarioActivo.Rol_62_RS != null)
             {
-                // =========================================================================
-                // 1. ADMIN
-                // =========================================================================
+
+                //ADMIN
                 bool verAdminPadre = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(1);
                 bool verUsuarios = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(2);
                 bool verBitacora = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(3);
@@ -186,9 +187,7 @@ namespace GUI_62_RS
 
                 adminToolStripMenuItem.Visible = (verAdminPadre || verUsuarios || verBitacora || verPerfiles || verRestore || verDigito);
 
-                // =========================================================================
-                // 2. PREFERENCIAS DE USUARIO
-                // =========================================================================
+                //PREFERENCIAS DE USUARIO
                 bool verIdioma = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(4);
                 bool verClave = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(5);
 
@@ -197,9 +196,8 @@ namespace GUI_62_RS
 
                 usuarioToolStripMenuItem.Visible = (verIdioma || verClave);
 
-                // =========================================================================
-                // 3. MAESTROS
-                // =========================================================================
+
+                //MAESTROS
                 bool verProd = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(14);
                 bool verCli = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(15);
                 bool verProv = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(16);
@@ -210,9 +208,7 @@ namespace GUI_62_RS
 
                 maestroToolStripMenuItem.Visible = (verProd || verCli || verProv);
 
-                // =========================================================================
-                // 4. VENTAS
-                // =========================================================================
+                //VENTAS
                 bool verCarrito = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(17);
                 bool verFacturar = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(18);
                 bool verDespachar = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(19);
@@ -223,9 +219,7 @@ namespace GUI_62_RS
 
                 ventasToolStripMenuItem.Visible = (verCarrito || verFacturar || verDespachar);
 
-                // =========================================================================
-                // 5. COMPRAS
-                // =========================================================================
+                //COMPRAS
                 bool verSoli = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(20);
                 bool verOrden = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(21);
                 bool verRecep = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(22);
@@ -236,9 +230,7 @@ namespace GUI_62_RS
 
                 comprasToolStripMenuItem.Visible = (verSoli || verOrden || verRecep);
 
-                // =========================================================================
-                // 6. REPORTES
-                // =========================================================================
+                //REPORTES
                 bool verRepVen = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(23);
                 bool verRepCom = usuarioActivo.Rol_62_RS.ValidarPermiso_62_RS(24);
 

@@ -54,6 +54,9 @@ namespace GUI_62_RS
                 {
                     usuarioActivo.Rol_62_RS = bllPermisos_62_RS.ObtenerRolUsuario_62_RS(usuarioActivo.IdRol_62_RS);
                 }
+
+                ///METODO RECALCUALR DVH Y VER SI ENTRAMOS AL SISTEMA O NO. con el metodo: VerificarIntegridadGlobal_62_RS
+
                 if (SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS.Password_62_RS == contraHash)
                 {
                     traducciones = SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS;

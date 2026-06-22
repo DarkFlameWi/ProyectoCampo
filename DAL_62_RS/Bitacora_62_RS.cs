@@ -103,6 +103,20 @@ namespace DAL_62_RS
                 throw new Exception(msjFiltrar + ex_62_RS.Message);
             }
         }
+
+        public DataTable ListarTodaBitacoraParaDVV_62_RS()
+        {
+            try
+            {
+                string query = "SELECT IdBitacora_62_RS, Usu_62_RS, FechaCambio_62_RS, Descripcion_62_RS, Modulo_62_RS, Criticidad_62_RS, Dvh_62_RS FROM Bitacora_62_RS";
+                return accesos_62_RS.LeerText_62_RS(query);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Error al leer bitácora completa para DVV: " + ex.Message);
+            }
+        }
+
         public void ActualizarDVH_62_RS(int idBitacora_62_RS, int dvh_62_RS)
         {
             try

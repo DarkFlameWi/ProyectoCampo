@@ -60,5 +60,17 @@ namespace BLL_62_RS
             }
             return dalBitacora_62_RS.FiltrarBitacora_62_RS(login, modulo, evento, criticidad, desde, hasta);
         }
+
+        public DataTable ListarTodaBitacoraParaDVV_62_RS()
+        {
+            try
+            {
+                return dalBitacora_62_RS.ListarTodaBitacoraParaDVV_62_RS();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al procesar la lista completa de bitácora: " + ex.Message);
+            }
+        }
     }
 }
