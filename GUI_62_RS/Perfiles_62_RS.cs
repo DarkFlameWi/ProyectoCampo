@@ -55,6 +55,7 @@ namespace GUI_62_RS
         {
             return SingletonSession_62_RS.Instancia_62_RS.IdiomaActual_62_RS.Traducciones_62_RS[clave];
         }
+
         private void Perfiles_62_RS_Load(object sender, EventArgs e)
         {
             CargarListasBase_62_RS();

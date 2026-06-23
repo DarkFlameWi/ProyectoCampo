@@ -68,7 +68,6 @@ namespace BLL_62_RS
             }
             catch (Exception ex) { throw new Exception(Traducir("Exc_BLL_ErrorFam") + ex.Message); }
         }
-
         public void BajaFamilia_62_RS(int idFamilia_62_RS)
         {
             try
@@ -116,7 +115,7 @@ namespace BLL_62_RS
                 }
 
                 string usuario = SingletonSession_62_RS.Instancia_62_RS.Usuario_62_RS?.UsU_62_RS ?? "Sistema";
-                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario, Traducir("Bit_ConfigFam") + familiaBase.Id_62_RS, "Administracion", "3");
+                bllBitacora_62_RS.InsertarBitacora_62_RS(usuario, "Permisos cambiado" + familiaBase.Nombre_62_RS, "Administracion", "3");
             }
             catch (PermisoDuplicadoExcepcion_62_RS exDup)
             {
